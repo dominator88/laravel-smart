@@ -1,0 +1,13 @@
+//上传参数
+$this->_addParam('uploadParam' , [
+  'width'       => 300 ,
+  'height'      => 300 ,
+  'saveAsAlbum' => TRUE,
+  'albumTag'    => '默认相册',
+]);
+
+//相册参数
+$this->_addParam( 'albumParam', [
+  'defaultTag' => '默认相册',
+  'pageSize'   => 12,
+] );

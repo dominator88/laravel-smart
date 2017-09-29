@@ -1,0 +1,350 @@
+/*
+.page-logo {
+	line-height: 75px;
+	font-size: 18px;
+}
+
+.page-logo a {
+	text-decoration:none ;
+}
+*/
+
+.back-btn-row {
+	text-align: center;
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+
+.fit-img-preview {
+	display: inline-block;
+}
+
+.fit-img-preview img {
+	max-width: 120px;
+	min-width: 60px;
+}
+
+.open_album_btn {
+	margin-left: 8px;
+}
+
+.fit-loading {
+	position: fixed;
+	filter: alpha(opacity=80);
+	-moz-opacity: 0.8;
+	-khtml-opacity: 0.8;
+	opacity: 0.8;
+	color: #FFF;
+	width: 120px;
+	height: 120px;
+	border-radius: 6px;
+	text-align: center;
+	z-index: 13000;
+	background: url(img/loading.gif) no-repeat 50% 50% #000;
+}
+
+.fit-modal {
+	display: none;
+	position: absolute;
+	filter: alpha(opacity=30);
+	-moz-opacity: 0.3;
+	opacity: 0.3;
+	width: 100%;
+	height: 100%;
+	background: #000;
+	z-index: 11000;
+	top: 0;
+}
+
+.fit-alert,
+.fit-confirm {
+	display: none;
+	position: absolute;
+	font-family: 'Microsoft YaHei', '黑体', Arial, 'Times New Roman', SimHei !important;
+	font-size: 16px;
+	background: #FFFFFF;
+	width: 85%;
+	max-width: 300px;
+	border-radius: 6px;
+	min-height: 100px;
+	z-index: 12000;
+	box-shadow: 0 0 10px #424040;
+}
+
+.fit-alert .fit-alert-body,
+.fit-confirm .fit-confirm-body {
+	color: #000000;
+	text-align: center;
+	vertical-align: middle;
+	padding: 30px 35px;
+}
+
+.fit-alert .fit-alert_btn,
+.fit-confirm .fit-confirm-btn {
+	height: 40px;
+	border-top: 1px solid #cdcdcd;
+}
+
+.fit-alert .fit-alert-btn button,
+.fit-confirm .fit-confirm-btn button {
+	display: block;
+	float: left;
+	height: 40px;
+	width: 100%;
+	color: #1282fb;
+	background: #FFFFFF;
+	font-weight: bold;
+	border: 0;
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
+}
+
+.fit-alert .fit-alert-btn .half,
+.fit-confirm .fit-confirm-btn .half {
+	width: 50%;
+}
+
+.fit-alert .fit-alert-btn .half:first-child,
+.fit-confirm .fit-confirm-btn .half:first-child {
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 0;
+}
+
+.fit-alert .fit-alert-btn .half:last-child,
+.fit-confirm .fit-confirm-btn .half:last-child {
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 6px;
+	border-left: 1px solid #ddd;
+}
+
+.toast-top-center {
+	margin-top: 16px;
+}
+
+table .sorting {
+	cursor: pointer;
+	padding-right: 20px !important;
+	background: url("img/sort_both.png") 100% 50% no-repeat;
+}
+
+table .sort_asc {
+	cursor: pointer;
+	padding-right: 20px !important;
+	background: url("img/sort_asc.png") 100% 50% no-repeat;
+}
+
+table .sort_desc {
+	cursor: pointer;
+	padding-right: 20px !important;
+	background: url("img/sort_desc.png") 100% 50% no-repeat;
+}
+
+table td {
+	vertical-align: middle !important;
+}
+
+table .level-fa {
+	width: 20px;
+	cursor: pointer;
+}
+
+table .level-1 {
+}
+
+table .level-2 {
+	padding-left: 25px !important;
+}
+
+table .level-3 {
+	padding-left: 50px !important;
+}
+
+table .level-4 {
+	padding-left: 75px !important;
+}
+
+table .level-5 {
+	padding-left: 100px !important;
+}
+
+table .level-6 {
+	padding-left: 125px !important;
+}
+
+/*
+上传相关
+*/
+.uploader-holder-markup {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	background: #000000;
+	z-index: 60;
+}
+
+.uploader-holder-tracker {
+	position: absolute;
+	top: 0;
+	left: 0;
+	overflow: hidden;
+	border: 1px dashed #ffffff;
+	z-index: 620;
+	cursor: move;
+}
+
+.uploader-holder-tracker-img {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.uploader-holder-img-bg {
+	position: absolute;
+	top: 0;
+	left: 0;
+	opacity: 0.6;
+	z-index: 300;
+}
+
+.area-selection {
+	display: none;
+	position: absolute;
+	width: 400px;
+	padding: 10px;
+	border: 1px solid #dddddd;
+	border-radius: 3px;
+	background: #ffffff;
+	z-index: 10055;
+}
+
+.area-selection a {
+	text-decoration: none;
+}
+
+.area-selection .list-inline a {
+	display: inline-block;
+	width: 60px;
+	text-align: center;
+	margin-bottom: 6px;
+}
+
+.tile a:hover {
+	text-decoration: none;
+}
+
+.tile .number a {
+	color: #fff;
+}
+
+.tile .number a i {
+	width: 20px;
+	font-size: 18px;
+}
+
+.tile .number a:hover {
+	color: #ccc;
+	text-underline: none;
+}
+
+.thumbnail.album_item {
+	margin-bottom: 6px;
+}
+
+.thumbnail.album_item img {
+	display: block;
+	max-height: 180px;
+	width: 100%;
+}
+
+.caption.album_item {
+	text-align: center;
+	margin-bottom: 16px;
+}
+
+.code-text {
+	-moz-tab-size: 2;
+	background: #f5f2f0 none repeat scroll 0 0;
+	box-sizing: border-box;
+	color: black;
+	font: 100% Consolas, Monaco, monospace;
+	height: 10em;
+	margin: 0.5em 0;
+	padding: 1em;
+	white-space: pre;
+	width: 100%;
+	word-wrap: normal;
+}
+
+.permission {
+	padding: 8px 16px;
+	margin: 0px;
+	list-style: none;
+}
+
+.permission li {
+	padding: 0px;
+	margin: 0px;
+	padding-bottom: 16px;
+	list-style: none;
+}
+
+.permission .func-node {
+	margin-bottom: 8px;
+}
+
+.permission .func-node .func {
+	display: inline-block;
+	width: 100px;
+	margin-right: 20px;
+	cursor: pointer;
+	font-weight: bold;
+	color: #000;
+}
+
+.permission .func-node .func.active {
+	color: #000;
+}
+
+.permission .func-node .func.notall {
+	color: #888;
+}
+
+.permission .func-node .func.disabled {
+	color: #CCCCCC;
+}
+
+.permission .func-node .func-opt {
+	display: inline-block;
+	min-width: 60px;
+	margin-right: 8px;
+	cursor: pointer;
+	color: #000;
+}
+
+.permission .func-node .func-opt.active {
+	color: #000;
+}
+
+.permission .func-node .func-opt.notall {
+	color: #888;
+}
+
+.permission .func-node .func-opt.disabled {
+	color: #CCCCCC;
+}
+
+.permission .func-node .func-opt i {
+	width: 12px;
+}
+
+.permission .func-tree .sub-permission {
+	margin: 0px;
+	padding: 0px;
+	padding-left: 26px;
+}
+
+.permission .func-tree .sub-permission li {
+	padding: 0px;
+}
+

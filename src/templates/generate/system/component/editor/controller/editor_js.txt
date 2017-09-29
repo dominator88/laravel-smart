@@ -1,0 +1,2 @@
+$this->_addJsLib( 'node_modules/kindeditor/kindeditor-all-min.js' );
+$this->_addJsLib( 'node_modules/kindeditor/lang/zh-CN.js' );

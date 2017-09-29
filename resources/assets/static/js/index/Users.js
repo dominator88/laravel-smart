@@ -1,0 +1,5 @@
+var Users = {
+  init : function () {
+
+  }
+};

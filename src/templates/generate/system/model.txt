@@ -1,0 +1,19 @@
+<?php namespace App\Models;
+/**
+ * {funcName} Model
+ *
+ * @author MR.Z <zsh2088@gmail.com>
+ * @version 2.0 , {date}
+ */
+
+use Illuminate\Database\Eloquent\Model;
+
+class {func} extends Model {
+    public $table =  '{tableName}';
+
+    public $primaryKey = 'id';
+
+    public $timestamps = FALSE;
+
+    use \App\Traits\Service\Scope;
+}

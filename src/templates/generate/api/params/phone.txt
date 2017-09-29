@@ -1,0 +1,1 @@
+'phone' => ['手机号' , '' , PARAM_REQUIRED] ,

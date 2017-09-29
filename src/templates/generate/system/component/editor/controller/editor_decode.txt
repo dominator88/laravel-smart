@@ -1,0 +1,1 @@
+$data['{field}'] = htmlspecialchars_decode( $data['{field}'] );

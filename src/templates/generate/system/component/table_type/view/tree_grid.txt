@@ -1,0 +1,10 @@
+<div class="table-scrollable">
+  <table id="treeGrid" class="table table-hover">
+    <tr>
+      {tableTh}
+      <th width="60" data-formatter="optEdit"></th>
+      <th width="60" data-formatter="optDelete"></th>
+      <th>&nbsp;</th>
+    </tr>
+  </table>
+</div>

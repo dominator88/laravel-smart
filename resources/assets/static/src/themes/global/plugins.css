@@ -1,0 +1,102 @@
+@charset "UTF-8";
+/******************************
+ 3RD PARTY PLUGIN CUSTOMIZATION
+******************************/
+/* Cubic Bezier Transition */
+/***
+SELECT2
+***/
+
+.select2-container--bootstrap .select2-search--dropdown .select2-search__field,
+.select2-container--bootstrap .select2-selection,
+.select2-container--bootstrap.select2-container--focus .select2-selection,
+.select2-container--bootstrap.select2-container--open .select2-selection {
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+
+.select2-container--bootstrap .select2-selection--multiple .select2-selection__choice__remove {
+	cursor: pointer;
+	display: inline-block;
+	font-weight: 700;
+	margin-right: 3px;
+}
+
+.select2-container--bootstrap .select2-results__group {
+	display: block;
+	font-size: 12px;
+	white-space: nowrap;
+	font-weight: 600;
+	font-family: "Open Sans", sans-serif;
+}
+
+.select2-container--bootstrap .select2-selection {
+	font-family: "Open Sans", sans-serif;
+}
+
+.modal-open .select2-dropdown {
+	z-index: 10060;
+}
+
+.modal-open .select2-close-mask {
+	z-index: 10055;
+}
+
+.modal-open .select2-container--bootstrap .select2-selection--multiple .select2-search--inline .select2-search__field {
+	width: auto !important;
+}
+
+.select2-result-repository {
+	padding-top: 4px;
+	padding-bottom: 3px;
+}
+
+.select2-result-repository__avatar {
+	float: left;
+	width: 60px;
+	margin-right: 10px;
+}
+
+.select2-result-repository__avatar img {
+	width: 100%;
+	height: auto;
+	border-radius: 2px;
+}
+
+.select2-result-repository__meta {
+	margin-left: 70px;
+}
+
+.select2-result-repository__title {
+	color: black;
+	font-weight: bold;
+	word-wrap: break-word;
+	line-height: 1.1;
+	margin-bottom: 4px;
+}
+
+.select2-result-repository__forks, .select2-result-repository__stargazers {
+	margin-right: 1em;
+}
+
+.select2-result-repository__forks, .select2-result-repository__stargazers, .select2-result-repository__watchers {
+	display: inline-block;
+	color: #aaa;
+	font-size: 11px;
+}
+
+.select2-result-repository__description {
+	font-size: 13px;
+	color: #777;
+	margin-top: 4px;
+}
+
+.select2-results__option--highlighted .select2-result-repository__title {
+	color: white;
+}
+
+.select2-results__option--highlighted .select2-result-repository__forks, .select2-results__option--highlighted .select2-result-repository__stargazers, .select2-results__option--highlighted .select2-result-repository__description, .select2-results__option--highlighted .select2-result-repository__watchers {
+	color: #c1d7e9;
+}
+
+
