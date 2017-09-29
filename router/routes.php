@@ -47,7 +47,7 @@ Route::group(['prefix'=>'backend/sysrole','namespace'=>'Smart\Controllers\Backen
 });
 
 //系统用户
-Route::group(['prefix'=>'backend/sysuser','namespace'=>'Smart\Controllers\Backend'],function(){
+Route::group(['prefix'=>'backend/sysuser','namespace'=>'Smart\Controllers\Backend','middleware'=> ['web']],function(){
 
     Route::get('index' , 'SysUser@index');
 
@@ -74,7 +74,7 @@ Route::group(['prefix'=>'backend/sysuser','namespace'=>'Smart\Controllers\Backen
 });
 
 //区域管理
-Route::group(['prefix'=>'backend/sysarea','namespace'=>'Smart\Controllers\Backend'],function(){
+Route::group(['prefix'=>'backend/sysarea','namespace'=>'Smart\Controllers\Backend','middleware'=> ['web']],function(){
 
     Route::get('index' , 'SysArea@index');
 
@@ -96,7 +96,7 @@ Route::group(['prefix'=>'backend/sysarea','namespace'=>'Smart\Controllers\Backen
 
 
 //商品分类
-Route::group(['prefix'=>'backend/mergoodscatalog','namespace'=>'Smart\Controllers\Backend'],function(){
+Route::group(['prefix'=>'backend/mergoodscatalog','namespace'=>'Smart\Controllers\Backend','middleware'=> ['web']],function(){
 
     Route::get('index' , 'MerGoodsCatalog@index');
 
@@ -117,7 +117,7 @@ Route::group(['prefix'=>'backend/mergoodscatalog','namespace'=>'Smart\Controller
 });
 
 //机构管理
-Route::group(['prefix'=>'backend/sysmerchant','namespace'=>'Smart\Controllers\Backend'],function(){
+Route::group(['prefix'=>'backend/sysmerchant','namespace'=>'Smart\Controllers\Backend','middleware'=> ['web']],function(){
 
     Route::get('index' , 'SysMerchant@index');
 
@@ -138,7 +138,7 @@ Route::group(['prefix'=>'backend/sysmerchant','namespace'=>'Smart\Controllers\Ba
 });
 
 //机构功能
-Route::group(['prefix'=>'backend/merfunc','namespace'=>'Smart\Controllers\Backend'],function(){
+Route::group(['prefix'=>'backend/merfunc','namespace'=>'Smart\Controllers\Backend','middleware'=> ['web']],function(){
 
     Route::get('index' , 'MerFunc@index');
 
@@ -157,7 +157,7 @@ Route::group(['prefix'=>'backend/merfunc','namespace'=>'Smart\Controllers\Backen
 });
 
 //机构角色
-Route::group(['prefix'=>'backend/merrole','namespace'=>'Smart\Controllers\Backend'],function(){
+Route::group(['prefix'=>'backend/merrole','namespace'=>'Smart\Controllers\Backend','middleware'=> ['web']],function(){
 
     Route::get('index' , 'MerRole@index');
 
@@ -181,7 +181,7 @@ Route::group(['prefix'=>'backend/merrole','namespace'=>'Smart\Controllers\Backen
 });
 
 //系统用户
-Route::group(['prefix'=>'backend/mersysuser','namespace'=>'Smart\Controllers\Backend'],function(){
+Route::group(['prefix'=>'backend/mersysuser','namespace'=>'Smart\Controllers\Backend','middleware'=> ['web']],function(){
 
     Route::get('index/{merId?}' , 'MerSysUser@index');
 
@@ -197,7 +197,7 @@ Route::group(['prefix'=>'backend/mersysuser','namespace'=>'Smart\Controllers\Bac
 
 });
 
-Route::group(['prefix'=>'backend/meruser','namespace'=>'Smart\Controllers\Backend'],function(){
+Route::group(['prefix'=>'backend/meruser','namespace'=>'Smart\Controllers\Backend','middleware'=> ['web']],function(){
 
     Route::get('index' , 'MerUser@index');
 
@@ -220,7 +220,7 @@ Route::group(['prefix'=>'backend/meruser','namespace'=>'Smart\Controllers\Backen
 });
 
 //APP版本管理
-Route::group(['prefix'=>'backend/sysappversion','namespace'=>'Smart\Controllers\Backend'],function(){
+Route::group(['prefix'=>'backend/sysappversion','namespace'=>'Smart\Controllers\Backend','middleware'=> ['web']],function(){
 
     Route::get('index' , 'SysAppVersion@index');
 
@@ -235,7 +235,7 @@ Route::group(['prefix'=>'backend/sysappversion','namespace'=>'Smart\Controllers\
 });
 
 //消息推送
-Route::group(['prefix'=>'backend/syspush','namespace'=>'Smart\Controllers\Backend'],function(){
+Route::group(['prefix'=>'backend/syspush','namespace'=>'Smart\Controllers\Backend','middleware'=> ['web']],function(){
 
     Route::get('index' , 'syspush@index');
 
@@ -250,7 +250,7 @@ Route::group(['prefix'=>'backend/syspush','namespace'=>'Smart\Controllers\Backen
 });
 
 //短信
-Route::group(['prefix'=>'backend/syssms','namespace'=>'Smart\Controllers\Backend'],function(){
+Route::group(['prefix'=>'backend/syssms','namespace'=>'Smart\Controllers\Backend','middleware'=> ['web']],function(){
 
     Route::get('index' , 'syssms@index');
 
@@ -265,7 +265,7 @@ Route::group(['prefix'=>'backend/syssms','namespace'=>'Smart\Controllers\Backend
 });
 
 //邮件
-Route::group(['prefix'=>'backend/sysmail','namespace'=>'Smart\Controllers\Backend'],function(){
+Route::group(['prefix'=>'backend/sysmail','namespace'=>'Smart\Controllers\Backend','middleware'=> ['web']],function(){
 
     Route::get('index' , 'sysmail@index');
 
@@ -282,7 +282,7 @@ Route::group(['prefix'=>'backend/sysmail','namespace'=>'Smart\Controllers\Backen
 });
 
 //代码生成
-Route::group(['prefix'=>'backend/generate','namespace'=>'Smart\Controllers\Backend'],function(){
+Route::group(['prefix'=>'backend/generate','namespace'=>'Smart\Controllers\Backend','middleware'=> ['web']],function(){
 
     Route::get('index' , 'Generate@index');
 
@@ -295,7 +295,7 @@ Route::group(['prefix'=>'backend/generate','namespace'=>'Smart\Controllers\Backe
 });
 
 //接口模拟器
-Route::group(['prefix'=>'backend/simulator','namespace'=>'Smart\Controllers\Backend'],function(){
+Route::group(['prefix'=>'backend/simulator','namespace'=>'Smart\Controllers\Backend','middleware'=> ['web']],function(){
 
     Route::get('index' , 'Simulator@index');
 
