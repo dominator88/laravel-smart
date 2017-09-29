@@ -13,7 +13,7 @@
     "type": "library",
     "require": {
         "php": ">=7.0.0",
-        "laravel/framework": "~5.5"
+        "laravel/framework": "5.5"
     },
     "require-dev": {
 
@@ -30,7 +30,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-           
+
 
         }
     },
