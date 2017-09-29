@@ -53,7 +53,7 @@ class SysMail extends Backend {
         //需要引入的 css 和 js
         $this->_addJsLib( 'static/plugins/dmg-ui/TableGrid.js' );
 
-        return $this->_displayWithLayout('sysmail.index');
+        return $this->_displayWithLayout('backend::sysmail.index');
     }
 
     /**

@@ -64,7 +64,7 @@ class Generate extends Backend {
         $this->_addJsLib( 'node_modules/select2/dist/js/i18n/zh-CN.js' );
 
 
-        return $this->_displayWithLayout('generate.index');
+        return $this->_displayWithLayout('backend::generate.index');
     }
 
     function get_system_info(Request $request) {

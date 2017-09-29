@@ -59,7 +59,7 @@ class MerFunc extends Backend {
         //需要引入的 css 和 js
         $this->_addJsLib( 'static/plugins/dmg-ui/TreeGrid.js' );
 
-        return $this->_displayWithLayout('merfunc.index');
+        return $this->_displayWithLayout('backend::merfunc.index');
     }
 
 

@@ -64,7 +64,7 @@ class SysArea extends Backend {
         $this->_addJsLib( 'static/plugins/dmg-ui/TableGrid.js' );
 
 
-        return $this->_displayWithLayout('sysarea.index');
+        return $this->_displayWithLayout('backend::sysarea.index');
     }
 
     /**

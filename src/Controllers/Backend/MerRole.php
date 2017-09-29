@@ -60,7 +60,7 @@ class MerRole extends Backend {
         $this->_addJsLib( 'static/plugins/dmg-ui/TableGrid.js' );
 
 
-        return $this->_displayWithLayout('merrole.index');
+        return $this->_displayWithLayout('backend::merrole.index');
     }
 
     //读取

@@ -61,7 +61,7 @@ class SysPush extends Backend {
         $this->_addJsLib( 'static/plugins/dmg-ui/TableGrid.js' );
 
 
-        return $this->_displayWithLayout('syspush.index');
+        return $this->_displayWithLayout('backend::syspush.index');
     }
 
     /**

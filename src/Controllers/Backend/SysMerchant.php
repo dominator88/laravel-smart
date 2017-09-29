@@ -76,7 +76,7 @@ class SysMerchant extends Backend {
         $this->_addJsLib( 'static/plugins/dmg-ui/TableGrid.js' );
 
 
-        return $this->_displayWithLayout('sysmerchant.index');
+        return $this->_displayWithLayout('backend::sysmerchant.index');
     }
 
     /**

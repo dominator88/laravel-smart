@@ -78,7 +78,7 @@ class MerGoodsCatalog extends Backend {
 
         $this->_addJsLib( 'static/plugins/dmg-ui/TreeGrid.js' );
 
-        return $this->_displayWithLayout('mergoodscatalog.index');
+        return $this->_displayWithLayout('backend::mergoodscatalog.index');
     }
 
 

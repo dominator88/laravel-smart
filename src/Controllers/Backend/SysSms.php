@@ -55,7 +55,7 @@ class SysSms extends Backend {
         $this->_addJsLib( 'static/plugins/dmg-ui/TableGrid.js' );
 
 
-        return $this->_displayWithLayout('syssms.index');
+        return $this->_displayWithLayout('backend::syssms.index');
     }
 
     /**

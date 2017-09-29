@@ -61,7 +61,7 @@ class Simulator extends Backend {
         //需要引入的 css 和 js
         $this->_addJsLib( 'static/plugins/jquery-md5/jQuery.md5.js' );
 
-        return $this->_displayWithLayout('simulator.index');
+        return $this->_displayWithLayout('backend::simulator.index');
     }
 
     //读取结果
