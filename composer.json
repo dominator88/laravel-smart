@@ -14,9 +14,11 @@
     "require": {
         "php": ">=7.0.0",
         "laravel/framework": "5.5.*"
+
     },
     "require-dev": {
-
+      "php": ">=7.0.0",
+      "laravel/framework": "5.5.*"
     },
     "autoload": {
         "classmap": [
