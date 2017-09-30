@@ -19,8 +19,10 @@ class SmartServiceProvider extends ServiceProvider{
 
         $this->publishes([ __DIR__.'/../config/' => config_path()] , 'backend');
 
-
-
+        if(!file_exists(app_path('Http/Controllers/Api/Service'))){
+            mkdir(app_path('Http/Controllers/Api/Service') , 0777 ,true);
+            chmod(app_path('Http/Controllers/Api/Service') , 0777);
+        }
 
         $this->publishes([ __DIR__.'/../resources/Api' => app_path('Http/Controllers/Api')] , 'backend');
 

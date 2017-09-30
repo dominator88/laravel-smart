@@ -1,1 +1,0 @@
-'searchUser'   => full_uri( '{module}/MerUser/search' ), //自行修改

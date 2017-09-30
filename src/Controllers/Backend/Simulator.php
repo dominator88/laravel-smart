@@ -49,7 +49,7 @@ class Simulator extends Backend {
         $this->_addParam( [
             'deviceOsVersion' => $this->deviceOsVersion ,
             'apiVersion'      => $this->apiVersion ,
-            'secret'          => config( 'api.secret' ) ,
+            'secret'          => config( 'backend.secret' ) ,
             'testToken'       => $MerUser->getForTest() ,
             'testMer'         => $SysMerchant->getForTest() ,
             'defaultValue'    => [
@@ -93,7 +93,7 @@ class Simulator extends Backend {
         $data['defaultParams']      = $instance->defaultParams[ $method ];
         $data['defaultResponse']    = $this->_fixDefaultResponse( $instance->defaultResponse[ $method ] );
 
-        return view('simulator.params')->with($data);
+        return view('backend::simulator.params')->with($data);
 
     }
 

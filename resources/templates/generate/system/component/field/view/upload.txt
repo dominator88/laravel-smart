@@ -1,9 +1,0 @@
-<!-- start item -->
-<div class="form-group">
-	<label class="col-md-3 control-label">{comment}</label>
-	<div class="col-md-7">
-		<div id="{field}Preview" class="fit-img-preview"></div>
-		<button id="{field}UploadBtn" ></button>
-		<input type="text" name="{field}" class="hide" >
-	</div>
-</div><!-- end item -->

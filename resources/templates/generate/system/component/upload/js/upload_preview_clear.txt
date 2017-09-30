@@ -1,1 +1,0 @@
-setImgPreview.clear('{field}');

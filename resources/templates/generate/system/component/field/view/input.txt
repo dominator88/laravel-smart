@@ -1,8 +1,0 @@
-<!-- start item -->
-<div class="form-group">
-	<label class="col-md-3 control-label">{comment}</label>
-	<div class="col-md-7">
-    <input type="text" name="{field}" placeholder="{comment}" class="form-control"
-           data-valid="required" data-tips="请输入正确的{comment}" >
-	</div>
-</div><!-- end item -->

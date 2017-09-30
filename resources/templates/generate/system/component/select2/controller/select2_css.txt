@@ -1,1 +1,0 @@
-$this->_addCssLib( 'node_modules/select2/dist/css/select2.min.css' );

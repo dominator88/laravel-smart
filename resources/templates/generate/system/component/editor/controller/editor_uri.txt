@@ -1,1 +1,0 @@
-'upload_ke'   => full_uri( '{moduleLower}/{func}/upload' , ['is_ke' => 1 ] ),

@@ -1,4 +1,0 @@
-//验证用户
-if ( ! $this->validToken() ) {
-  return api_result( $this->error, $this->errCode );
-}

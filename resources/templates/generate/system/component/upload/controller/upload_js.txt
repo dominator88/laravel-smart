@@ -1,3 +1,0 @@
-$this->_addCssLib('node_modules/jcrop-0.9.12/css/jquery.Jcrop.min.css');
-$this->_addJsLib('node_modules/jcrop-0.9.12/js/jquery.Jcrop.min.js');
-$this->_addJsLib( 'static/plugins/dmg-ui/Uploader.js' );

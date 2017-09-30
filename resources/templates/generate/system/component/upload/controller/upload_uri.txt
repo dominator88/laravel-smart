@@ -1,3 +1,0 @@
-'upload'       => full_uri( '{moduleLower}/{funcLower}/upload' ),
-'albumCatalog' => full_uri( '{moduleLower}/{funcLower}/read_album_catalog' ),
-'album'        => full_uri( '{moduleLower}/{funcLower}/read_album' ),

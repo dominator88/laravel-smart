@@ -11,7 +11,7 @@ namespace Smart\Service;
 use Illuminate\Support\Facades\DB;
 
 define( 'SYSTEM_TEMP_BASE_PATH', __DIR__ . '/../../templates/generate/system/' );
-define( 'API_TEMP_BASE_PATH', app_path() . '/templates/generate/api' );
+define( 'API_TEMP_BASE_PATH', __DIR__ . '/../../templates/generate/api' );
 define( 'APP_PATH' , app_path());
 define( 'BASE_PATH' , base_path());
 
@@ -217,8 +217,8 @@ class GenerateService {
     ];
 
     var $apiTemp = [
-        'tmp'      => APP_PATH . '/templates/generate/api/api.txt',
-        'authUser' => APP_PATH . '/templates/generate/api/auth_user.txt'
+        'tmp'      => API_TEMP_BASE_PATH.'/api.txt',
+        'authUser' => API_TEMP_BASE_PATH.'/auth_user.txt'
     ];
 
     private static $instance;
@@ -820,7 +820,7 @@ class GenerateService {
         }
 
         if ( ! file_exists( $filePath ) ) {
-            mkdir( $filePath, 0777 );
+            mkdir( $filePath, 0777 ,true);
             chmod( $filePath, 0777 );
         }
 
@@ -828,7 +828,7 @@ class GenerateService {
         $params = '';
         if ( isset( $data['params'] ) ) {
             foreach ( $data['params'] as $param ) {
-                $params .= file_get_contents( APP_PATH . "/templates/generate/api/params/{$param}.txt" ) . "\r";
+                $params .= file_get_contents( API_TEMP_BASE_PATH."/params/{$param}.txt" ) . "\r";
             }
         }
         $data['params'] = $params;

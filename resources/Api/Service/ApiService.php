@@ -83,7 +83,7 @@ class ApiService {
             //  echo "$key=$val <br/>";
         }
 
-        $signature = implode( '&' , $new_arr ) . '&secret=' . config( 'api.secret' );
+        $signature = implode( '&' , $new_arr ) . '&secret=' . config( 'backend.secret' );
 
         $this->log( '签名:' , $inputArr );
 

@@ -1,7 +1,0 @@
-//select2 reload数据 请自行修改
-var userData = [{
-  id : row.id ,
-  text : row.nickname + '('+ row.phone +')'
-}];
-var userOptions = form_options_rows( userData , { field : 'text'} ) ;
-$('.select2me').html(userOptions).val(row.user_id).trigger('change');

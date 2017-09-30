@@ -1,2 +1,0 @@
-	//引入 TreeTable trait
-	use \App\Traits\Service\TreeTable;
