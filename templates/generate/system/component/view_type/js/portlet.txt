@@ -1,0 +1,28 @@
+//显示 portlet
+setPortletShow : function ( type ) {
+  var $tablePortlet = $('#tablePortlet') ;
+  var $addEditPortlet = $('#addEditPortlet');
+
+  $tablePortlet.slideUp('fast');
+  if ( type == 'add' ) {
+    if ( !$addEditPortlet.hasClass('blue') ) {
+      $addEditPortlet.removeClass('green-meadow').addClass('blue');
+    }
+
+    $addEditPortlet.find('.caption-subject').html('新增 ' + Param.pageTitle );
+  } else if ( type == 'edit' ) {
+    if ( !$addEditPortlet.hasClass('green-meadow') ) {
+      $addEditPortlet.removeClass('blue').addClass('green-meadow');
+    }
+    $addEditPortlet.find('.caption-subject').html('编辑 ' + Param.pageTitle );
+  }
+
+  //$('#data-table-portlet').slideUp('fast');
+  $addEditPortlet.show();
+},
+
+//关闭 portlet
+setPortletHide : function () {
+  $('#tablePortlet').slideDown('fast') ;
+  $('#addEditPortlet').slideUp('fast');
+},

@@ -1,0 +1,9 @@
+<!-- start item -->
+<div class="form-group">
+	<label class="col-md-3 control-label">{comment}</label>
+	<div class="col-md-7">
+		<select name="{field}" class="form-control">
+			<?= form_options( $param['{field}'] ) ?>
+		</select>
+	</div>
+</div><!-- end item -->

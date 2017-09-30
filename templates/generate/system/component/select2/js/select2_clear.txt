@@ -1,0 +1,1 @@
+$('.select2me').val(null).trigger('change');

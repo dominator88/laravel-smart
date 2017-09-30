@@ -1,0 +1,18 @@
+//上传按钮
+$('#{field}UploadBtn').Uploader({
+  uri : Param.uri.upload , //上传文件
+  param : Param.uploadParam ,
+  album : true ,
+  albumUri : Param.uri.album ,
+  albumCatalogUri : Param.uri.albumCatalog ,
+  albumParam : Param.albumParam ,
+  onSuccess : function ( ret ) {
+    tips.success(ret.msg);
+    if ( ret.code == 0 ) {
+      setImgPreview.set('{field}' , ret.data.savePath);
+    }
+  },
+  onChooseAlbum : function( uri ){
+    setImgPreview.set('{field}' , uri );
+  }
+});

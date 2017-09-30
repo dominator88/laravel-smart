@@ -1,0 +1,1 @@
+setImgPreview.set('{field}' , row.{field});

@@ -19,6 +19,11 @@ class SmartServiceProvider extends ServiceProvider{
 
         $this->publishes([ __DIR__.'/../config/' => config_path()] , 'backend');
 
+
+
+
+        $this->publishes([ __DIR__.'/../resources/Api' => app_path('Http/Controllers/Api')] , 'backend');
+
         $this->publishes([ __DIR__.'/../resources/assets/' => public_path('static')] , 'backend');
 
 

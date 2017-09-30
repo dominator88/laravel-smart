@@ -13,7 +13,12 @@
     "type": "library",
     "require": {
         "php": ">=7.0.0",
-        "laravel/framework": "5.5.*"
+        "laravel/framework": "5.5.*",
+        "cebe/markdown": "^1.1",
+        "jpush/jpush": "^3.5",
+        "laravel/tinker": "~1.0",
+        "phpmailer/phpmailer": "^6.0",
+        "toplan/laravel-sms": "~2.6"
 
     },
     "require-dev": {

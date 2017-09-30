@@ -1,0 +1,16 @@
+/**
+ * 读取
+ * @return response->Json
+ */
+public function read(Request $request) {
+  $config = [
+    'status'    => $request->input( 'status', '' ),
+    'keyword'   => $request->input( 'keyword', '' ),
+    'sort'      => $request->input( 'sort', 'id' ),
+    'order'     => $request->input( 'order', 'DESC' ),
+  ];
+
+  $data['rows']    = $this->service->getByCond( $config );
+
+  return json( ajax_arr( '查询成功', 0, $data ) );
+}

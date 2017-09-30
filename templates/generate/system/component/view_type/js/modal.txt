@@ -1,0 +1,16 @@
+//显示 modal
+setPortletShow : function ( type ) {
+  var $addEditModal = $('#addEditModal') ;
+
+  $addEditModal.modal('show');
+  if ( type == 'add' ) {
+    $addEditModal.find('.caption-subject').html('新增 ' + Param.pageTitle );
+  } else if ( type == 'edit' ) {
+    $addEditModal.find('.caption-subject').html('编辑 ' + Param.pageTitle );
+  }
+},
+
+//关闭 modal
+setPortletHide : function () {
+  $('#addEditModal').modal('hide') ;
+},

@@ -292,6 +292,10 @@ Route::group(['prefix'=>'backend/generate','namespace'=>'Smart\Controllers\Backe
 
     Route::post('create_api' ,  'Generate@create_api');
 
+    Route::get('destroy_system_file' ,  'Generate@destroy_system_file');
+
+
+
 });
 
 //接口模拟器

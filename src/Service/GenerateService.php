@@ -10,7 +10,7 @@ namespace Smart\Service;
 
 use Illuminate\Support\Facades\DB;
 
-define( 'SYSTEM_TEMP_BASE_PATH', app_path() . '/templates/generate/system/' );
+define( 'SYSTEM_TEMP_BASE_PATH', __DIR__ . '/../../templates/generate/system/' );
 define( 'API_TEMP_BASE_PATH', app_path() . '/templates/generate/api' );
 define( 'APP_PATH' , app_path());
 define( 'BASE_PATH' , base_path());
@@ -593,6 +593,12 @@ class GenerateService {
     }
 
     private function saveFile( $temp, $filePath, $fileContent ) {
+        $dir = dirname($filePath);
+        if(!file_exists($dir)){
+            mkdir($dir , 0777 , true);
+            chmod($dir , 0777);
+        }
+
         $ret = file_put_contents( $filePath, $fileContent );
         if ( $ret === FALSE ) {
             return ajax_arr( $temp . ' 创建失败', 500 );
@@ -763,14 +769,6 @@ class GenerateService {
         }
 
         $fileContent = $this->replaceTmp( $fileContent, $replaceField );
-
-
-        $dir = BASE_PATH . "/resources/views/{$replaceData['funcLower']}";
-
-        if ( ! file_exists( $dir ) ) {
-            mkdir( $dir, 0777, TRUE );
-            chmod( $dir, 0777 );
-        }
 
         //保存文件
         return $this->saveFile( $temp, $filePath, $fileContent );
