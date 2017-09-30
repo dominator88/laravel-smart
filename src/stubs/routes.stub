@@ -1,0 +1,6 @@
+
+Route::group(['prefix'=>'{version}','namespace'=>'Api'],function(){
+
+    Route::get('{direction}/{action}' , 'Index@index');
+
+});

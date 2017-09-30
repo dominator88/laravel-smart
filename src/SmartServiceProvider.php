@@ -28,6 +28,12 @@ class SmartServiceProvider extends ServiceProvider{
 
         $this->publishes([ __DIR__.'/../resources/assets/' => public_path('static')] , 'backend');
 
+        file_put_contents(
+            base_path('routes/api.php'),
+            file_get_contents(__DIR__.'/stubs/routes.stub'),
+            FILE_APPEND
+        );
+
 
     }
 

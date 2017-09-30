@@ -128,7 +128,7 @@ class Simulator extends Backend {
     function read_me() {
         $this->_init( '文档' );
         $parser = new MarkdownExtra();
-        $readme = $parser->parse( file_get_contents( ROOT_PATH . './README.md' ) );
+        $readme = $parser->parse( file_get_contents( base_path() . './README.md' ) );
 
         $this->_addData( 'readme' , $readme );
 

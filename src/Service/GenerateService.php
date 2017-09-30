@@ -820,7 +820,7 @@ class GenerateService {
         }
 
         if ( ! file_exists( $filePath ) ) {
-            mkdir( $filePath, 0777 ,true);
+            mkdir( $filePath, 0777 ,true) or die('创建失败');
             chmod( $filePath, 0777 );
         }
 

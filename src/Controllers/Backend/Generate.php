@@ -95,7 +95,7 @@ class Generate extends Backend {
         $data = [
             'name'       => $request->input( 'name' ),
             'directory'  => $request->input( 'directory' ),
-            'params'     => $request->input( 'params/a' ),
+            'params'     => $request->input( 'params' ),
             'desc'       => $request->input( 'desc' ),
             'apiVersion' => $request->input( 'apiVersion' ),
             'authUser'   => $request->input( 'authUser' )
