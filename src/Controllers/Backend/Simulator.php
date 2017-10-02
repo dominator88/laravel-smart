@@ -91,6 +91,7 @@ class Simulator extends Backend {
         $data['method']             = $method;
         $data['allowRequestMethod'] = $instance->allowRequestMethod;
         $data['defaultParams']      = $instance->defaultParams[ $method ];
+
         $data['defaultResponse']    = $this->_fixDefaultResponse( $instance->defaultResponse[ $method ] );
 
         return view('backend::simulator.params')->with($data);

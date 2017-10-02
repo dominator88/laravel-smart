@@ -7,7 +7,9 @@
  */
 namespace Smart;
 
+use App\Service\MerTokenService;
 use Illuminate\Support\ServiceProvider;
+use Smart\Interfaces\TokenService;
 
 class SmartServiceProvider extends ServiceProvider{
 
@@ -38,6 +40,10 @@ class SmartServiceProvider extends ServiceProvider{
     }
 
     public function register(){
+        $this->app->singleton( TokenService::class , function($app){
+            return new MerTokenService();
+        });
+
         $this->mergeConfigFrom( __DIR__.'/../config/backend.php' ,'backend' );
     }
 
