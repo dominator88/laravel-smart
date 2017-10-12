@@ -310,6 +310,13 @@ Route::group(['prefix'=>'backend/simulator','namespace'=>'Smart\Controllers\Back
 });
 
 
+//接口路由
+Route::group(['prefix'=>'{version}','namespace'=>'Api' , 'middleware'=> ['api']],function(){
 
+    Route::any('{direction}/{action}' , 'Index@index');
+
+
+
+});
 
 

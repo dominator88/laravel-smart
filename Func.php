@@ -2,7 +2,7 @@
 if ( ! function_exists( 'full_uri' ) ) {
     function full_uri( $uri , $param = [] ) {
         return url( strtolower($uri) , $param  );
-    }
+     }
 }
 
 if ( ! function_exists( 'extend' ) ) {

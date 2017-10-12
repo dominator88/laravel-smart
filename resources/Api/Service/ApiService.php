@@ -7,8 +7,9 @@
  */
 namespace App\Http\Controllers\Api\Service\v1;
 
+use Smart\Interfaces\TokenService;
 use Smart\Service\AuthUcService;
-use Smart\Service\EcmMemberTokenService;
+
 use Smart\Service\MerUserDeviceService;
 use Illuminate\Support\Facades\DB;
 
@@ -27,6 +28,8 @@ class ApiService {
     public $merId           = '';
     public $error           = '';
     public $errCode         = 500;
+
+    public $token = '';
 
     //出错代码表
     public $code = [
@@ -51,13 +54,16 @@ class ApiService {
 
     private static $instance;
 
+
+
     public static function instance() {
         if ( self::$instance == NULL ) {
             self::$instance = new ApiService();
         }
-
         return self::$instance;
     }
+
+
 
     public function getError( $code ) {
         return api_result( $this->code[ $code ] , $code );
@@ -129,7 +135,7 @@ class ApiService {
             return FALSE;
         }
 
-        return abs( time() - $timestamp ) < config( 'api.timeGap' );
+        return abs( time() - $timestamp ) < config( 'backend.timeGap' );
     }
 
     /**
@@ -138,6 +144,7 @@ class ApiService {
      * @return mixed
      */
     public function validToken() {
+        $this->token = resolve( TokenService::class );
         $this->userId = '';
         $this->error  = 500;
 
@@ -147,8 +154,8 @@ class ApiService {
 
             return FALSE;
         } else {
-            $EcmMemberTokenService =  EcmMemberTokenService::instance();
-            $MemberData = $EcmMemberTokenService->getByToken($this->params['token']);
+
+            $MemberData = $this->token->getByToken($this->params['token']);
 
             //   $this->log('用户数据',implode(',',$MemberData));
             /* $MerUserDevice = MerUserDeviceService::instance();
@@ -163,8 +170,8 @@ class ApiService {
                 return FALSE;
             }
 
-            $this->userId = $MemberData['user_id'];
-            $this->behalf = $MemberData['behalf_id'];
+            $this->userId = $MemberData->id;
+
             return TRUE;
         }
     }
