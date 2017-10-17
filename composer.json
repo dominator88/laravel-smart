@@ -40,14 +40,14 @@
         }
     },
     "extra": {
-        "laravel": {
-            "laravel": {
+
+
                 "providers": [
                     "Smart\\SmartServiceProvider"
                 ]
 
-            }
-        }
+
+
     }
 
 }
