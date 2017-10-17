@@ -41,12 +41,12 @@
     },
     "extra": {
 
-
+            "laravel":{
                 "providers": [
                     "Smart\\SmartServiceProvider"
                 ]
 
-
+            }
 
     }
 
