@@ -311,7 +311,7 @@ Route::group(['prefix'=>'backend/simulator','namespace'=>'Smart\Controllers\Back
 
 
 //接口路由
-Route::group(['prefix'=>'{version}','namespace'=>'Api' , 'middleware'=> ['api']],function(){
+Route::group(['prefix'=>'api/{version}','namespace'=>'App\Http\Controllers\Api' , 'middleware'=> ['api']],function(){
 
     Route::any('{direction}/{action}' , 'Index@index');
 

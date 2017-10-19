@@ -373,6 +373,7 @@ class ApiService {
         $filename = './logs/api_log_' . date( 'Y_m_d' ) . '.txt';
 
         if ( ! file_exists( $filename ) ) {
+            if( ! file_exists($filename)){ mkdir( dirname($filename));}
             file_put_contents( $filename , '' );
             chmod( $filename , 0777 );
         }
