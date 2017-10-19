@@ -1,7 +1,7 @@
 {
     "name":  "dominator88/laravel-smart",
-    "description": "The Laravel Framework.",
-    "keywords": ["admin", "laravel" ,"grid"],
+    "description": "后台管理系统.能快速度进行移动端开发.集成多个常见工具包.",
+    "keywords": ["admin", "laravel" ,"grid" ,"api" ],
     "homepage": "https://github.com/dominator88/laravel-smart",
     "license": "MIT",
     "authors": [
