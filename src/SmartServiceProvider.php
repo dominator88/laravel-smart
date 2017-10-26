@@ -7,11 +7,17 @@
  */
 namespace Smart;
 
+
 use App\Service\MerTokenService;
 use Illuminate\Support\ServiceProvider;
 use Smart\Interfaces\TokenService;
 
 class SmartServiceProvider extends ServiceProvider{
+
+    protected  $commands = [
+        \Smart\Console\Commands\InstallCommand::class,
+        \Smart\Console\Commands\UninstallCommand::class,
+    ];
 
     public function boot(){
 
@@ -30,6 +36,7 @@ class SmartServiceProvider extends ServiceProvider{
 
         $this->publishes([ __DIR__.'/../resources/assets/static/' => public_path('static')] , 'backend');
 
+        $this->publishes([ __DIR__.'/../database/migrations/' => database_path( 'migrations')] , 'backend-migrations');
 
 
     }
@@ -40,6 +47,7 @@ class SmartServiceProvider extends ServiceProvider{
         });
 
         $this->mergeConfigFrom( __DIR__.'/../config/backend.php' ,'backend' );
+        $this->commands($this->commands);
     }
 
 }

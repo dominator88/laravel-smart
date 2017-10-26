@@ -158,7 +158,7 @@
                     <div class="col-md-12">
                         <!-- start form -->
                         <form id="privilegeForm" class="form-horizontal">
-                            {!! csrf_field() !!}}
+                            {!! csrf_field() !!}
                             <div class="form-body">
                                 <!-- start item -->
                                 <div class="form-group">
