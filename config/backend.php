@@ -10,6 +10,8 @@ return [
 
     'sessionName' => 'backend_session',
 
+    'directory' => ['Http/Controllers/Api' , 'Http/Controllers/backend' , 'Http/Controllers/mp'],
+
     'superAdminId' => 1,
     'defaultPwd' => '123123',
 

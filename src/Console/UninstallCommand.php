@@ -40,6 +40,13 @@ class UninstallCommand extends Command
         if(! $this->confirm('你确认要卸载laravel-smart吗?')){
             return ;
         }
+
+        array_map(function($file){
+            $this->laravel['files']->deleteDirectory(app_path($file));
+        } , config('backend.directory'));
+
+        $this->laravel['files']->deleteDirectory(public_path('smart'));
+        $this->laravel['files']->delete( config_path('backend.php'));
         $this->info('卸载laravel-smart 成功!');
         //
     }
