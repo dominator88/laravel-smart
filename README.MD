@@ -18,11 +18,13 @@
 
     `composer require dominator88/laravel-smart:dev-master`
     
-- 运行下面命令来发布资源
+- 运行下面命令来发布资源,以及安装数据库
     
     `php artisan vendor:publish --provider="Smart\SmartServiceProvider"`
         
     `php artisan make:auth`
+    
+    `php artisan Smart:install`
 
 为权限认证添加 模块,并设置为当前模型作为用户模型
 
@@ -32,9 +34,6 @@
         ]
 
 
-数据库安装
-
-    env DB_HOST=127.0.0.1 php artisan migrate
 
 ### 接口说明
 --------
