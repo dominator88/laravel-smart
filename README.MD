@@ -32,6 +32,9 @@
         ]
 
 
+数据库安装
+
+    env DB_HOST=127.0.0.1 php artisan migrate
 
 ### 接口说明
 --------

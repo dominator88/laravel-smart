@@ -47,17 +47,18 @@ trait TreeTable {
 	}
 	
 	//转换树key
-	private function treeToArray( $arr, $key ) {
-		$ret = [];
-		foreach ( $arr as $val ) {
-			if ( isset( $val->$key ) ) {
-                $val->$key  = $this->treeToArray( $val->$key , $key );
-			}
-			$ret[] = $val;
-		}
-		
-		return $ret;
-	}
+    private function treeToArray( $arr, $key ) {
+        $ret = [];
+        foreach ( $arr as $val ) {
+            if ( isset( $val[$key] ) ) {
+                $val[$key]  = $this->treeToArray( $val[$key] , $key );
+
+            }
+            $ret[] = $val;
+        }
+
+        return $ret;
+    }
 	
 	/**
 	 *

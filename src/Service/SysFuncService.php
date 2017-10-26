@@ -101,7 +101,6 @@ class SysFuncService extends BaseService{
             ->toArray();
 
 
-
         if( $param['withPrivilege']){
             $data = $this->withPrivilege($data);
         }
