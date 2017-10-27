@@ -38,6 +38,8 @@ class SmartServiceProvider extends ServiceProvider{
 
         $this->publishes([ __DIR__.'/../database/migrations/' => database_path( 'migrations')] , 'backend-migrations');
 
+        $this->publishes([ __DIR__.'/../database/seeds/' => database_path( 'seeds')] , 'backend-migrations');
+
 
     }
 

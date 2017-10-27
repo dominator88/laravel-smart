@@ -13,6 +13,9 @@ return [
     'directory' => ['Http/Controllers/Api' , 'Http/Controllers/backend' , 'Http/Controllers/mp'],
 
     'superAdminId' => 1,
+
+    'defaultAdmin' => 'sys_admin',
+
     'defaultPwd' => '123123',
 
     'areaCachePrefix' => 'backend_area',
