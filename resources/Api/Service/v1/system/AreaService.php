@@ -7,7 +7,8 @@
  */
 
 
-use Smart\Controllers\Api\Service\v1\ApiService;
+use App\Http\Controllers\Api\Service\v1\ApiService;
+
 use Smart\Service\SysAreaService;
 
 
