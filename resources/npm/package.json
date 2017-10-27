@@ -1,0 +1,54 @@
+{
+  "name": "smart2",
+  "version": "1.0.0",
+  "description": "smart + thinkphp5",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "smart",
+    "tp5"
+  ],
+  "author": "Zix",
+  "repository": {
+    "type": "git",
+    "url": "git@git.coding.net:HBWYCM/php-whlz.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "block-ui": "^2.70.1",
+    "bootpag": "^1.0.7",
+    "bootstrap": "^3.3.7",
+    "bootstrap-datetime-picker": "^2.4.4",
+    "bootstrap-hover-dropdown": "^2.2.1",
+    "bootstrap-switch": "^3.3.4",
+    "echarts": "^3.7.2",
+    "font-awesome": "^4.7.0",
+    "jcrop-0.9.12": "^0.9.12",
+    "jquery": "^3.2.1",
+    "jquery-slimscroll": "^1.3.8",
+    "jquery.backstretch": "^2.1.15",
+    "jquery.counterup": "^2.1.0",
+    "js-cookie": "^2.1.4",
+    "kindeditor": "^4.1.10",
+    "markdown": "^0.5.0",
+    "moment": "^2.19.1",
+    "normalize.css": "^4.2.0",
+    "owl.carousel": "^2.2.0",
+    "select2": "^4.0.5",
+    "simple-line-icons-webfont": "^4.0.3",
+    "simplemde": "^1.11.2",
+    "toastr": "^2.1.2",
+    "waypoints": "^4.0.1"
+  },
+  "devDependencies": {
+    "del": "^2.2.0",
+    "fancybox": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^2.0.6",
+    "gulp-concat": "^2.6.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.5.3"
+  }
+}
