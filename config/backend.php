@@ -18,6 +18,8 @@ return [
 
     'defaultPwd' => '123123',
 
+    'defaultEmail' => 'admin@admin.com',
+
     'areaCachePrefix' => 'backend_area',
 
     'JPush'      => [

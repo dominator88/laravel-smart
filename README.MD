@@ -30,7 +30,7 @@
 
         'admin' => [
             'driver' => 'eloquent',
-            'model' => App\Models\SysUser::class,
+            'model' => Smart\Models\SysUser::class,
         ]
 
 

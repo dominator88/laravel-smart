@@ -22,7 +22,7 @@ class AdminTableSeeder extends Seeder
                 'password' => bcrypt(config('backend.defaultPwd')),
                 'status' => 1,
                 'name' => 'admin',
-                'email' => 'admin@admin.com',
+                'email' => config('backend.defaultEmail'),
                 'icon' => '',
                 'phone' => '',
                 'token' => '',
