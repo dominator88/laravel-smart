@@ -1,14 +1,14 @@
 {
-  "name": "smart2",
+  "name": "laravel-smart",
   "version": "1.0.0",
-  "description": "smart + thinkphp5",
+  "description": "smart + laravel",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "smart",
-    "tp5"
+    "laravel-admin"
   ],
   "author": "Zix",
   "repository": {
