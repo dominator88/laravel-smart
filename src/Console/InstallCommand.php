@@ -3,6 +3,7 @@
 namespace Smart\Console\Commands;
 
 use Illuminate\Console\Command;
+use Smart\Auth\Database\AdminTableSeeder;
 use Smart\Models\SysUser;
 
 class InstallCommand extends Command
@@ -50,7 +51,7 @@ class InstallCommand extends Command
 
         $this->call('migrate');
         if( SysUser::count() == 0){
-            $this->call('db:seed' , [ '--class' => \AdminTableSeeder::class]);
+            $this->call('db:seed' , [ '--class' => AdminTableSeeder::class]);
         }
 
     }

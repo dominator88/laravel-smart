@@ -1,4 +1,5 @@
 <?php
+namespace Smart\Auth\Database;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
