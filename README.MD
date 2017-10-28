@@ -26,12 +26,38 @@
     
     `php artisan Smart:install`
 
-为权限认证添加 模块,并设置为当前模型作为用户模型
+为权限认证添加 模块,并设置为当前认证模型,  更改 confit/auth.php 文件
 
-        'admin' => [
+- 设置默认guard值
+
+      'defaults' => [
+                'guard' => 'admin',
+                'passwords' => 'users',
+      ],
+
+- 定义用户模型设置
+
+      'admin' => [
             'driver' => 'eloquent',
             'model' => Smart\Models\SysUser::class,
-        ]
+      ]
+      
+- guard添加 
+     
+      'guards' => [
+              'web' => [
+                  'driver' => 'session',
+                  'provider' => 'users',
+              ],
+              'admin' => [
+                  'driver' => 'session',
+                  'provider' => 'admin',
+              ],
+              'api' => [
+                  'driver' => 'token',
+                  'provider' => 'users',
+              ],
+          ],
 
 
 
