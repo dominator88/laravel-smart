@@ -30,36 +30,53 @@
 
 为权限认证添加 模块,并设置为当前认证模型,  更改 confit/auth.php 文件
 
-- 设置默认guard值
+    <?php
 
-      'defaults' => [
-                'guard' => 'admin',
-                'passwords' => 'users',
-      ],
+    return [
+    'defaults' => [
+        'guard' => 'admin',
+        'passwords' => 'users',
+    ],
+    'guards' => [
+            'web' => [
+                'driver' => 'session',
+                'provider' => 'users',
+            ],
+            'admin' => [
+                'driver' => 'session',
+                'provider' => 'admin',
+            ],
+    
+            'api' => [
+                'driver' => 'token',
+                'provider' => 'users',
+            ],
+        ],
+        'providers' => [
+                'users' => [
+                    'driver' => 'eloquent',
+                    'model' => App\Models\User::class,
+                ],
+                'admin' => [
+                    'driver' => 'eloquent',
+                    'model' => Smart\Models\SysUser::class,
+                ],
+        
+                // 'users' => [
+                //     'driver' => 'database',
+                //     'table' => 'users',
+                // ],
+            ],
+            'passwords' => [
+                    'users' => [
+                        'provider' => 'users',
+                        'table' => 'password_resets',
+                        'expire' => 60,
+                    ],
+                ],
+            
+            ];
 
-- 定义用户模型设置
-
-      'admin' => [
-            'driver' => 'eloquent',
-            'model' => Smart\Models\SysUser::class,
-      ]
-      
-- guard添加 
-     
-      'guards' => [
-              'web' => [
-                  'driver' => 'session',
-                  'provider' => 'users',
-              ],
-              'admin' => [
-                  'driver' => 'session',
-                  'provider' => 'admin',
-              ],
-              'api' => [
-                  'driver' => 'token',
-                  'provider' => 'users',
-              ],
-          ],
 
 
 
