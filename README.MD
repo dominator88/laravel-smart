@@ -16,6 +16,20 @@
 安装步骤
 --------
 
+- 设置composer.json,找到config元素配置地方更改为如下
+
+      "config": {
+              "preferred-install": "dist",
+              "sort-packages": true,
+              "optimize-autoloader": true
+       },"minimum-stability": "dev",
+          "repositories": {
+              "packagist": {
+                  "type": "composer",
+                  "url": "https://packagist.phpcomposer.com"
+           }
+       }
+
 - 首先安装好laravel,并且设置好数据库连接
 
     `composer require dominator88/laravel-smart:dev-master`
