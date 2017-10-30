@@ -17,7 +17,7 @@ define( 'PARAM_REQUIRED' , 'required' );
 define( 'PARAM_DIGIT' , 'digit' );
 define( 'PARAM_POSITIVE' , 'positive' );
 
-class apiservice {
+class ApiService {
 
     public $debug           = true;
     public $params          = [];
