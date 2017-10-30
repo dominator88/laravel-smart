@@ -390,9 +390,9 @@ class ApiService {
     public function logstat( $param ) {
         $data = [
             'device'            => $param['device'] ,
-            'device_os_version' => $param['deviceosversion'] ,
-            'app_version'       => $param['appversion'] ,
-            'api_version'       => $param['apiversion'] ,
+            'device_os_version' => $param['deviceOsVersion'] ,
+            'app_version'       => $param['appVersion'] ,
+            'api_version'       => $param['apiVersion'] ,
             'uri'               => request()->url( true ) ,
             'ip'                => request()->ip( 0 , true )
         ];
