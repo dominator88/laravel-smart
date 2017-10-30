@@ -32,6 +32,12 @@ class SmartServiceProvider extends ServiceProvider{
             chmod(app_path('Http/Controllers/Api/Service') , 0777);
         }
 
+        //service
+        $this->publishes([ __DIR__.'/../resources/Service' => app_path('Service')] , 'backend');
+
+        //Models
+        $this->publishes([ __DIR__.'/../resources/Models' => app_path('Models')] , 'backend');
+
         $this->publishes([ __DIR__.'/../resources/Api' => app_path('Http/Controllers/Api')] , 'backend');
 
         $this->publishes([ __DIR__.'/../resources/assets/static/' => public_path('static')] , 'backend');
