@@ -40,6 +40,8 @@
         
     `php artisan make:auth`
     
+    配置 config/backend.php,这里可以设置初始化超级管理员帐户,也可使用默认默认(不作 修改),在后面会提到默认配置的帐户名密码
+    
     `php artisan smart:install`
 
 为权限认证添加 模块,并设置为当前认证模型,  更改 confit/auth.php 文件
@@ -101,7 +103,7 @@
 
 >邮箱：admin@admin.com
 
-超级管理员帐户密码可以在 config/backend.php 进行配置。
+
 
 从项目根目录进入 public 目录，执行命令：
 
