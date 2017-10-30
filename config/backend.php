@@ -22,6 +22,8 @@ return [
 
     'areaCachePrefix' => 'backend_area',
 
+    'secret'        => 'laravel-smart-secret',
+
     'JPush'      => [
         'appKey' => 'xxx' ,
         'secret' => 'xxx' ,
