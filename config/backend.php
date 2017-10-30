@@ -24,7 +24,7 @@ return [
 
     'secret'        => 'laravel-smart-secret',
 
-    'timegap'   => 300,
+    'timeGap'   => 300,
 
     'JPush'      => [
         'appKey' => 'xxx' ,

@@ -19,15 +19,15 @@ define( 'PARAM_POSITIVE' , 'positive' );
 
 class ApiService {
 
-    public $debug           = true;
+    public $debug           = TRUE;
     public $params          = [];
-    public $defaultparams   = [];
-    public $defaultresponse = [];
-    public $userid          = '';
+    public $defaultParams   = [];
+    public $defaultResponse = [];
+    public $userId          = '';
     public $behalf          = '';
-    public $merid           = '';
+    public $merId           = '';
     public $error           = '';
-    public $errcode         = 500;
+    public $errCode         = 500;
 
     public $token = '';
 
@@ -57,7 +57,7 @@ class ApiService {
 
 
     public static function instance() {
-        if ( self::$instance == null ) {
+        if ( self::$instance == NULL ) {
             self::$instance = new ApiService();
         }
         return self::$instance;
@@ -65,22 +65,22 @@ class ApiService {
 
 
 
-    public function geterror( $code ) {
+    public function getError( $code ) {
         return api_result( $this->code[ $code ] , $code );
     }
 
     /**
      * 数据签名
      *
-     * @param $inputarr
+     * @param $inputArr
      *
      * @return string
      */
-    public function signature( $inputarr ) {
-        ksort( $inputarr );
+    public function signature( $inputArr ) {
+        ksort( $inputArr );
 
         $new_arr = [];
-        foreach ( $inputarr as $key => $val ) {
+        foreach ( $inputArr as $key => $val ) {
             $val = htmlspecialchars_decode( $val );
             if ( is_array( $val ) ) {
                 $val = json_encode( $val , JSON_UNESCAPED_UNICODE );
@@ -91,7 +91,7 @@ class ApiService {
 
         $signature = implode( '&' , $new_arr ) . '&secret=' . config( 'backend.secret' );
 
-        $this->log( '签名:' , $inputarr );
+        $this->log( '签名:' , $inputArr );
 
         return md5( $signature );
     }
@@ -99,25 +99,25 @@ class ApiService {
     /**
      * 校验签名
      *
-     * @param $metadata
+     * @param $metaData
      * @param $signature
      *
      * @return bool
      */
-    public function validsignature( $metadata , $signature ) {
+    public function validSignature( $metaData , $signature ) {
 
         if ( empty( $signature ) ) {
-            return false;
+            return FALSE;
         }
 
-        if ( isset( $metadata['file_data'] ) ) {
-            unset( $metadata['file_data'] );
+        if ( isset( $metaData['file_data'] ) ) {
+            unset( $metaData['file_data'] );
         }
 
-        $newsignature = $this->signature( $metadata );
-        $this->log( 'server signature' , $newsignature );
+        $newSignature = $this->signature( $metaData );
+        $this->log( 'server signature' , $newSignature );
 
-        return $signature == $newsignature;
+        return $signature == $newSignature;
     }
 
     /**
@@ -127,15 +127,15 @@ class ApiService {
      *
      * @return bool
      */
-    public function validtimestamp( $timestamp ) {
+    public function validTimestamp( $timestamp ) {
         $this->log( 'server time' , time() );
         $this->log( 'client time' , $timestamp );
         $this->log( 'time_diff' , abs( time() - $timestamp ) );
         if ( empty( $timestamp ) ) {
-            return false;
+            return FALSE;
         }
 
-        return abs( time() - $timestamp ) < config( 'backend.timegap' );
+        return abs( time() - $timestamp ) < config( 'backend.timeGap' );
     }
 
     /**
@@ -143,60 +143,60 @@ class ApiService {
      *
      * @return mixed
      */
-    public function validtoken() {
-        $this->token = resolve( tokenservice::class );
-        $this->userid = '';
+    public function validToken() {
+        $this->token = resolve( TokenService::class );
+        $this->userId = '';
         $this->error  = 500;
 
         if ( ! isset( $this->params['token'] ) || empty( $this->params['token'] ) ) {
             //参数错误
             $this->error = '请填写token';
 
-            return false;
+            return FALSE;
         } else {
 
-            $memberdata = $this->token->getbytoken($this->params['token']);
+            $MemberData = $this->token->getByToken($this->params['token']);
 
-            //   $this->log('用户数据',implode(',',$memberdata));
-            /* $meruserdevice = meruserdeviceservice::instance();
-             $devicedata    = $meruserdevice->getbytoken( $this->params['token'] );*/
-            //$devicedata    = $meruserdevice->getbytoken( $this->params['token'], $this->params['device'] );
+            //   $this->log('用户数据',implode(',',$MemberData));
+            /* $MerUserDevice = MerUserDeviceService::instance();
+             $deviceData    = $MerUserDevice->getByToken( $this->params['token'] );*/
+            //$deviceData    = $MerUserDevice->getByToken( $this->params['token'], $this->params['device'] );
 
-            if ( empty( $memberdata ) ) {
+            if ( empty( $MemberData ) ) {
                 //数据未找到
                 $this->error   = '认证失败';
-                $this->errcode = 403;
+                $this->errCode = 403;
 
-                return false;
+                return FALSE;
             }
 
-            $this->userid = $memberdata->id;
+            $this->userId = $MemberData->id;
 
-            return true;
+            return TRUE;
         }
     }
 
     /**
      * 验证单个参数
      *
-     * @param $paramname
+     * @param $paramName
      * @param string $rule
      *
      * @return bool
      */
-//	public function validparam( $paramname, $rule = param_required ) {
+//	public function validParam( $paramName, $rule = PARAM_REQUIRED ) {
 //		$this->error   = '';
-//		$this->errcode = 500;
+//		$this->errCode = 500;
 //		switch ( $rule ) {
-//			case  param_required :
-//				if ( empty( trim( $this->requestparams[ $paramname ] ) ) ) {
-//					$this->error = "$paramname 不能为空";
+//			case  PARAM_REQUIRED :
+//				if ( empty( trim( $this->requestParams[ $paramName ] ) ) ) {
+//					$this->error = "$paramName 不能为空";
 //
-//					return false;
+//					return FALSE;
 //				}
 //		}
 //
-//		return true;
+//		return TRUE;
 //	}
 
     /**
@@ -204,9 +204,9 @@ class ApiService {
      *
      * @return bool
      */
-    public function validparams() {
+    public function validParams() {
         $method = strtolower( request()->method() );
-        foreach ( $this->defaultparams[ $method ] as $key => $defined ) {
+        foreach ( $this->defaultParams[ $method ] as $key => $defined ) {
             //如果是非必填参数 则赋值为 默认值,以避免程序错误
             if ( ! isset( $defined[2] ) ) {
                 //检查是否填写必填参数
@@ -216,7 +216,7 @@ class ApiService {
                     } else {
                         $this->error = "请填写 $key ";
 
-                        return false;
+                        return FALSE;
                     }
                 }
                 continue;
@@ -234,7 +234,7 @@ class ApiService {
                 } else {
                     $this->error = "请填写 $key ";
 
-                    return false;
+                    return FALSE;
                 }
             }
             $value = trim( $this->params[ $key ] );
@@ -244,7 +244,7 @@ class ApiService {
                 if ( ! isset( $rule[ $value ] ) ) {
                     $this->error = "请填写正确的 $key ";
 
-                    return false;
+                    return FALSE;
                 }
             } else {
                 switch ( $rule ) {
@@ -253,10 +253,10 @@ class ApiService {
                         if ( $value === '' && empty( $value ) ) {
                             $this->error = "请填写 $key ";
 
-                            return false;
+                            return FALSE;
                         }
-                        if ( $key == 'merid' ) {
-                            $this->merid = $value;
+                        if ( $key == 'merId' ) {
+                            $this->merId = $value;
                         }
                         break;
                     case PARAM_DIGIT:
@@ -264,7 +264,7 @@ class ApiService {
                         if ( ! is_numeric( $value ) ) {
                             $this->error = " $key 不是是数字";
 
-                            return false;
+                            return FALSE;
                         }
                         break;
                     case PARAM_POSITIVE :
@@ -272,82 +272,82 @@ class ApiService {
                         if ( ! is_numeric( $value ) || $value <= 0 ) {
                             $this->error = " $key 必须大于0";
 
-                            return false;
+                            return FALSE;
                         }
                         break;
                 }
             }
         }
 
-        return true;
+        return TRUE;
     }
 
     /**
      * 格式化数据
      *
      * @param $data
-     * @param $defaultresponse
+     * @param $defaultResponse
      *
      * @return array
      */
-    public function formatdata( $data , $defaultresponse = [] ) {
+    public function formatData( $data , $defaultResponse = [] ) {
         if ( empty( $data ) ) {
             return [];
         }
 
-        if ( empty( $defaultresponse ) ) {
+        if ( empty( $defaultResponse ) ) {
             $method          = strtolower( request()->method() );
-            $defaultresponse = $this->defaultresponse[ $method ];
+            $defaultResponse = $this->defaultResponse[ $method ];
         }
 
-        if ( empty( $defaultresponse ) ) {
+        if ( empty( $defaultResponse ) ) {
             return $data;
         }
 
-        $newdata = [];
+        $newData = [];
         if ( isset( $data[0] ) ) {
             foreach ( $data as $item ) {
-                $newdata[] = $this->formatdataforrow( $defaultresponse , $item );
+                $newData[] = $this->formatDataForRow( $defaultResponse , $item );
             }
         } else {
-            $newdata = $this->formatdataforrow( $defaultresponse , $data );
+            $newData = $this->formatDataForRow( $defaultResponse , $data );
         }
 
-        return $newdata;
+        return $newData;
     }
 
     /**
      * 格式化一行数据
      *
-     * @param $defaultresponse
+     * @param $defaultResponse
      * @param $data
      *
      * @return array
      */
-    private function formatdataforrow( $defaultresponse , $data ) {
-        $newdata = [];
-        foreach ( $defaultresponse as $key => $defined ) {
+    private function formatDataForRow( $defaultResponse , $data ) {
+        $newData = [];
+        foreach ( $defaultResponse as $key => $defined ) {
             if ( isset( $data[ $key ] ) && is_array( $data[ $key ] ) ) {
                 foreach ( $data[ $key ] as $k => $row ) {
-                    $newdata[ $key ][ $k ] = $this->formatdataforrow( $defined , $row );
+                    $newData[ $key ][ $k ] = $this->formatDataForRow( $defined , $row );
                 }
             } else {
                 if ( is_array( $defined ) && isset( $defined[1] ) && method_exists( $this , $defined[1] ) ) {
                     $formatter       = $defined[1];
                     $value           = isset( $data[ $key ] ) ? $data[ $key ] : '';
-                    $newdata[ $key ] = $this->$formatter( $value , $data );
+                    $newData[ $key ] = $this->$formatter( $value , $data );
                 } else {
-                    $newdata[ $key ] = isset( $data[ $key ] ) ? $data[ $key ] : '';
+                    $newData[ $key ] = isset( $data[ $key ] ) ? $data[ $key ] : '';
                 }
             }
         }
 
-        return $newdata;
+        return $newData;
     }
 
     //格式化 图标
-    public function formaticon( $value , $row = [] ) {
-        if ( filter_var( $value , FILTER_VALIDATE_URL  , FILTER_FLAG_SCHEME_REQUIRED ) ) {
+    public function formatIcon( $value , $row = [] ) {
+        if ( filter_var( $value , FILTER_VALIDATE_URL , FILTER_FLAG_SCHEME_REQUIRED ) ) {
             return $value;
         }
 
@@ -355,7 +355,7 @@ class ApiService {
     }
 
     //格式化 手机号
-    public function formatphone( $value , $row = [] ) {
+    public function formatPhone( $value , $row = [] ) {
         return substr_replace( $value , '****' , 3 , 4 );
     }
 
@@ -370,31 +370,30 @@ class ApiService {
             return;
         }
 
-        $filename = './logs/api_log_' . date( 'y_m_d' ) . '.txt';
+        $filename = './logs/api_log_' . date( 'Y_m_d' ) . '.txt';
 
         if ( ! file_exists( $filename ) ) {
-            if( ! file_exists($filename)){ mkdir( dirname($filename));}
             file_put_contents( $filename , '' );
             chmod( $filename , 0777 );
         }
 
-        $value = is_array( $value ) ? print_r( $value , true ) : $value;
+        $value = is_array( $value ) ? print_r( $value , TRUE ) : $value;
 
-        $text = "----------" . date( 'y-m-d h:i:s' ) . " 开始----------\r\n";
+        $text = "----------" . date( 'Y-m-d H:i:s' ) . " 开始----------\r\n";
         $text .= " $key = $value  \r\n";
         // $text .= "----------结束----------\r\n" ;
 
         file_put_contents( $filename , $text , FILE_APPEND );
     }
 
-    public function logstat( $param ) {
+    public function logStat( $param ) {
         $data = [
             'device'            => $param['device'] ,
             'device_os_version' => $param['deviceOsVersion'] ,
             'app_version'       => $param['appVersion'] ,
             'api_version'       => $param['apiVersion'] ,
-            'uri'               => request()->url( true ) ,
-            'ip'                => request()->ip( 0 , true )
+            'uri'               => request()->url( TRUE ) ,
+            'ip'                => request()->ip( 0 , TRUE )
         ];
 
         DB::table( 'sys_api_log' )->insert( $data );
