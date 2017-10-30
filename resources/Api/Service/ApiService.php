@@ -83,7 +83,7 @@ class ApiService {
         foreach ( $inputarr as $key => $val ) {
             $val = htmlspecialchars_decode( $val );
             if ( is_array( $val ) ) {
-                $val = json_encode( $val , json_unescaped_unicode );
+                $val = json_encode( $val , JSON_UNESCAPED_UNICODE );
             }
             $new_arr[] = "$key=$val";
             //  echo "$key=$val <br/>";
@@ -248,7 +248,7 @@ class ApiService {
                 }
             } else {
                 switch ( $rule ) {
-                    case param_required :
+                    case PARAM_REQUIRED :
                         //判断必填
                         if ( $value === '' && empty( $value ) ) {
                             $this->error = "请填写 $key ";
@@ -259,7 +259,7 @@ class ApiService {
                             $this->merid = $value;
                         }
                         break;
-                    case param_digit:
+                    case PARAM_DIGIT:
                         //判断是数字
                         if ( ! is_numeric( $value ) ) {
                             $this->error = " $key 不是是数字";
@@ -267,7 +267,7 @@ class ApiService {
                             return false;
                         }
                         break;
-                    case param_positive :
+                    case PARAM_POSITIVE :
                         //判断是否是正数
                         if ( ! is_numeric( $value ) || $value <= 0 ) {
                             $this->error = " $key 必须大于0";
@@ -347,7 +347,7 @@ class ApiService {
 
     //格式化 图标
     public function formaticon( $value , $row = [] ) {
-        if ( filter_var( $value , filter_validate_url , filter_flag_scheme_required ) ) {
+        if ( filter_var( $value , FILTER_VALIDATE_URL  , FILTER_FLAG_SCHEME_REQUIRED ) ) {
             return $value;
         }
 
@@ -384,7 +384,7 @@ class ApiService {
         $text .= " $key = $value  \r\n";
         // $text .= "----------结束----------\r\n" ;
 
-        file_put_contents( $filename , $text , file_append );
+        file_put_contents( $filename , $text , FILE_APPEND );
     }
 
     public function logstat( $param ) {
