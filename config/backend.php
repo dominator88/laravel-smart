@@ -10,7 +10,7 @@ return [
 
     'sessionName' => 'backend_session',
 
-    'directory' => ['Http/Controllers/Api' , 'Http/Controllers/backend' , 'Http/Controllers/mp'],
+    'directory' => ['Http/Controllers/Api' , 'Http/Controllers/backend' , 'Http/Controllers/mp' , 'Service' , 'Models'],
 
     'superAdminId' => 1,
 
