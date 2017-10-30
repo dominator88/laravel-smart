@@ -397,7 +397,7 @@ class ApiService {
             'ip'                => request()->ip( 0 , true )
         ];
 
-        db::table( 'sys_api_log' )->insert( $data );
+        DB::table( 'sys_api_log' )->insert( $data );
     }
 
     protected  function statistics($data){
