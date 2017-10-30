@@ -40,7 +40,7 @@
         
     `php artisan make:auth`
     
-    `php artisan Smart:install`
+    `php artisan smart:install`
 
 为权限认证添加 模块,并设置为当前认证模型,  更改 confit/auth.php 文件
 
@@ -91,7 +91,23 @@
             
             ];
 
+### 如此便可以进行访问：
 
+>后台地址: http:// sitename /backend/index/index
+
+>帐户名: sys_admin
+
+>密码 123123
+
+>邮箱：admin@admin.com
+
+超级管理员帐户密码可以在 config/backend.php 进行配置。
+
+从项目根目录进入 public 目录，执行命令：
+
+  `npm update`
+  
+不知道 npm 如何安装的可以在搜索引擎上查找。
 
 
 ### 接口说明
@@ -189,6 +205,8 @@
       var signatureString = merId=1&timestamp=1476340001&token=103ed1d0811212312&secret=smart2_api_secret
 
 - md5 signatureString 得到签名
+
+
 
 
 
