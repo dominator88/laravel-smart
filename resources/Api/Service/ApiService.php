@@ -58,7 +58,7 @@ class ApiService {
 
     public static function instance() {
         if ( self::$instance == null ) {
-            self::$instance = new apiservice();
+            self::$instance = new ApiService();
         }
         return self::$instance;
     }
