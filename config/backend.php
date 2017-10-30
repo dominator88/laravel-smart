@@ -6,7 +6,7 @@
  * Time: 11:07
  */
 return [
-    'baseUri' => 'http://laravel.local.com/',
+    'baseUri' => 'http://laravel-packages.local.com/',
 
     'sessionName' => 'backend_session',
 
