@@ -42,6 +42,7 @@ class UninstallCommand extends Command
         }
 
         array_map(function($file){
+            $this->call('migrate:rollback');
             $this->laravel['files']->deleteDirectory(app_path($file));
         } , config('backend.directory'));
 
