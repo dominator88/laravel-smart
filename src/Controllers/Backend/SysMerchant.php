@@ -116,7 +116,7 @@ class SysMerchant extends Backend {
         $this->_addJsLib( 'static/js/backend/SysMerchantDetail.js' );
         $this->_addJsCode( 'SysMerchantDetail.init()' );
 
-        return $this->_displayWithLayout( 'sysmerchant.detail' );
+        return $this->_displayWithLayout( 'backend::sysmerchant.detail' );
     }
 
 

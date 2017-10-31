@@ -109,6 +109,8 @@
 
   `npm update`
   
+在此请注意 需要将 config/backend.php 里 baseUri 更改为当前域名 , 否则页面会出现样式错乱 
+  
 不知道 npm 如何安装的可以在搜索引擎上查找。
 
 
