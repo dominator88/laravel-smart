@@ -111,7 +111,7 @@ class MerRole extends Backend {
             'withPrivilege' => TRUE,
         ] );
 
-        return view('merrole.permission')->with($data);
+        return view('backend::merrole.permission')->with($data);
     }
 
     function get_privilegeData(Request $request){
