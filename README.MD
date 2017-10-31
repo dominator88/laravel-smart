@@ -99,7 +99,7 @@
 
 >帐户名: sys_admin
 
->密码 123123
+>密码: 123123
 
 >邮箱：admin@admin.com
 

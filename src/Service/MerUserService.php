@@ -184,6 +184,8 @@ class MerUserService extends BaseService {
 
             return FALSE;
         }
+
+
         $param = [
             'excludeId' => $excludeId ,
             'phone'     => $phone ,
@@ -194,7 +196,7 @@ class MerUserService extends BaseService {
             $param['merId'] = $merId;
         }
 
-        if ( $this->getByCond( $param ) > 0 ) {
+        if ( $this->getByCond( $param ) > 0  && empty($excludeId)) {
             $this->error = '手机号已经被注册了';
 
             return FALSE;
@@ -217,6 +219,7 @@ class MerUserService extends BaseService {
             return TRUE;
         }
 
+
         $param = [
             'excludeId' => $excludeId ,
             'nickname'  => $nickname ,
@@ -227,7 +230,7 @@ class MerUserService extends BaseService {
             $param['merId'] = $merId;
         }
 
-        if ( $this->getByCond( $param ) > 0 ) {
+        if ( $this->getByCond( $param ) > 0 && empty($excludeId)) {
             $this->error = '昵称已经被注册了';
 
             return FALSE;
@@ -282,7 +285,7 @@ class MerUserService extends BaseService {
         }
 
         $count = $this->getByCond( $param );
-        if ( $count > 0 ) {
+        if ( $count > 0 && empty($excludeId)) {
             $this->error = 'Email已经被占用了';
 
             return FALSE;
@@ -554,12 +557,15 @@ class MerUserService extends BaseService {
      * @return array
      */
     public function update( $id , $data ) {
-        //检查phone
-        if ( isset( $data['phone'] ) &&
-            ! $this->checkPhoneUnique( $data['phone'] , $data['mer_id'] , $id )
-        ) {
-            return ajax_arr( $this->error , 500 );
-        }
+
+
+            //检查phone
+            if ( isset( $data['phone'] ) &&
+                ! $this->checkPhoneUnique( $data['phone'] , $data['mer_id'] , $id )
+            ) {
+                return ajax_arr( $this->error , 500 );
+            }
+
 
         if ( isset( $data['nickname'] ) && empty( $data['nickname'] ) ) {
             $data['nickname'] = $data['username'];
