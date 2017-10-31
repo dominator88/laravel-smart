@@ -142,7 +142,7 @@ class Simulator extends Backend {
         $this->data['jsCode'][]   = 'SimulatorReadme.init()';
 
 
-        return $this->_displayWithLayout( 'readme' );
+        return $this->_displayWithLayout( 'backend::readme' );
     }
 
 }
