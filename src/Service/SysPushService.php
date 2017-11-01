@@ -9,7 +9,9 @@
 
 
 use Smart\Models\SysPush;
-use JPush\Client as JPush;
+
+
+use JPush;
 
 
 
