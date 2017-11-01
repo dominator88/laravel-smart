@@ -10,7 +10,10 @@ namespace Smart;
 
 use App\Service\MerTokenService;
 use Illuminate\Support\ServiceProvider;
+
 use Smart\Interfaces\TokenService;
+
+use Illuminate\Mail\Mailer;
 
 class SmartServiceProvider extends ServiceProvider{
 
@@ -45,6 +48,8 @@ class SmartServiceProvider extends ServiceProvider{
         $this->publishes([ __DIR__.'/../database/migrations/' => database_path( 'migrations')] , 'backend-migrations');
 
         $this->publishes([ __DIR__.'/../resources/npm/' => public_path()] , 'backend');
+
+
 
     }
 

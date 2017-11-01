@@ -9,8 +9,10 @@
 namespace Smart\Service;
 
 
+use Illuminate\Support\Facades\Mail;
 use Smart\Models\SysMail;
-use PHPMailer\PHPMailer\PHPMailer;
+
+use App\Mail\Captcha;
 
 class SysMailService extends BaseService {
 
@@ -134,15 +136,15 @@ class SysMailService extends BaseService {
      *
      * @return PHPMailer
      */
-    private function makeMail( $type = 'captcha' ) {
-        $mail = new PHPMailer;
+    /*private function makeMail( $type = 'captcha' ) {
+
 
         //$mail->SMTPDebug = 3;                               // Enable verbose debug output
         $from         = $this->type2mail[ $type ];
-        $mailConfig   = config( 'custom.mail' );
+        $mailConfig   = config( 'mail' );
         $memberConfig = $mailConfig[ $from ];
 
-        $mail->isSMTP();  // Set mailer to use SMTP
+        /*$mail->isSMTP();  // Set mailer to use SMTP
         $mail->Host       = $mailConfig['smtp'];  // Specify main and backup SMTP servers
         $mail->SMTPAuth   = TRUE;                 // Enable SMTP authentication
         $mail->Username   = $memberConfig['username'];  // SMTP username
@@ -154,7 +156,7 @@ class SysMailService extends BaseService {
         $mail->isHTML( TRUE );  // Set email format to HTML
 
         return $mail;
-    }
+    }*/
 
     /**
      * 发送验证码
@@ -170,9 +172,10 @@ class SysMailService extends BaseService {
                 return ajax_arr( '请填写正确的email' . $address , 500 );
             }
 
+
             $data = [
                 'address' => $address ,
-                'subject' => '来自' . config( 'custom.projectName' ) . '的验证码' ,
+                'subject' => '来自' . config( 'backend.projectName' ) . '的验证码' ,
                 'captcha' => $this->getCaptcha() ,
             ];
 
@@ -187,17 +190,21 @@ class SysMailService extends BaseService {
             $id      = $data['id'];
         }
 
-        $mail = $this->makeMail( 'captcha' );
+      /*  $mail = $this->makeMail( 'captcha' );
         $mail->addAddress( $address );     // Add a recipient
-        $mail->Subject = $data['subject'];
-        $mail->Body    = "验证码为 <b>" . $data['captcha'] . "</b> 请于10分钟内验证";
+        $mail->Subject = $data['subject'];*/
+
+
+        $captcha = new Captcha($data['subject']);
+        $captcha->captcha =  $data['captcha'] ;
+         Mail::send($captcha);
 
         //保存验证码到 数据库
-        if ( ! $mail->send() ) {
+        /*if ( ! $mail->send() ) {
             $this->setError( $mail->ErrorInfo );
 
             return ajax_arr( '发送失败'.$data['captcha'] , 500 );
-        }
+        }*/
         //修改状态
         $this->setMailSent( $id );
 
