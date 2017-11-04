@@ -21,7 +21,7 @@ class MerGoodsCatalog extends Backend {
     public function __construct(Request $request) {
         parent::__construct($request);
         $this->_initClassName( $this->controller );
-        $this->service = MerGoodsCatalogService::instance();
+        $this->service = $this->serviceManager->make( MerGoodsCatalogService::class);
     }
 
     //页面入口

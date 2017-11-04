@@ -25,10 +25,10 @@ class Simulator extends Backend {
     /**
      * Simulator constructor.
      */
-    public function __construct(Request $request) {
+    public function __construct(Request $request ) {
         parent::__construct($request);
         $this->_initClassName( $this->controller );
-        $this->service = SimulatorService::instance();
+        $this->service = $this->serviceManager->make( SimulatorService::class);
         $this->apiVersion = config('backend.api.apiVersion');
     }
 
@@ -67,9 +67,10 @@ class Simulator extends Backend {
 
     //读取结果
     function read_api() {
-        $Simulator = SimulatorService::instance();
 
-        $ret = $Simulator->readApi( $this->apiVersion );
+     //   $Simulator = SimulatorService::instance();
+
+        $ret = $this->service->readApi( $this->apiVersion );
 
         return json( $ret );
     }

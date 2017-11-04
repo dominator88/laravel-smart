@@ -20,7 +20,7 @@ class SysMail extends Backend {
     public function __construct(Request $request) {
         parent::__construct($request);
         $this->_initClassName( $this->controller );
-        $this->service = SysMailService::instance();
+        $this->service = $this->serviceManager->make( SysMailService::class);
     }
 
     //页面入口

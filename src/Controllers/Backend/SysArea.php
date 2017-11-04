@@ -9,6 +9,7 @@ namespace Smart\Controllers\Backend;
 
 
 use Smart\Service\SysAreaService;
+use Smart\Service\ServiceManager;
 use Illuminate\Http\Request;
 
 class SysArea extends Backend {
@@ -19,7 +20,7 @@ class SysArea extends Backend {
     public function __construct(Request $request) {
         parent::__construct($request);
         $this->_initClassName( $this->controller );
-        $this->service = SysAreaService::instance();
+        $this->service = $this->serviceManager->make( SysAreaService::class);
     }
 
     //页面入口

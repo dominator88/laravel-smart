@@ -21,7 +21,7 @@ class SysPush extends Backend {
     public function __construct(Request $request ) {
         parent::__construct($request);
         $this->_initClassName( $this->controller );
-        $this->service = SysPushService::instance();
+        $this->service = $this->serviceManager->make( SysPushService::class);
     }
 
     //页面入口

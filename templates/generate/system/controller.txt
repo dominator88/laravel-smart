@@ -19,7 +19,7 @@ class {func} extends {module} {
 	public function __construct(Request $request) {
 		parent::__construct($request);
 		$this->_initClassName( $this->controller );
-		$this->service = {func}Service::instance();
+		$this->service = $this->serviceManager->make( {func}Service::class);
 	}
 
 	//页面入口

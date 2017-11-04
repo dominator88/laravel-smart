@@ -18,7 +18,7 @@ class SysMerchant extends Backend {
     public function __construct(Request $request) {
         parent::__construct($request);
         $this->_initClassName( $this->controller );
-        $this->service = SysMerchantService::instance();
+        $this->service = $this->serviceManager->make( SysMerchantService::class);
     }
 
     //页面入口

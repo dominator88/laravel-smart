@@ -18,8 +18,7 @@ class SysFunc extends Backend{
     {
         parent::__construct($request);
         $this->_initClassName( $this->controller );
-
-        $this->service = SysFuncService::instance();
+        $this->service = $this->serviceManager->make( SysFuncService::class);
     }
 
     public function index(Request $request){

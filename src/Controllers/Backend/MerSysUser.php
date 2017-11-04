@@ -22,7 +22,7 @@ class MerSysUser extends Backend {
     public function __construct(Request  $request) {
         parent::__construct($request);
         $this->_initClassName( $this->controller );
-        $this->service = SysUserService::instance();
+        $this->service = $this->serviceManager->make( SysUserService::class);
     }
 
     /**

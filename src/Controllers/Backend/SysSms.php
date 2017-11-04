@@ -20,7 +20,7 @@ class SysSms extends Backend {
     public function __construct(Request  $request) {
         parent::__construct($request);
         $this->_initClassName( $this->controller );
-        $this->service = SysSmsService::instance();
+        $this->service = $this->serviceManager->make( SysSmsService::class);
     }
 
     //页面入口

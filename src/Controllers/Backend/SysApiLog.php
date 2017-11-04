@@ -8,6 +8,7 @@
 
 
 use Illuminate\Http\Request;
+use Smart\Service\ServiceManager;
 use Smart\Service\SysApiLogService;
 
 class SysApiLog extends Backend {
@@ -18,7 +19,7 @@ class SysApiLog extends Backend {
 	public function __construct(Request $request) {
 		parent::__construct($request);
 		$this->_initClassName( $this->controller );
-		$this->service = SysApiLogService::instance();
+        $this->service = $this->serviceManager->make( SysApiLogService::class);
 	}
 
 	//页面入口

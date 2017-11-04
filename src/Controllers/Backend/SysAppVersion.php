@@ -9,6 +9,7 @@
 namespace Smart\Controllers\Backend;
 
 use Smart\Service\SysAppVersionService;
+use Smart\Service\ServiceManager;
 use Illuminate\Http\Request;
 
 
@@ -20,7 +21,7 @@ class SysAppVersion extends Backend {
     public function __construct(Request  $request) {
         parent::__construct($request);
         $this->_initClassName( $this->controller );
-        $this->service = SysAppVersionService::instance();
+        $this->service = $this->serviceManager->make( SysAppVersionService::class);
     }
 
     //页面入口

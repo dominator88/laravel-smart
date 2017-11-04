@@ -14,6 +14,7 @@ use Illuminate\Support\ServiceProvider;
 use Smart\Interfaces\TokenService;
 
 use Illuminate\Mail\Mailer;
+use Smart\Service\ServiceManager;
 
 class SmartServiceProvider extends ServiceProvider{
 
@@ -56,6 +57,10 @@ class SmartServiceProvider extends ServiceProvider{
     public function register(){
         $this->app->singleton( TokenService::class , function($app){
             return new MerTokenService();
+        });
+
+        $this->app->singleton( ServiceManager::class ,function($app){
+            return new ServiceManager();
         });
 
         $this->mergeConfigFrom( __DIR__.'/../config/backend.php' ,'backend' );
