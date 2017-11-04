@@ -36,4 +36,8 @@ return [
     'sms' => [
         'name' => 'alidayu',
     ],
+
+    'api' => [
+        'apiVersion' => 'v1',
+    ],
 ];

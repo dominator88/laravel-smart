@@ -41,7 +41,7 @@ class InstallCommand extends Command
     {
         $this->initData();
         //
-        $this->info('laravel-smart 安装成功!');
+        $this->info('laravel-smart install success!');
     }
 
     /**

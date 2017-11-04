@@ -29,6 +29,7 @@ class Simulator extends Backend {
         parent::__construct($request);
         $this->_initClassName( $this->controller );
         $this->service = SimulatorService::instance();
+        $this->apiVersion = config('backend.api.apiVersion');
     }
 
     //页面入口
