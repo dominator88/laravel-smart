@@ -44,8 +44,12 @@
 
             "laravel":{
                 "providers": [
-                    "Smart\\SmartServiceProvider"
-                ]
+                    "Smart\\SmartServiceProvider",
+                    "Intervention\\Image\\ImageServiceProvider"
+                ],
+                "aliases": {
+                    "Image": "Intervention\\Image\\Facades\\Image"
+                }
 
             }
 
