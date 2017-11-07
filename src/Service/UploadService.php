@@ -176,8 +176,7 @@ class UploadService {
         if ( $this->param['type'] == 'img' ) {
             $checkRet = $this->checkCropThumb();
             if ( ! $checkRet ) {
-                unlink( $this->relativePath );
-
+                Storage::delete($this->relativePath);
                 return $this->returnError();
             }
 
@@ -264,7 +263,7 @@ class UploadService {
 
             $this->result['width']  = $this->param['width'];
             $this->result['height'] = $this->param['height'];
-            unlink( $cropPath );
+            Storage::delete($cropPath);
         } else {
             //检查图片尺寸
             if ( $this->param['width'] > 0 && $this->result['width'] != $this->param['width'] ) {
@@ -311,18 +310,13 @@ class UploadService {
      */
     private function uploadToFtp() {
 
-        if ( config( 'custom.uploadType' ) == 'ftp' ) {
-            $ftp = new FtpService( config( 'custom.ftp' ) );
+        if ( config( 'backend.image.uploadType' ) == 'ftp' ) {
             foreach ( $this->uploadFtpList as $file ) {
-                if ( $ftp->put( $file, $file ) ) {
-                    unlink( $file );
-                } else {
-                    $this->setError( $ftp->get_error() );
-
-                    return FALSE;
+                if ( Storage::store( $file, 'ftp' ) ) {
+                    Storage::delete($file);
                 }
             }
-            $ftp->close();
+
         }
 
         return TRUE;
