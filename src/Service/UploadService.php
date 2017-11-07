@@ -255,9 +255,12 @@ class UploadService {
             $pathInfo = pathinfo( $this->fileInfo );
             $cropPath = dirname(Storage::path($this->fileInfo))."crop_{$pathInfo['basename']}";
 
+            //裁剪图片
             $crop = explode( ',', $this->param['crop'] );
 
-            $image->resize( $this->result['width'] , $this->result['height'])->save($cropPath );
+            $image->crop( $crop[2], $crop[3], $crop[0], $crop[1])->save($cropPath );
+
+            Image::make($cropPath)->resize($this->param['width'] , $this->param['height'])->save( Storage::path($this->fileInfo));
 
             $this->result['width']  = $this->param['width'];
             $this->result['height'] = $this->param['height'];
