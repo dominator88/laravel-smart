@@ -8,6 +8,8 @@
 return [
     'baseUri' => '/',
 
+    'projectName' => 'laravel-smart',
+
     'sessionName' => 'backend_session',
 
     'directory' => ['Http/Controllers/Api' , 'Http/Controllers/backend' , 'Http/Controllers/mp' , 'Service' , 'Models'],

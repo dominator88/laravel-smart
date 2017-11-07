@@ -258,8 +258,6 @@ class UploadService {
             $crop = explode( ',', $this->param['crop'] );
 
             $image->resize( $this->result['width'] , $this->result['height'])->save($cropPath );
-            $cropImage = Image::make( $cropPath );
-
 
             $this->result['width']  = $this->param['width'];
             $this->result['height'] = $this->param['height'];
