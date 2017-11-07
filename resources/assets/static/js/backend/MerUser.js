@@ -176,7 +176,7 @@ var MerUser = {
 			onSuccess : function (ret) {
 				tips.success(ret.msg);
 				if ( ret.code == 0 ) {
-					setImgPreview.set('icon' , ret.data.savePath);
+					setImgPreview.set('icon' , ret.data.uri);
 				}
 			} ,
 			onChooseAlbum : function (uri) {

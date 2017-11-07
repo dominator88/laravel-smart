@@ -217,6 +217,12 @@ Route::group(['prefix'=>'backend/meruser','namespace'=>'Smart\Controllers\Backen
 
     Route::get('reset_pwd/{id}' , 'MerUser@reset_pwd');
 
+    Route::get('read_album_catalog' ,   'MerUser@read_album_catalog');
+
+    Route::post('upload' ,   'MerUser@upload');
+
+    Route::get('read_album' ,   'MerUser@read_album');
+
 });
 
 //APP版本管理

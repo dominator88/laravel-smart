@@ -31,7 +31,10 @@ return [
         'secret' => 'xxx' ,
     ] ,
 
-    'imgUri' => '',
+    'image' => [
+        'imgUri' => '',
+        'uploadType' => 'local',
+    ],
 
     'sms' => [
         'name' => 'alidayu',

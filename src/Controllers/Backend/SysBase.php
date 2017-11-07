@@ -10,9 +10,11 @@ namespace Smart\Controllers\Backend;
 use Smart\Controllers\Controller;
 use Smart\Service\MerAlbumCatalogService;
 use Smart\Service\MerAlbumService;
+use Smart\Service\ServiceManager;
 use Smart\Service\SysAreaService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Smart\Service\UploadService;
 
 class SysBase extends  Controller{
 
@@ -64,7 +66,7 @@ class SysBase extends  Controller{
         $this->data['param']['uri']       = [
             'base'    => $this->baseUri ,
             'module'  => "{$this->baseUri}{$this->module}/index/index" ,
-            'img'     => config( 'backend.imgUri' ) ,
+            'img'     => config( 'backend.image.imgUri' ) ,
             'menu'    => "" ,
             'this'    => full_uri( $currentBaseUri . $this->action ) ,
             'chPwd'   => full_uri( "{$this->baseUri}{$this->module}/auth/changePassword" ) ,
@@ -187,8 +189,14 @@ class SysBase extends  Controller{
 
     }
 
-    public function upload(){
+    public function upload(Request $request){
+        $param          = $request->all( );
+        $param['isKE']  = $request->input( 'isKE' , 0 );
+        $param['merId'] = $this->merId;
+         $serviceManager = resolve(ServiceManager::class);
+        $Upload = $serviceManager->make( UploadService::class );
 
+        return json( $Upload->doUpload( $param ) );
     }
 
     public function read_album(Request $request){

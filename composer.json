@@ -18,7 +18,8 @@
         "jpush/jpush": "^3.5",
         "laravel/tinker": "~1.0",
         "guzzlehttp/guzzle": "^6.2@dev",
-        "toplan/laravel-sms": "~2.6"
+        "toplan/laravel-sms": "~2.6",
+        "intervention/image": "^2.3@dev"
 
     },
     "require-dev": {

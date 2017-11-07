@@ -15,14 +15,14 @@ class CreateMerAlbumTable extends Migration
     {
         Schema::create('mer_album', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('mer_id');
-            $table->integer('sort');
-            $table->string('uri',200);
-            $table->integer('size');
-            $table->string('mimes', 50);
-            $table->string('img_size', 200);
-            $table->string('desc');
-            $table->tinyInteger('status');
+            $table->integer('mer_id')->default(0);
+            $table->integer('sort')->default(1);
+            $table->string('uri',200)->nullable();
+            $table->integer('size')->default(0);
+            $table->string('mimes', 50)->nullable();
+            $table->string('img_size', 200)->default(0);
+            $table->string('desc')->nullable();
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
     }

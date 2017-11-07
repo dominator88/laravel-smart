@@ -230,3 +230,33 @@ if ( ! function_exists( 'form_options_rows' ) ) {
     }
 
 }
+
+if ( ! function_exists( 'file_size' ) ) {
+    function file_size( $size ) {
+        $unit  = [ 'B' , 'KB' , 'MB' , 'GB' , 'TB' , 'PB' ];
+        $index = 0;
+        do {
+            $size = $size / 1024;
+            $index ++;
+        } while ( $size >= 1024 );
+
+        return round( $size , 1 ) . $unit[ $index ];
+    }
+}
+
+if ( ! function_exists( 'full_img_uri' ) ) {
+    /**
+     * 返回图片绝对路径
+     *
+     * @param $imgUri
+     *
+     * @return string
+     */
+    function full_img_uri( $imgUri ) {
+        if ( config( 'backend.image.uploadType' ) == 'local' ) {
+            return route( $imgUri , '' , '' , TRUE );
+        }
+
+        return config( 'backend.image.imgUri' ) . $imgUri;
+    }
+}
