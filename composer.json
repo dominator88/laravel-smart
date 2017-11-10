@@ -27,8 +27,8 @@
     },
     "autoload": {
         "classmap": [
-            "database/seeds",
-            "database/factories"
+            "tests/seeds",
+            "tests/factories"
         ],
         "psr-4": {
             "Smart\\": "src/"

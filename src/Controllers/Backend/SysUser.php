@@ -28,7 +28,7 @@ class SysUser extends Backend {
      *
      * @return string
      */
-    public function index(Request $request) {
+    public function index(Request $request) {echo xdebug_call_class();
         $this->_init( '系统用户' );
 
         $this->_addParam( 'uri' , [
