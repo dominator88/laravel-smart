@@ -4,7 +4,8 @@ namespace Tests;
 
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Support\Facades\Schema;
-use Laravel\BrowserKitTesting\TestCase as BaseTestCase;
+//use Laravel\BrowserKitTesting\TestCase as BaseTestCase;
+use Tests\DuskTestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -13,7 +14,7 @@ abstract class TestCase extends BaseTestCase
      *
      * @var string
      */
-    public $baseUrl = 'http://localhost';
+    public $baseUrl = 'http://laravel-packages.local.com';
 
     /**
      * Creates the application.

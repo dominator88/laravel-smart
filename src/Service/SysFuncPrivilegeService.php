@@ -141,8 +141,9 @@ class SysFuncPrivilegeService extends BaseService{
             if ( ! empty( $needDelete ) ) {
                 DB::table('sys_func_privilege')
                     ->where( 'func_id' , $funcId )
-                    ->where( 'name' , 'in' , $needDelete )
+                    ->whereIn( 'name' ,  $needDelete )
                     ->delete();
+
             }
 
             DB::commit();

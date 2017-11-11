@@ -46,7 +46,7 @@ class SysBase extends  Controller{
         $routeAction = Route::currentRouteAction();
         $routes = $this->parseRouteAction($routeAction);
         $this->baseUri = config('backend.baseUri');
-        $this->module = $routes['module'];
+        $this->module = strtolower($routes['module']);
         $this->controller = $routes['controller'];
         $this->action = $routes['action'];
 
