@@ -29,7 +29,7 @@
     "minimum-stability": "dev",
     "autoload": {
         "classmap": [
-            "tests/seeds" 
+            "tests/seeds"
 
         ],
         "psr-4": {
