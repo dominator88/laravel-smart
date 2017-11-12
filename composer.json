@@ -29,8 +29,8 @@
     "minimum-stability": "dev",
     "autoload": {
         "classmap": [
-            "tests/seeds" ,
-            "tests/factories"
+            "tests/seeds" 
+
         ],
         "psr-4": {
             "Smart\\": "src/"

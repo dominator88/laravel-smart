@@ -109,7 +109,7 @@ class SysFuncPrivilegeService extends BaseService{
      *
      * @return array
      */
-    public function updateByFunc( $funcId , $data ) {
+    public function updateByFunc( $funcId  , $data = [] ) {
 
         $oldData = $this->getByFunc( $funcId );
         $p       = [];
@@ -117,7 +117,7 @@ class SysFuncPrivilegeService extends BaseService{
             $p[] = $item['name'];
         }
 
-
+        $data['name'] = isset($data['name']) ? $data['name'] : [];
         $needAdd    = array_diff( $data['name'] , $p );
         $needDelete = array_diff( $p , $data['name'] );
 
