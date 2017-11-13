@@ -57,7 +57,7 @@ abstract class TestCase extends BaseTestCase
         //加载路由
         require __DIR__ . '/router/routes.php';
 
-        require  __DIR__ . '/seeds/factory.php';
+        require  __DIR__ . '/factories/factory.php';
 
 
 

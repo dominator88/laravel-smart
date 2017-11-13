@@ -23,7 +23,7 @@ class CreateSysFuncTable extends Migration
             $table->string('color')->nullable();
             $table->string('name');
             $table->string('icon')->nullable();
-            $table->string('uri');
+            $table->string('uri')->nullable();
             $table->string('desc')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->integer('level')->default(1);
