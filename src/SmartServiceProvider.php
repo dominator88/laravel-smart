@@ -44,10 +44,10 @@ class SmartServiceProvider extends ServiceProvider{
 
         $this->publishes([ __DIR__.'/../config/' => config_path()] , 'backend');
 
-        if(!file_exists(app_path('Http/Controllers/Api/Service'))){
+/*        if(!file_exists(app_path('Http/Controllers/Api/Service'))){
             mkdir(app_path('Http/Controllers/Api/Service') , 0777 ,true);
             chmod(app_path('Http/Controllers/Api/Service') , 0777);
-        }
+        }*/
 
         //service
         $this->publishes([ __DIR__.'/../resources/Service' => app_path('Service')] , 'backend');
@@ -55,7 +55,12 @@ class SmartServiceProvider extends ServiceProvider{
         //Models
         $this->publishes([ __DIR__.'/../resources/Models' => app_path('Models')] , 'backend');
 
-        $this->publishes([ __DIR__.'/../resources/Api' => app_path('Http/Controllers/Api')] , 'backend');
+        //发布Api包
+        $this->publishes([ __DIR__.'/../resources/Api' => app_path('Api')] , 'backend');
+
+        if( file_exists(app_path('Api').'/routes.php' ) ){
+            $this->loadRoutesFrom(app_path('Api').'/routes.php');
+        }
 
         $this->publishes([ __DIR__.'/../resources/assets/static/' => public_path('static')] , 'backend');
 
@@ -67,6 +72,8 @@ class SmartServiceProvider extends ServiceProvider{
 
     }
 
+
+
     public function register(){
         $this->app->singleton( TokenService::class , function($app){
             return new MerTokenService();
@@ -76,7 +83,7 @@ class SmartServiceProvider extends ServiceProvider{
             return new ServiceManager();
         });
 
-        $this->mergeConfigFrom( base_path().'/config/backend.php' ,'backend' );
+        $this->mergeConfigFrom(__DIR__.'/../config/backend.php' ,'backend' );
         $this->commands($this->commands);
     }
 

@@ -5,10 +5,10 @@
  * Date: 2017/9/18
  * Time: 21:07
  */
-namespace App\Http\Controllers\Api;
+namespace App\Api;
 
 
-use App\Http\Controllers\Api\Service\v1\ApiService;
+use App\Api\Service\v1\ApiService;
 use Illuminate\Http\Request;
 
 
@@ -86,7 +86,7 @@ class Index {
 
         $action  = ucfirst( $action );
         $version = strtolower( $version );
-        $class   = '\\App\\Http\\Controllers\\Api\\Service\\' . $version . '\\' . $directory . '\\' . $action . 'Service';
+        $class   = '\\App\\Api\\Service\\' . $version . '\\' . $directory . '\\' . $action . 'Service';
         $this->api->log( 'service file' , $class );
 
         //检查是否存在响应文件

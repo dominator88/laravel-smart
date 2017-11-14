@@ -32,7 +32,7 @@ class SimulatorService extends BaseService {
 
     function readApi( $apiVersion ) {
 
-        $dir   = app_path() . "/Http/Controllers/api/service/" . $apiVersion;
+        $dir   = app_path('Api') . '/Service/' . $apiVersion;
         $files = scandir( $dir );
 
         $api   = [];
@@ -78,7 +78,7 @@ class SimulatorService extends BaseService {
     }
 
     function _parser( $apiVersion, $subDir, $className ) {
-        $api = "App\\Http\\Controllers\\Api\\Service\\{$apiVersion}\\{$subDir}\\{$className}Service";
+        $api = "App\\Api\\Service\\{$apiVersion}\\{$subDir}\\{$className}Service";
         //echo $api;
         $ref = new ReflectionClass( $api );
         $doc = $ref->getDocComment();

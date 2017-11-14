@@ -1,23 +1,23 @@
 <?php
-namespace App\Api\Service\{apiVersion}\{directory};
+namespace App\Api\Service\v1\test;
 
 /**
- * {desc}
+ * 测试
  *
  * @author MR.Z <zsh2088@gmail.com>
- * @version 2.0 , {date}
+ * @version 2.0 , 2017-11-14
  */
 
 use App\Api\Service\v1\ApiService;
 
-class {name}Service extends ApiService {
+class LoginService extends ApiService {
 
   //允许的请求方式
 	public $allowRequestMethod = [
-	  'get'  => 'GET - 取{desc}',
-	  'post' => 'POST - 设置{desc}',
-	  'put' => 'PUT - 设置{desc}',
-	  'delete' => 'DELETE - 设置{desc}'
+	  'get'  => 'GET - 取测试',
+	  'post' => 'POST - 设置测试',
+	  'put' => 'PUT - 设置测试',
+	  'delete' => 'DELETE - 设置测试'
 	];
 
 	/**
@@ -27,16 +27,16 @@ class {name}Service extends ApiService {
 	 */
 	public $defaultParams = [
 	  'get' => [
-	    {params}
+	    
 	  ],
 	  'post' => [
-	    {params}
+	    
 	  ],
 	  'put' => [
-	    {params}
+	    
 	  ],
 	  'delete' => [
-	    {params}
+	    
 	  ]
 	];
 
@@ -56,7 +56,7 @@ class {name}Service extends ApiService {
   private static $instance;
 	public static function instance( $params = [] ) {
 		if ( self::$instance == NULL ) {
-			self::$instance = new {name}Service();
+			self::$instance = new LoginService();
 			self::$instance->params = $params ;
 		}
 
@@ -69,7 +69,10 @@ class {name}Service extends ApiService {
    * @return array
    */
 	public function response() {
-    {authUser}
+    //验证用户
+if ( ! $this->validToken() ) {
+  return api_result( $this->error, $this->errCode );
+}
 
 		if ( ! $this->validParams() ) {
 			return api_result( $this->error, 500 );

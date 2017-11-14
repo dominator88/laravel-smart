@@ -5,7 +5,7 @@
  * Date: 2017/9/18
  * Time: 21:13
  */
-namespace App\Http\Controllers\Api\Service\v1;
+namespace App\Api\Service\v1;
 
 use Smart\Interfaces\TokenService;
 use Smart\Service\AuthUcService;

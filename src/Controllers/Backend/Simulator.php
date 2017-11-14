@@ -81,7 +81,7 @@ class Simulator extends Backend {
         $action    = ucfirst( $action );
         $method    = $request->input( 'method' , '' );
 
-        $service = "App\\Http\\Controllers\\Api\\Service\\{$this->apiVersion}\\{$directory}\\{$action}Service";
+        $service = "App\\Api\\Service\\{$this->apiVersion}\\{$directory}\\{$action}Service";
 
         $instance = $service::instance();
 

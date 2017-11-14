@@ -1,4 +1,4 @@
-<?php namespace App\Http\Controllers\Api\Service\v1\system;
+<?php namespace App\Api\Service\v1\system;
 /**
  * 区域
  * User: MR.Z < zsh2088@gmail.com >
@@ -7,7 +7,7 @@
  */
 
 
-use App\Http\Controllers\Api\Service\v1\ApiService;
+use App\Api\Service\v1\ApiService;
 
 use Smart\Service\SysAreaService;
 
