@@ -45,4 +45,7 @@ return [
     'api' => [
         'apiVersion' => 'v1',
     ],
+
+    //自定义扩展模块  默认模块为backend  mp为自定义需要自行在app目录下创建mp文件夹  执行安装时自动生成目录及路由文件
+    'module_ext' => env('MODULE_EXT' , 'mp'),
 ];

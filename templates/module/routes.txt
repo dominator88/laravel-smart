@@ -1,0 +1,9 @@
+<?php
+use Illuminate\Routing\Router;
+Route::group([
+    'prefix'=>'{module}',
+    'namespace' => 'App\\{module}\\Controllers' ,
+    'middleware'=> ['web']
+],function(Router $router ){
+    $router->get('index' ,  'IndexController@index');
+});

@@ -29,6 +29,19 @@ class SmartServiceProvider extends ServiceProvider{
 
         $this->loadRoutesFrom( __DIR__ . '/../router/routes.php');
 
+        $modules = explode(',' , config('backend.module_ext'));
+
+        foreach($modules as $module){
+            if(file_exists(app_path().'/'.ucfirst($module).'/routes.php')) {
+                $this->loadRoutesFrom(app_path() . '/' . ucfirst($module) . '/routes.php');
+            }
+
+            if(file_exists(app_path().'/'.ucfirst($module).'/views')){
+                $this->loadViewsFrom(app_path().'/'.ucfirst($module) .'/views' , ucfirst($module));
+            }
+
+        }
+
         $this->publishes([ __DIR__.'/../config/' => config_path()] , 'backend');
 
         if(!file_exists(app_path('Http/Controllers/Api/Service'))){
@@ -63,7 +76,7 @@ class SmartServiceProvider extends ServiceProvider{
             return new ServiceManager();
         });
 
-        $this->mergeConfigFrom( __DIR__.'/../config/backend.php' ,'backend' );
+        $this->mergeConfigFrom( base_path().'/config/backend.php' ,'backend' );
         $this->commands($this->commands);
     }
 
