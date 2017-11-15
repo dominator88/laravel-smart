@@ -5,7 +5,7 @@
  * @version 2.0 , 2016-09-19
  */
 
-var syspush = {
+var SysPush = {
 	token : $('input[name=_token]').val(),
 	config : {} ,
 	init : function () {

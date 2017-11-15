@@ -5,7 +5,7 @@
  * @version 2.0 , 2016-10-10
  */
 
-var sysmail = {
+var SysMail = {
   token : $('input[name=_token]').val(),
   config : {} ,
   init : function () {

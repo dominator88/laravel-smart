@@ -63,7 +63,7 @@ class SysPushService extends BaseService {
         $appKey = empty( $appKey ) ? config( 'backend.JPush.appKey' ) : '';
         $secret = empty( $secret ) ? config( 'backend.JPush.secret' ) : '';
 
-        $this->jpush = new JPush( $appKey, $secret );
+     //   $this->jpush = new JPush( $appKey, $secret );
     }
 
     //取默认值

@@ -5,7 +5,7 @@
  * @version 2.0 , 2016-09-18
  */
 
-var syssms = {
+var SysSms = {
 	token : $('input[name=_token]').val(),
 	config : {} ,
 	init : function () {
