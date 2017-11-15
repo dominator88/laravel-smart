@@ -243,47 +243,47 @@ Route::group(['prefix'=>'backend/sysappversion','namespace'=>'Smart\Controllers\
 //消息推送
 Route::group(['prefix'=>'backend/syspush','namespace'=>'Smart\Controllers\Backend','middleware'=> ['web']],function(){
 
-    Route::get('index' , 'syspush@index');
+    Route::get('index' , 'SysPush@index');
 
-    Route::get('read' , 'syspush@read');
+    Route::get('read' , 'SysPush@read');
 
-    Route::post('update/{id}' ,   'syspush@update');
+    Route::post('update/{id}' ,   'SysPush@update');
 
-    Route::post('insert' ,   'syspush@insert');
+    Route::post('insert' ,   'SysPush@insert');
 
-    Route::post('destroy' ,   'syspush@destroy');
+    Route::post('destroy' ,   'SysPush@destroy');
 
 });
 
 //短信
 Route::group(['prefix'=>'backend/syssms','namespace'=>'Smart\Controllers\Backend','middleware'=> ['web']],function(){
 
-    Route::get('index' , 'syssms@index');
+    Route::get('index' , 'SysSms@index');
 
-    Route::get('read' , 'syssms@read');
+    Route::get('read' , 'SysSms@read');
 
-    Route::post('update/{id}' ,   'syssms@update');
+    Route::post('update/{id}' ,   'SysSms@update');
 
-    Route::post('insert' ,   'syssms@insert');
+    Route::post('insert' ,   'SysSms@insert');
 
-    Route::post('destroy' ,   'syssms@destroy');
+    Route::post('destroy' ,   'SysSms@destroy');
 
 });
 
 //邮件
 Route::group(['prefix'=>'backend/sysmail','namespace'=>'Smart\Controllers\Backend','middleware'=> ['web']],function(){
 
-    Route::get('index' , 'sysmail@index');
+    Route::get('index' , 'SysMail@index');
 
-    Route::get('read' , 'sysmail@read');
+    Route::get('read' , 'SysMail@read');
 
-    Route::post('update/{id}' ,   'sysmail@update');
+    Route::post('update/{id}' ,   'SysMail@update');
 
-    Route::post('insert' ,   'sysmail@insert');
+    Route::post('insert' ,   'SysMail@insert');
 
-    Route::post('destroy' ,   'sysmail@destroy');
+    Route::post('destroy' ,   'SysMail@destroy');
 
-    Route::post('send' ,   'sysmail@send');
+    Route::post('send' ,   'SysMail@send');
 
 });
 
