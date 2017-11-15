@@ -71,6 +71,8 @@ Route::group(['prefix'=>'backend/sysuser','namespace'=>'Smart\Controllers\Backen
 
     Route::get('read_album' ,   'SysUser@read_album');
 
+    Route::post('upload' ,   'SysUser@upload');
+
 });
 
 //区域管理
