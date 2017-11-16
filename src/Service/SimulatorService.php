@@ -14,6 +14,7 @@ namespace Smart\Service;
  * @version 2.0 2016-09-13
  */
 
+use Illuminate\Filesystem\Filesystem;
 use ReflectionClass;
 
 class SimulatorService extends BaseService {
@@ -33,46 +34,31 @@ class SimulatorService extends BaseService {
     function readApi( $apiVersion ) {
 
         $dir   = app_path('Api') . '/Service/' . $apiVersion;
-        $files = scandir( $dir );
+        $filesystem = new Filesystem();
+        $dirs = $filesystem->directories($dir);
 
         $api   = [];
-        foreach ( $files as $file ) {
 
-            if ( strpos( $file, '.' ) > - 1 ) {
-                continue;
-            }
-
-            if ( ! array_key_exists( $file, $api ) ) {
-                $api[ $file ] = [];
-            }
-
-            $basePaths = $dir . DIRECTORY_SEPARATOR . $file;
-            if ( is_dir( $basePaths ) ) {
-                $basePathFiles = scandir( $basePaths );
-                foreach ( $basePathFiles as $f ) {
-                    if ( strpos( $f, '.' ) == 0 ) {
-                        continue;
-                    }
-                    $f_path = $basePaths . DIRECTORY_SEPARATOR . $f;
-                    if ( is_file( $f_path ) ) {
-                        if ( strpos( $f, '.php' ) > 0 ) {
-                            $fileName = substr( $f, 0, strlen( $f ) - strlen( 'Service.php' ) );
-//							$f_name    = "Api\\Service\\{$apiVersion}\\$file\\" . $fileName;
-
-                            $name = $this->_parser( $apiVersion, $file, $fileName );
-                            if ( ! $name ) {
-                                continue;
-                            }
-                            $api[ $file ][] = [
-                                'directory' => $file,
-                                'action'    => strtolower( $fileName ),
-                                'text'      => $name
-                            ];
-                        }
-                    }
+        foreach( $dirs as $dir ){
+            $files = $filesystem->allFiles($dir);
+            foreach($files  as $file){
+                $filename = $file->getRelativePathname();
+                $class = substr( $filename, 0, strripos($filename , 'Service.php'));
+                $file_dir = $filesystem->dirname($file);
+                $file = substr($file_dir , strripos($file_dir , '/' ) + 1) ;
+                $name = $this->_parser( $apiVersion ,$file , $class);
+                if ( ! $name ) {
+                    continue;
                 }
+                $api[ $file ][] = [
+                    'directory' => $file,
+                    'action'    => strtolower( $class ),
+                    'text'      => $name
+                ];
             }
         }
+
+
 
         return $api;
     }
