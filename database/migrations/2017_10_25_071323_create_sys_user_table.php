@@ -22,7 +22,7 @@ class CreateSysUserTable extends Migration
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->tinyInteger('status')->default(1);
-            $table->string('token')->nullable();
+            $table->string('api_token')->nullable();
             $table->timestamps();
             $table->dateTime('signed_at')->nullable();
             $table->ipAddress('signed_ip')->nullable();

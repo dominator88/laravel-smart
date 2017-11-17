@@ -148,7 +148,7 @@ class ApiService {
         $this->userId = '';
         $this->error  = 500;
 
-        if ( ! isset( $this->params['token'] ) || empty( $this->params['token'] ) ) {
+        if ( ! isset( $this->params['api_token'] ) || empty( $this->params['api_token'] ) ) {
             //参数错误
             $this->error = '请填写token';
 

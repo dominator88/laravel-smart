@@ -205,11 +205,11 @@ var Simulator = {
 
   addTestData : function () {
     var $form = $( '#paramsForm' );
-    var $token = $form.find( 'input[name="token"]' );
+    var $token = $form.find( 'input[name="api_token"]' );
     var $merId = $form.find( 'input[name="merId"]' );
     var html = '';
     if ( $token.length > 0 ) {
-      html = '<select name="token" class="form-control">';
+      html = '<select name="api_token" class="form-control">';
 
       for ( var i = 0 ; i < Param.testToken.length ; i ++ ) {
         var user = Param.testToken[ i ];

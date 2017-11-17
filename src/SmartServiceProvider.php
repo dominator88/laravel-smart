@@ -9,6 +9,7 @@ namespace Smart;
 
 
 use App\Service\MerTokenService;
+use App\Service\SysTokenService;
 use Illuminate\Support\ServiceProvider;
 
 use Smart\Interfaces\TokenService;
@@ -75,9 +76,6 @@ class SmartServiceProvider extends ServiceProvider{
 
 
     public function register(){
-        $this->app->singleton( TokenService::class , function($app){
-            return new MerTokenService();
-        });
 
         $this->app->singleton( ServiceManager::class ,function($app){
             return new ServiceManager();
