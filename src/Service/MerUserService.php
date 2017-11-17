@@ -165,7 +165,7 @@ class MerUserService extends BaseService {
      * @return mixed
      */
     public function getForTest() {
-        $data = DB::table('mer_user as mu')->leftJoin('mer_sys_user as msu', 'mu.id','=','msu.id')->leftJoin('sys_user as su' , 'su.id','=','msu.sys_user_id')->where('for_test',1)->get()->toArray();
+        $data = DB::table('mer_user as mu')->leftJoin('mer_user_device as mud', 'mu.id','=','mud.user_id')->where('for_test',1)->get()->toArray();
         return $data;
     }
 
