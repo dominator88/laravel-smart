@@ -7,7 +7,6 @@
  */
 namespace Smart;
 
-
 use App\Service\MerTokenService;
 use App\Service\SysTokenService;
 use Illuminate\Support\ServiceProvider;
@@ -22,6 +21,10 @@ class SmartServiceProvider extends ServiceProvider{
     protected  $commands = [
         \Smart\Console\Commands\InstallCommand::class,
         \Smart\Console\Commands\UninstallCommand::class,
+    ];
+
+    protected $routeMiddleware = [
+        'auth.token' => \Smart\Middleware\CheckToken::class
     ];
 
     public function boot(){
@@ -82,7 +85,23 @@ class SmartServiceProvider extends ServiceProvider{
         });
 
         $this->mergeConfigFrom(__DIR__.'/../config/backend.php' ,'backend' );
+        $this->registerRouteMiddleware();
         $this->commands($this->commands);
+    }
+
+
+    /**
+     * Register the route middleware.
+     *
+     * @return void
+     */
+    protected function registerRouteMiddleware()
+    {
+        // register route middleware.
+        foreach ($this->routeMiddleware as $key => $middleware) {
+            app('router')->aliasMiddleware($key, $middleware);
+        }
+
     }
 
 }

@@ -7,6 +7,9 @@
  */
 namespace App\Api\Service\v1;
 
+use App\Service\SysTokenService;
+use Illuminate\Auth\AuthManager;
+use Illuminate\Support\Facades\Auth;
 use Smart\Interfaces\TokenService;
 use Smart\Service\AuthUcService;
 
@@ -143,8 +146,9 @@ class ApiService {
      *
      * @return mixed
      */
-    public function validToken() {
-        $this->token = resolve( TokenService::class );
+    public function validToken( ) {
+
+    //    $this->token = resolve( TokenService::class );
         $this->userId = '';
         $this->error  = 500;
 
@@ -155,12 +159,11 @@ class ApiService {
             return FALSE;
         } else {
 
-            $MemberData = $this->token->getByToken($this->params['token']);
+         //   $MemberData = $this->token->getByToken($this->params['token']);
+            $MemberData = Auth::guard('api')->user();
+           // AuthManager::
 
-            //   $this->log('用户数据',implode(',',$MemberData));
-            /* $MerUserDevice = MerUserDeviceService::instance();
-             $deviceData    = $MerUserDevice->getByToken( $this->params['token'] );*/
-            //$deviceData    = $MerUserDevice->getByToken( $this->params['token'], $this->params['device'] );
+
 
             if ( empty( $MemberData ) ) {
                 //数据未找到

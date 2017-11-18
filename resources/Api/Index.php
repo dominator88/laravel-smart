@@ -23,49 +23,22 @@ class Index {
 
     public function index(Request $request , $version , $directory , $action = 'index' ) {
 
-        //取 http 头
         $header = [
             'timestamp'       => $request->header( 'timestamp' ) ,
             'signature'       => $request->header( 'signature' ) ,
             'device'          => $request->header( 'device' ) ,
             'deviceOsVersion' => $request->header( 'device-os-version' ) ,
             'appVersion'      => $request->header( 'app-version' ) ,
-            'apiVersion'      => $version ,
+            'apiVersion'      => $request->input('version') ,
         ];
-
-
         //取api
         $api = $this->api;
-        $api->logStat( $header );
-        $api->log( 'headerData' , $header );
 
-        // 检查时间戳
-        if ( ! $this->api->validTimestamp( $header['timestamp'] ) ) {
-            exit( json( $api->getError( 405 ) )->send() );
-        }
-        $this->api->log( 'request ' , request()->method() );
-
-        // 取参数
         $params = $request->all();
-        $api->log( 'params' , $params );
-
         //取时间戳
-        $params['timestamp'] = $header['timestamp'];
+        $params['timestamp'] = $request->header( 'timestamp' ) ;
 
-        //检查签名
-        if ( ! $this->api->validSignature( $params , $header['signature'] ) ) {
-            exit( json( $api->getError( 406 ) )->send() );
-        }
-
-        //合并参数
         $params = array_merge( $params , $header );
-        $this->api->log( 'params' , $params );
-
-        // 参数错误
-        if ( ! is_array( $params ) || empty( $params ) ) {
-            exit( json( $api->getError( 400 ) )->send() );
-        }
-
         $result = $this->response( $version , $directory , $action , $params );
         $api->log( '请求结束' );
 

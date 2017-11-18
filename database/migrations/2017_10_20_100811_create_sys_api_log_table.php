@@ -15,12 +15,12 @@ class CreateSysApiLogTable extends Migration
     {
         Schema::create('sys_api_log', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('device');
-            $table->string('device_os_version');
-            $table->string('app_version');
-            $table->string('api_version');
-            $table->string('uri');
-            $table->string('ip');
+            $table->string('device')->nullable();
+            $table->string('device_os_version')->nullable();
+            $table->string('app_version')->nullable();
+            $table->string('api_version')->nullable();
+            $table->string('uri')->nullable();
+            $table->string('ip')->nullable();
             $table->timestamps();
         });
     }
