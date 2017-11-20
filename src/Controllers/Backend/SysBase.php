@@ -59,7 +59,7 @@ class SysBase extends  Controller{
         if( empty($matches) ){
             preg_match('/^App\\\(?P<module>\w+)\\\Controllers\\\(?P<controller>\w+)@(?P<action>\w+)/', $routeAction, $matches);
         }
-        
+
         return $matches;
     }
 

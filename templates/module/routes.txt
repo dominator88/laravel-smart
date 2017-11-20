@@ -1,7 +1,7 @@
 <?php
 use Illuminate\Routing\Router;
 Route::group([
-    'prefix'=>'{module}',
+    'prefix'=>strtolower('{module}' ),
     'namespace' => 'App\\{module}\\Controllers' ,
     'middleware'=> ['web']
 ],function(Router $router ){
