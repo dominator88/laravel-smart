@@ -56,6 +56,10 @@ class SysBase extends  Controller{
        // $routeAction = 'App\Http\Controllers\Backend\SysFunc@index';
         preg_match('/^Smart\\\Controllers\\\(?P<module>\w+)\\\(?P<controller>\w+)@(?P<action>\w+)/', $routeAction, $matches);
 
+        if( empty($matches) ){
+            preg_match('/^App\\\(?P<module>\w+)\\\Controllers\\\(?P<controller>\w+)@(?P<action>\w+)/', $routeAction, $matches);
+        }
+        
         return $matches;
     }
 
