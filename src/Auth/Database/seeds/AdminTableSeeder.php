@@ -25,7 +25,7 @@ class AdminTableSeeder extends Seeder
                 'email' => config('backend.defaultEmail'),
                 'icon' => '',
                 'phone' => '',
-                'token' => '',
+                'api_token' => '',
                 'signed_at' => Carbon::now(),
                 'signed_ip' => '',
 
