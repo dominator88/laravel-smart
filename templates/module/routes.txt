@@ -5,5 +5,5 @@ Route::group([
     'namespace' => 'App\\{module}\\Controllers' ,
     'middleware'=> ['web']
 ],function(Router $router ){
-    $router->get('index' ,  'IndexController@index');
+    $router->get('index/index' ,  'IndexController@index');
 });
