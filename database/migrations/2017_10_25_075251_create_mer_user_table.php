@@ -15,7 +15,7 @@ class CreateMerUserTable extends Migration
     {
         Schema::create('mer_user', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('mer_id');
+            $table->integer('mer_id')->default(0);
             $table->integer('referee_id')->default(0);
             $table->tinyInteger('sex');
             $table->string('username');

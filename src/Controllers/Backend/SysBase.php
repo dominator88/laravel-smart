@@ -19,7 +19,7 @@ use Smart\Service\UploadService;
 class SysBase extends  Controller{
 
     public $user       = NULL;
-    public $merId      = '';
+    public $merId      = 0 ;
     public $baseUri    = '';
     public $module     = ''; //功能 不分大小写
     public $controller = ''; //控制器
