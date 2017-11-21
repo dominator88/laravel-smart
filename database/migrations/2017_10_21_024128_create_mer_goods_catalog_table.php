@@ -15,15 +15,15 @@ class CreateMerGoodsCatalogTable extends Migration
     {
         Schema::create('mer_goods_catalog', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('mer_id');
-            $table->integer('pid');
-            $table->string('text');
-            $table->string('icon');
-            $table->string('desc');
-            $table->tinyInteger('sort');
-            $table->tinyInteger('level');
-            $table->tinyInteger('status');
-            $table->enum('type' ,  ['goods' , 'virtual' , 'service']);
+            $table->integer('mer_id')->default(0);
+            $table->integer('pid')->default(0);
+            $table->string('text')->nullable();
+            $table->string('icon')->nullable();
+            $table->string('desc')->nullable();
+            $table->tinyInteger('sort')->default(1);
+            $table->tinyInteger('level')->default(1);
+            $table->tinyInteger('status')->default(1);
+            $table->enum('type' ,  ['goods' , 'virtual' , 'service'])->default('goods');
 
         });
     }

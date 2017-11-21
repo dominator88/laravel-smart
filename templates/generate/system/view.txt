@@ -1,4 +1,4 @@
-@extend('public.layout')
+@extends('public.layout')
 @section('content')
 <!-- BEGIN CONTENT BODY -->
 {!! csrf_field() !!}

@@ -8,7 +8,7 @@ public function getByCond( $param ) {
   ];
   $param  = extend( $default , $param );
 
-   $model = $this->getModel()->status($param['status'])->orderBy('level' , 'ASC')->orderBy('sort' , 'ASC')->get($param['field'])->toArray();
+   $data = $this->getModel()->status($param['status'])->orderBy('level' , 'ASC')->orderBy('sort' , 'ASC')->get($param['field'])->toArray();
 
   $result = [ ];
   $index  = [ ];
