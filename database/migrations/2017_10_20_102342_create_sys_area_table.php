@@ -15,6 +15,7 @@ class CreateSysAreaTable extends Migration
     {
         Schema::create('sys_area', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('level');
             $table->integer('pid'  );
             $table->string('text');
             $table->string('tip');

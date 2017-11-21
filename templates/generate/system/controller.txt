@@ -1,4 +1,4 @@
-<?php namespace App\{module};
+<?php namespace App\{module}\Controllers;
 /**
  * {funcName} Controller
  *
@@ -9,7 +9,7 @@
 
 use Illuminate\Http\Request;
 use App\Service\{func}Service;
-use Smart\Controllers\{module}\{module};
+use App\{module}\Controllers\{module};
 
 class {func} extends {module} {
 
