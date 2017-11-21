@@ -67,10 +67,10 @@ class GenerateService {
      //   'model'      => base_path('common/model/{func}.php'),
         'model'     => APP_PATH .'/Models/{func}.php',
         'service'    => APP_PATH . '/Service/{func}Service.php',
-        'controller' => APP_PATH . '/{moduleLower}/{func}.php',
+        'controller' => APP_PATH . '/{moduleLower}/controllers/{func}.php',
         'js'         => 'static/js/{moduleLower}/{func}.js',
-     //   'view'       => BASE_PATH . '/resources/views/{module}/{funcLower}/index.html',
-        'view'       => BASE_PATH . '/resources/views/{funcLower}/index.blade.php',
+        //   'view'       => BASE_PATH . '/resources/views/{module}/{funcLower}/index.html',
+        'view'       => APP_PATH . '/{moduleLower}/views/{funcLower}/index.blade.php',
         'api'        => APP_PATH . '/Api/Service/',
     ];
 
