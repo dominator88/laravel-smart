@@ -60,7 +60,7 @@ class {func} extends {module} {
 		{gridJs}
     {treeGridJs}
 
-		return $this->_displayWithLayout();
+		return $this->_displayWithLayout('{module}::{funcName}.index');
 	}
 
 	{gridRead}

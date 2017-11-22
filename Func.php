@@ -231,6 +231,38 @@ if ( ! function_exists( 'form_options_rows' ) ) {
 
 }
 
+if ( ! function_exists( 'form_options_rows_group' ) ) {
+    /**
+     * optgroup 显示 options
+     *
+     * @param $data
+     * @param $valueField
+     * @param $textField
+     * @param $groupField
+     *
+     * @return string
+     */
+    function form_options_rows_group( $data , $valueField = 'id' , $textField = 'text' , $groupField = 'type_text' ) {
+        $newData = [];
+        foreach ( $data as $item ) {
+            if(array_key_exists($groupField , $item)){
+                $newData[ $item[ $groupField ] ][] = $item;
+            }
+        }
+
+        $html = '';
+        foreach ( $newData as $key => $row ) {
+            $html .= '<optgroup label="' . $key . '">';
+            foreach ( $row as $r ) {
+                $html .= '<option value="' . $r[ $valueField ] . '">' . $r[ $textField ] . '</option> ';
+            }
+            $html .= '</optgroup> ';
+        }
+
+        return $html;
+    }
+}
+
 if ( ! function_exists( 'file_size' ) ) {
     function file_size( $size ) {
         $unit  = [ 'B' , 'KB' , 'MB' , 'GB' , 'TB' , 'PB' ];
