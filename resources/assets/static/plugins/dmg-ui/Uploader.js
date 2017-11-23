@@ -4,6 +4,7 @@
 
 ;(function ( $ ) {
 
+  var token = $('input[name=_token]').val();
   //var settings = {};
   var thisUploadObj = null;
 
@@ -173,6 +174,7 @@
           }
           fd.append( key , settings.param[ key ] );
         }
+        fd.append('_token' ,token);
         //如果是图片
         if ( file.type.match( 'image.*' ) ) {
           //如果是图片,则计算裁剪
