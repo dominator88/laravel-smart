@@ -15,7 +15,7 @@ use Smart\Service\SimulatorService;
 use Smart\Service\SysMerchantService;
 use cebe\markdown\MarkdownExtra;
 use Illuminate\Http\Request;
-
+use Facades\Smart\Service\ServiceManager;
 
 class Simulator extends Backend {
 
@@ -28,7 +28,7 @@ class Simulator extends Backend {
     public function __construct(Request $request ) {
         parent::__construct($request);
         $this->_initClassName( $this->controller );
-        $this->service = $this->serviceManager->make( SimulatorService::class);
+        $this->service = ServiceManager::make(  SimulatorService::class);
         $this->apiVersion = config('backend.api.apiVersion');
     }
 

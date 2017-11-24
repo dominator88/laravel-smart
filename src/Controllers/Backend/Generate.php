@@ -10,7 +10,7 @@ namespace Smart\Controllers\Backend;
 
 use Smart\Service\GenerateService;
 use Illuminate\Http\Request;
-
+use Facades\Smart\Service\ServiceManager;
 class Generate extends Backend {
     /**
      * 构造函数
@@ -19,7 +19,7 @@ class Generate extends Backend {
     public function __construct(Request $request) {
         parent::__construct($request);
         $this->_initClassName( $this->controller );
-        $this->service = $this->serviceManager->make( GenerateService::class);
+        $this->service = ServiceManager::make(  GenerateService::class);
     }
 
     public function index() {

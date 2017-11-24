@@ -13,16 +13,16 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Smart\Controllers\Backend\SysBase;
 use Smart\Service\SysFuncService;
-use Smart\Service\ServiceManager;
+use Facades\Smart\Service\ServiceManager;
 
 class {module} extends SysBase{
 
-    public $serviceManager ;
+
 
     public function __construct(Request $request)
     {
         parent::__construct($request);
-        $this->serviceManager = resolve( ServiceManager::class );
+
         $this->middleware('auth');
 
     }
@@ -45,12 +45,6 @@ class {module} extends SysBase{
 
     public function _displayWithLayout( $view = 'index'){
 
-        foreach($this->data as $k=>$v){
-            view()->share($k , $v);
-        }
-        view()->share('js' , $this->_makeJs());
-        view()->share('css' , $this->_makeCss());
-
-        return view($view);
+        return view($view)->with($this->data)->with('js' , $this->_makeJs())->with('css' , $this->_makeCss());
     }
 }

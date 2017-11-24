@@ -11,6 +11,7 @@ namespace Smart\Controllers\Backend;
 use Smart\Service\SysRoleService;
 use Smart\Service\SysUserService;
 use Illuminate\Http\Request;
+use Facades\Smart\Service\ServiceManager;
 
 class SysUser extends Backend {
 
@@ -20,7 +21,7 @@ class SysUser extends Backend {
     public function __construct(Request $request) {
         parent::__construct($request);
         $this->_initClassName( $this->controller );
-        $this->service = $this->serviceManager->make( SysUserService::class);
+        $this->service = ServiceManager::make(  SysUserService::class);
     }
 
     /**

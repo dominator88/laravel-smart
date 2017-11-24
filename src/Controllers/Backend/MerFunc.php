@@ -8,7 +8,7 @@
 
 namespace Smart\Controllers\Backend;
 
-
+use Facades\Smart\Service\ServiceManager;
 use Smart\Service\SysFuncPrivilegeService;
 use Smart\Service\SysFuncService;
 use Illuminate\Http\Request;
@@ -22,7 +22,7 @@ class MerFunc extends Backend {
     public function __construct(Request $request) {
         parent::__construct($request);
         $this->_initClassName( $this->controller );
-        $this->service = $this->serviceManager->make( SysFuncService::class);
+        $this->service = ServiceManager::make(  SysFuncService::class);
     }
 
     //页面入口

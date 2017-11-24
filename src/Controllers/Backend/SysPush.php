@@ -11,7 +11,7 @@
 
 use Smart\Service\SysPushService;
 use Illuminate\Http\Request;
-
+use Facades\Smart\Service\ServiceManager;
 
 class SysPush extends Backend {
 
@@ -21,7 +21,7 @@ class SysPush extends Backend {
     public function __construct(Request $request ) {
         parent::__construct($request);
         $this->_initClassName( $this->controller );
-        $this->service = $this->serviceManager->make( SysPushService::class);
+        $this->service = ServiceManager::make(  SysPushService::class);
     }
 
     //页面入口

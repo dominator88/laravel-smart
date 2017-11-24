@@ -11,6 +11,7 @@ namespace Smart\Controllers\Backend;
 
 use Smart\Service\SysSmsService;
 use Illuminate\Http\Request;
+use Facades\Smart\Service\ServiceManager;
 
 class SysSms extends Backend {
 
@@ -20,7 +21,7 @@ class SysSms extends Backend {
     public function __construct(Request  $request) {
         parent::__construct($request);
         $this->_initClassName( $this->controller );
-        $this->service = $this->serviceManager->make( SysSmsService::class);
+        $this->service = ServiceManager::make(  SysSmsService::class);
     }
 
     //页面入口

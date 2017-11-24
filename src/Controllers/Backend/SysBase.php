@@ -10,7 +10,7 @@ namespace Smart\Controllers\Backend;
 use Smart\Controllers\Controller;
 use Smart\Service\MerAlbumCatalogService;
 use Smart\Service\MerAlbumService;
-use Smart\Service\ServiceManager;
+use Facades\Smart\Service\ServiceManager;
 use Smart\Service\SysAreaService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +26,8 @@ class SysBase extends  Controller{
     public $className  = ''; //控制器 区分大小写
     public $action     = ''; //操作
     public $service    = NULL;
+
+
 
     public $data = [
         'pageTitle'  => '' , //页面title
@@ -43,6 +45,7 @@ class SysBase extends  Controller{
 
     public function __construct(Request $request)
     {
+
         $routeAction = Route::currentRouteAction();
         $routes = $this->parseRouteAction($routeAction);
         $this->baseUri = config('backend.baseUri');

@@ -12,7 +12,7 @@ use Smart\Service\MerSysUserService;
 use Smart\Service\SysRoleService;
 use Smart\Service\SysUserService;
 use Illuminate\Http\Request;
-
+use Facades\Smart\Service\ServiceManager;
 
 class MerSysUser extends Backend {
 
@@ -22,7 +22,7 @@ class MerSysUser extends Backend {
     public function __construct(Request  $request) {
         parent::__construct($request);
         $this->_initClassName( $this->controller );
-        $this->service = $this->serviceManager->make( SysUserService::class);
+        $this->service = ServiceManager::make(  SysUserService::class);
     }
 
     /**

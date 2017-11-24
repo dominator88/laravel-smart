@@ -6,7 +6,7 @@
  * @version 2.0 , {date}
  */
 
-
+use Facades\Smart\Service\ServiceManager;
 use Illuminate\Http\Request;
 use App\Service\{func}Service;
 use App\{module}\Controllers\{module};
@@ -19,7 +19,7 @@ class {func} extends {module} {
 	public function __construct(Request $request) {
 		parent::__construct($request);
 		$this->_initClassName( $this->controller );
-		$this->service = $this->serviceManager->make( {func}Service::class);
+		$this->service = ServiceManager::make(  {func}Service::class );
 	}
 
 	//页面入口

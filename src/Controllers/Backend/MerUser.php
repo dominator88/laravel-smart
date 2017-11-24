@@ -10,7 +10,7 @@
 
 use Smart\Service\MerUserService;
 use Illuminate\Http\Request;
-
+use Facades\Smart\Service\ServiceManager;
 class MerUser extends Backend {
 
     /**
@@ -19,7 +19,7 @@ class MerUser extends Backend {
     public function __construct(Request $request) {
         parent::__construct($request);
         $this->_initClassName( $this->controller );
-        $this->service = $this->serviceManager->make( MerUserService::class);
+        $this->service = ServiceManager::make(  MerUserService::class);
         $this->merId = 1;
     }
 

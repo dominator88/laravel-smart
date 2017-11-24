@@ -9,7 +9,7 @@
 namespace Smart\Controllers\Backend;
 
 
-
+use Facades\Smart\Service\ServiceManager;
 use Smart\Service\MerGoodsCatalogService;
 use Illuminate\Http\Request;
 
@@ -21,7 +21,7 @@ class MerGoodsCatalog extends Backend {
     public function __construct(Request $request) {
         parent::__construct($request);
         $this->_initClassName( $this->controller );
-        $this->service = $this->serviceManager->make( MerGoodsCatalogService::class);
+        $this->service = ServiceManager::make(  MerGoodsCatalogService::class);
     }
 
     //页面入口

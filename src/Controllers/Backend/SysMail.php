@@ -11,7 +11,7 @@ namespace Smart\Controllers\Backend;
 
 use Smart\Service\SysMailService;
 use Illuminate\Http\Request;
-
+use Facades\Smart\Service\ServiceManager;
 class SysMail extends Backend {
 
     /**
@@ -20,7 +20,7 @@ class SysMail extends Backend {
     public function __construct(Request $request) {
         parent::__construct($request);
         $this->_initClassName( $this->controller );
-        $this->service = $this->serviceManager->make( SysMailService::class);
+        $this->service = ServiceManager::make(  SysMailService::class);
     }
 
     //页面入口

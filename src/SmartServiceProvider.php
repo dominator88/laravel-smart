@@ -14,7 +14,7 @@ use Illuminate\Support\ServiceProvider;
 use Smart\Interfaces\TokenService;
 
 use Illuminate\Mail\Mailer;
-use Smart\Service\ServiceManager;
+use Facades\Smart\Service\ServiceManager;
 
 class SmartServiceProvider extends ServiceProvider{
 

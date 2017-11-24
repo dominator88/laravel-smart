@@ -7,6 +7,7 @@
  */
 namespace Smart\Controllers\Backend;
 
+use Facades\Smart\Service\ServiceManager;
 use Smart\Service\SysFuncPrivilegeService;
 use Smart\Service\SysFuncService;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class SysFunc extends Backend{
     {
         parent::__construct($request);
         $this->_initClassName( $this->controller );
-        $this->service = $this->serviceManager->make( SysFuncService::class);
+        $this->service = ServiceManager::make( SysFuncService::class);
     }
 
     public function index(Request $request){

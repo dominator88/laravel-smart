@@ -9,6 +9,7 @@ namespace Smart\Controllers\Backend;
 
 use Smart\Service\SysMerchantService;
 use Illuminate\Http\Request;
+use Facades\Smart\Service\ServiceManager;
 
 class SysMerchant extends Backend {
 
@@ -18,7 +19,7 @@ class SysMerchant extends Backend {
     public function __construct(Request $request) {
         parent::__construct($request);
         $this->_initClassName( $this->controller );
-        $this->service = $this->serviceManager->make( SysMerchantService::class);
+        $this->service = ServiceManager::make(  SysMerchantService::class);
     }
 
     //页面入口

@@ -11,6 +11,7 @@ use Smart\Service\SysFuncPrivilegeService;
 use Smart\Service\SysFuncService;
 use Smart\Service\SysRoleService;
 use Smart\Service\SysRolePermissionService;
+use Facades\Smart\Service\ServiceManager;
 
 use Illuminate\Http\Request;
 
@@ -22,7 +23,7 @@ class SysRole extends Backend{
     public function __construct(Request $request) {
         parent::__construct($request);
         $this->_initClassName( $this->controller );
-        $this->service = $this->serviceManager->make( SysRoleService::class);
+        $this->service = ServiceManager::make(  SysRoleService::class);
     }
 
     //页面入口
