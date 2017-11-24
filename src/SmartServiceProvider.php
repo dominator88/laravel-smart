@@ -7,14 +7,7 @@
  */
 namespace Smart;
 
-use App\Service\MerTokenService;
-use App\Service\SysTokenService;
 use Illuminate\Support\ServiceProvider;
-
-use Smart\Interfaces\TokenService;
-
-use Illuminate\Mail\Mailer;
-use Facades\Smart\Service\ServiceManager;
 
 class SmartServiceProvider extends ServiceProvider{
 
@@ -48,11 +41,6 @@ class SmartServiceProvider extends ServiceProvider{
 
         $this->publishes([ __DIR__.'/../config/' => config_path()] , 'backend');
 
-/*        if(!file_exists(app_path('Http/Controllers/Api/Service'))){
-            mkdir(app_path('Http/Controllers/Api/Service') , 0777 ,true);
-            chmod(app_path('Http/Controllers/Api/Service') , 0777);
-        }*/
-
         //service
         $this->publishes([ __DIR__.'/../resources/Service' => app_path('Service')] , 'backend');
 
@@ -79,10 +67,6 @@ class SmartServiceProvider extends ServiceProvider{
 
 
     public function register(){
-
-        $this->app->singleton( ServiceManager::class ,function($app){
-            return new ServiceManager();
-        });
 
         $this->mergeConfigFrom(__DIR__.'/../config/backend.php' ,'backend' );
         $this->registerRouteMiddleware();
