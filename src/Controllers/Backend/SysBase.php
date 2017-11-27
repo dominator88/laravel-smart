@@ -200,8 +200,8 @@ class SysBase extends  Controller{
         $param          = $request->all( );
         $param['isKE']  = $request->input( 'isKE' , 0 );
         $param['merId'] = $this->merId;
-         $serviceManager = resolve(ServiceManager::class);
-        $Upload = $serviceManager->make( UploadService::class );
+
+        $Upload = ServiceManager::make( UploadService::class );
 
         return json( $Upload->doUpload( $param ) );
     }

@@ -9,6 +9,7 @@
 
 namespace Smart\Service;
 
+use Smart\Models\SysFunc;
 use Smart\Models\SysUser;
 use Smart\Models\SysUserRole;
 use Illuminate\Support\Facades\DB;
@@ -39,6 +40,8 @@ class SysUserService extends BaseService {
 
         return self::$instance;
     }
+
+    public $user = null;
 
     /**
      * 取默认值
@@ -309,4 +312,22 @@ class SysUserService extends BaseService {
             return ajax_arr( $e->getMessage() , 500 );
         }
     }
+
+    public function setUser($id){
+        $this->user = SysUser::find($id);
+    }
+
+    public function checkUser(  $func ){
+
+        $roles = $this->user->sysRole->toArray();
+        $roles = array_column($roles , 'id' );
+        $sysFuncs = SysFunc::whereIn( 'id' , $roles)->get(['uri'])->toArray();
+        $sysFuncs = array_column($sysFuncs , 'uri');
+        if( in_array($func , $sysFuncs)){
+            return true;
+        }
+        return false;
+    }
+
+
 }

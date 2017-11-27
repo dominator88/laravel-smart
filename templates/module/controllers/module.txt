@@ -29,7 +29,7 @@ class {module} extends SysBase{
 
     public function _init($pageTitle = '新页面'){
         parent::_init($pageTitle);
-        $SysFuncService = $this->serviceManager->make( SysFuncService::class );
+        $SysFuncService = ServiceManager::make( SysFuncService::class );
       //  var_dump($SysFuncService->getMenuByRoles(1,'backend'));
         $this->user = Auth::user();
         $this->_addData(

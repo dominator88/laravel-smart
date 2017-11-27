@@ -21,6 +21,10 @@ class SysUser extends Authenticatable
         return $this->belongsToMany('Smart\Models\SysMerchant' , 'mer_sys_user' , 'sys_user_id' ,'mer_id');
     }
 
+    public function sysRole(){
+        return $this->belongsToMany( SysRole::class , 'sys_user_role' ,'user_id' , 'role_id');
+    }
+
     public function scopeKeyword($query , $param){
         if($param)
             return $query->where(function($query) use ($param){

@@ -44,12 +44,6 @@ class Backend extends SysBase{
 
     public function _displayWithLayout( $view = 'index'){
 
-        foreach($this->data as $k=>$v){
-            view()->share($k , $v);
-        }
-        view()->share('js' , $this->_makeJs());
-        view()->share('css' , $this->_makeCss());
-
-        return view($view);
+        return view($view)->with($this->data)->with('js' , $this->_makeJs())->with('css' , $this->_makeCss());
     }
 }

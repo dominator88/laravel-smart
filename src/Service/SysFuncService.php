@@ -6,8 +6,10 @@
  * Time: 17:35
  */
 namespace Smart\Service;
+use Facades\Smart\Service\ServiceManager;
 use Smart\Models\SysFunc;
 use Illuminate\Support\Facades\DB;
+use Smart\Models\SysUser;
 
 class SysFuncService extends BaseService{
 
@@ -31,6 +33,7 @@ class SysFuncService extends BaseService{
         1 => '启用' ,
     ];
 
+    public $privilege = null;
 
     private static $instance = null;
 
@@ -72,8 +75,6 @@ class SysFuncService extends BaseService{
         $roleIds = explode( ',' , $roleIds );
         if ( $roleIds == config( 'backend.superAdminId' ) || in_array( config( 'backend.superAdminId' ) , $roleIds ) ) {
            $result = $this->getByCond(['isMenu'=>1 , 'status' => 1 , 'module'=> $module]);
-          //     self::$instance->model->where('is_menu',1)->where('status',1)->where('module' , $module)->get()->toArray();
-
             //如果是系统管理员
             return $result;
         } else {
@@ -185,6 +186,25 @@ class SysFuncService extends BaseService{
         }
 
         return $data;
+    }
+
+    public function getPrivilege( $uri ){
+        $func = SysFunc::where('uri' , $uri )->first();
+        if(empty($func)){
+            return false;
+        }
+        $this->privilege = $func;
+        return true;
+    }
+
+    public function accept( $id ){
+        if($id == config('backend.superAdminId')){
+            return true;
+        }
+
+        $sysUserService =ServiceManager::make( SysUserService::class );
+        $sysUserService->setUser($id);
+       return  $sysUserService->checkUser( $this->privilege->uri );
     }
 
 }
