@@ -197,14 +197,17 @@ class SysFuncService extends BaseService{
         return true;
     }
 
-    public function accept( $id ){
-        if($id == config('backend.superAdminId')){
-            return true;
+    public function accept( SysUserService  $sysUserService ){
+
+        $klass = get_called_class();
+        preg_match('#([^\\\\]+)$#', $klass, $extract);
+        $method = 'visit'.$extract[1];
+        if( method_exists( $sysUserService , $method)){
+            return $sysUserService->$method($this);
         }
 
-        $sysUserService =ServiceManager::make( SysUserService::class );
-        $sysUserService->setUser($id);
-       return  $sysUserService->checkUser( $this->privilege->uri );
+
+
     }
 
 }
