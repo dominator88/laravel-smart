@@ -318,15 +318,18 @@ class SysUserService extends BaseService {
     }
 
     public function visitSysFuncService(  SysFuncService $sysFuncService ){
+        
         if($this->user->id == config('backend.superAdminId')){
             return true;
         }
-        $roles = $this->user->sysRole->toArray();
-        $roles = array_column($roles , 'id' );
-        $sysFuncs = SysFunc::whereIn( 'id' , $roles)->get(['uri'])->toArray();
-        $sysFuncs = array_column($sysFuncs , 'uri');
-        if( in_array( $sysFuncService->privilege->uri , $sysFuncs)){
-            return true;
+        $roles = $this->user->sysRole;
+        foreach($roles as $k=>$role){
+            foreach($role->rolePermission as $key=>$privilege){
+                if($privilege->uri == $sysFuncService->privilege->uri){
+                    return true;
+                }
+            }
+
         }
         return false;
     }

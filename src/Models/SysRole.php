@@ -13,4 +13,8 @@ class SysRole extends Model
     public $timestamps = false ;
 
     use \Smart\Traits\Service\Scope;
+
+    public function rolePermission(){
+        return $this->belongsToMany(SysFunc::class , 'sys_role_permission' , 'role_id' , 'privilege_id');
+    }
 }
