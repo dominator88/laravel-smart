@@ -9,6 +9,7 @@
 
 namespace Smart\Service;
 
+use Illuminate\Support\Traits\Macroable;
 use Smart\Models\SysFunc;
 use Smart\Models\SysUser;
 use Smart\Models\SysUserRole;
@@ -20,6 +21,8 @@ class SysUserService extends BaseService {
 
     //引入 GridTable trait
     use \Smart\Traits\Service\GridTable;
+
+    use Macroable;
 
     //状态
     public $status = [
@@ -317,22 +320,7 @@ class SysUserService extends BaseService {
         $this->user = SysUser::find($id);
     }
 
-    public function visitSysFuncService(  SysFuncService $sysFuncService ){
-        
-        if($this->user->id == config('backend.superAdminId')){
-            return true;
-        }
-        $roles = $this->user->sysRole;
-        foreach($roles as $k=>$role){
-            foreach($role->rolePermission as $key=>$privilege){
-                if($privilege->uri == $sysFuncService->privilege->uri){
-                    return true;
-                }
-            }
 
-        }
-        return false;
-    }
 
 
 }

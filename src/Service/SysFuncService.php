@@ -202,11 +202,24 @@ class SysFuncService extends BaseService{
         $klass = get_called_class();
         preg_match('#([^\\\\]+)$#', $klass, $extract);
         $method = 'visit'.$extract[1];
-        if( method_exists( $sysUserService , $method)){
-            return $sysUserService->$method($this);
-        }
 
+        SysUserService::macro($method , function(SysFuncService $sysFuncService) {
+            if($this->user->id == config('backend.superAdminId')){
+                return true;
+            }
+            $roles = $this->user->sysRole;
+            foreach($roles as $k=>$role){
+                foreach($role->rolePermission as $key=>$privilege){
+                    if($privilege->uri == $sysFuncService->privilege->uri){
+                        return true;
+                    }
+                }
 
+            }
+            return false;
+        });
+
+         return $sysUserService->$method($this);
 
     }
 
