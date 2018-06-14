@@ -21,4 +21,8 @@ class MerAlbum extends Model {
         if($param)
             return $query->where('name' , 'like' , "%{$param}%");
     }
+
+    public function tag(){
+        return $this->belongsToMany( MerAlbumCatalog::class , 'mer_album_tag' , 'album_id' , 'catalog_id' );
+    }
 }

@@ -50,7 +50,7 @@ class MerAlbumCatalogService extends BaseService {
     function getByCond( $param ) {
         $default = [
             'field'    => ['*'],
-            'merId'    => '',
+            'merId'    => 0,
             'keyword'  => '',
             'status'   => '',
             'page'     => 1,
@@ -72,7 +72,6 @@ class MerAlbumCatalogService extends BaseService {
 
            $data = $model->getAll($param)->orderBy($param['sort'], $param['order'])->get( $param['field'])->toArray();
 
-            //echo $this->model->getLastSql();
         }
 
         return $data ? $data : [];

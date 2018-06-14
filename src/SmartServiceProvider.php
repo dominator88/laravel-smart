@@ -7,86 +7,82 @@
  */
 namespace Smart;
 
+use App\Models\SysModules;
 use Illuminate\Support\ServiceProvider;
 
-class SmartServiceProvider extends ServiceProvider{
+class SmartServiceProvider extends ServiceProvider {
 
-    protected  $commands = [
-        \Smart\Console\Commands\InstallCommand::class,
-        \Smart\Console\Commands\UninstallCommand::class,
-    ];
+	protected $commands = [
+		\Smart\Console\Commands\InstallCommand::class,
+		\Smart\Console\Commands\UninstallCommand::class,
+	];
 
-    protected $routeMiddleware = [
-        'auth.token' => \Smart\Middleware\CheckToken::class
-    ];
+	protected $routeMiddleware = [
+		'auth.token' => \Smart\Middleware\CheckToken::class,
+	];
 
-    public function boot(){
+	public function boot() {
 
-        $this->loadViewsFrom( __DIR__.'/../resources/views' ,'backend');
+		$this->loadViewsFrom(__DIR__ . '/../resources/views', 'backend');
 
-        $this->loadRoutesFrom( __DIR__ . '/../router/routes.php');
+		$this->loadRoutesFrom(__DIR__ . '/../router/routes.php');
 
-        $modules = explode(',' , config('backend.module_ext'));
+		$modules = explode(',', config('backend.module_ext'));
+		//列出状态正常的模块
+		$modules = SysModules::where('status', '1')->get();
 
-        foreach($modules as $module){
-            if(file_exists(app_path().'/'.ucfirst($module).'/routes.php')) {
-                $this->loadRoutesFrom(app_path() . '/' . ucfirst($module) . '/routes.php');
-            }
+		foreach ($modules as $module) {
+			if (file_exists(app_path() . '/' . ucfirst($module->symbol) . '/routes.php')) {
+				$this->loadRoutesFrom(app_path() . '/' . ucfirst($module->symbol) . '/routes.php');
+			}
 
-            if(file_exists(app_path().'/'.ucfirst($module).'/views')){
-                $this->loadViewsFrom(app_path().'/'.ucfirst($module) .'/views' , ucfirst($module));
-            }
+			if (file_exists(app_path() . '/' . ucfirst($module->symbol) . '/views')) {
+				$this->loadViewsFrom(app_path() . '/' . ucfirst($module->symbol) . '/views', ucfirst($module->symbol), ucfirst($module->symbol));
+			}
 
-        }
+		}
 
-        $this->publishes([ __DIR__.'/../config/' => config_path()] , 'backend');
+		$this->publishes([__DIR__ . '/../config/' => config_path()], 'backend');
 
-        //service
-        $this->publishes([ __DIR__.'/../resources/Service' => app_path('Service')] , 'backend');
+		//service
+		$this->publishes([__DIR__ . '/../resources/Service' => app_path('Service')], 'backend');
 
-        //Models
-        $this->publishes([ __DIR__.'/../resources/Models' => app_path('Models')] , 'backend');
+		//Models
+		$this->publishes([__DIR__ . '/../resources/Models' => app_path('Models')], 'backend');
 
-        //发布Api包
-        $this->publishes([ __DIR__.'/../resources/Api' => app_path('Api')] , 'backend');
+		//发布Api包
+		$this->publishes([__DIR__ . '/../resources/Api' => app_path('Api')], 'backend');
 
-        if( file_exists(app_path('Api').'/routes.php' ) ){
-            $this->loadRoutesFrom(app_path('Api').'/routes.php');
-        }
+		if (file_exists(app_path('Api') . '/routes.php')) {
+			$this->loadRoutesFrom(app_path('Api') . '/routes.php');
+		}
 
-        $this->publishes([ __DIR__.'/../resources/assets/static/' => public_path('static')] , 'backend');
+		$this->publishes([__DIR__ . '/../resources/assets/static/' => public_path('static')], 'backend');
 
-        $this->publishes([ __DIR__.'/../database/migrations/' => database_path( 'migrations')] , 'backend-migrations');
+		$this->publishes([__DIR__ . '/../database/migrations/' => database_path('migrations')], 'backend-migrations');
 
-        $this->publishes([ __DIR__.'/../resources/npm/' => public_path()] , 'backend');
+		$this->publishes([__DIR__ . '/../resources/npm/' => public_path()], 'backend');
 
+	}
 
+	public function register() {
 
-    }
+		$this->mergeConfigFrom(__DIR__ . '/../config/backend.php', 'backend');
+		$this->registerRouteMiddleware();
+		$this->commands($this->commands);
+	}
 
+	/**
+	 * Register the route middleware.
+	 *
+	 * @return void
+	 */
+	protected function registerRouteMiddleware() {
+		// register route middleware.
+		foreach ($this->routeMiddleware as $key => $middleware) {
+			app('router')->aliasMiddleware($key, $middleware);
+		}
 
-
-    public function register(){
-
-        $this->mergeConfigFrom(__DIR__.'/../config/backend.php' ,'backend' );
-        $this->registerRouteMiddleware();
-        $this->commands($this->commands);
-    }
-
-
-    /**
-     * Register the route middleware.
-     *
-     * @return void
-     */
-    protected function registerRouteMiddleware()
-    {
-        // register route middleware.
-        foreach ($this->routeMiddleware as $key => $middleware) {
-            app('router')->aliasMiddleware($key, $middleware);
-        }
-
-    }
+	}
 
 }
-

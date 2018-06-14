@@ -26,5 +26,9 @@ class MerAlbumCatalog extends Model
             return $query->where('mer_id' , $param);
         }
     }
+
+    public function album(){
+        return $this->belongsToMany( MerAlbum::class , 'mer_album_tag' , 'catalog_id' , 'album_id' );
+    }
     //
 }

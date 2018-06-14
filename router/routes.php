@@ -137,6 +137,8 @@ Route::group(['prefix'=>'backend/sysmerchant','namespace'=>'Smart\Controllers\Ba
 
     Route::post('destroy' ,   'SysMerchant@destroy');
 
+    Route::post('upload' ,   'SysMerchant@upload');
+
 });
 
 //机构功能
@@ -303,6 +305,24 @@ Route::group(['prefix'=>'backend/generate','namespace'=>'Smart\Controllers\Backe
     Route::get('destroy_system_file' ,  'Generate@destroy_system_file');
 
 
+
+});
+
+Route::group(['prefix'=> 'backend/meralbum' , 'namespace'=> 'Smart\Controllers\Backend' , 'middleware' => ['web'] ] , function(){
+
+    Route::get('index/{id?}' , 'MerAlbum@index');
+
+    Route::get('read' , 'MerAlbum@read');
+
+});
+
+Route::group(['prefix'=> 'backend/meralbumcatalog' , 'namespace'=> 'Smart\Controllers\Backend' , 'middleware' => ['web'] ] , function(){
+
+    Route::get('index' , 'MerAlbumCatalog@index');
+
+    Route::get('read' , 'MerAlbumCatalog@read');
+
+    Route::get('read_album/{id}' , 'MerAlbumCatalog@read_album');
 
 });
 
