@@ -5,8 +5,8 @@
 	<!-- BEGIN PAGE BAR -->
 	<div class="page-bar">
 		<ul class="page-breadcrumb">
-			<li><a href="<?= $param['uri']['module'] ?>">首页</a> <i class="fa fa-circle"></i></li>
-			<li><span><?= $param['pageTitle'] ?></span></li>
+			<li><a href="<?=$param['uri']['module']?>">首页</a> <i class="fa fa-circle"></i></li>
+			<li><span><?=$param['pageTitle']?></span></li>
 		</ul>
 	</div>
 	<!-- END PAGE BAR -->
@@ -17,7 +17,7 @@
 			<div class="portlet-title">
 				<div class="caption">
 					<i class="icon-settings"></i>
-					<span class="caption-subject uppercase"><?= $param['pageTitle'] ?></span>
+					<span class="caption-subject uppercase"><?=$param['pageTitle']?></span>
 				</div>
 				<div class="actions">
 					<a href="javascript:;" class="btn btn-circle blue" id="addNewBtn">
@@ -91,7 +91,7 @@
 								<div class="form-group">
 									<label class="col-md-3 control-label">状态</label>
 									<div class="col-md-7">
-										<?= form_radios('status' , $param['status'] ) ?>
+										<?=form_radios('status', $param['status'])?>
 									</div>
 								</div><!-- end item -->
 								<!-- start item -->
@@ -106,7 +106,7 @@
 									<label class="col-md-3 control-label">等级</label>
 									<div class="col-md-7">
 										<select class="form-control" name="rank">
-											<?= form_options( $param['rank'] ) ?>
+											<?=form_options($param['rank'])?>
 										</select>
 									</div>
 								</div><!-- end item -->
