@@ -7,9 +7,9 @@
  */
 namespace Smart;
 
-use App\Models\SysModules;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Smart\Models\SysModules;
 
 class SmartServiceProvider extends ServiceProvider {
 
