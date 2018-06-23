@@ -57,7 +57,6 @@ if (!function_exists('form_radio')) {
 			'title' => $title,
 			'name' => $name,
 			'data' => $data,
-			'title' => $title,
 			'value' => $checked_value,
 		];
 
@@ -65,10 +64,26 @@ if (!function_exists('form_radio')) {
 	}
 }
 
-use Facades\Smart\Service\WidgetService;
+if (!function_exists('form_text2')) {
+	function form_text2($name, $value = 0, $title, $help = '', $placeholder = '') {
+		$data = [
+			'type' => 'text',
+			'title' => $title,
+			'name' => $name,
+			'data' => $data,
+			'value' => $value,
+			'help' => $help,
+			'placeholder' => $placeholder,
+		];
+
+		return form_field($data);
+	}
+}
+
+//use Facades\Smart\Service\WidgetService;
 function form_field($param) {
 
-	$widgetService = WidgetService::make($param);
+	$widgetService = Facades\Smart\Service\WidgetService::make($param);
 	return $widgetService;
 }
 

@@ -8,112 +8,112 @@
 
 namespace Smart\Controllers\Backend;
 
-use Smart\Service\GenerateService;
-use Illuminate\Http\Request;
 use Facades\Smart\Service\ServiceManager;
+use Illuminate\Http\Request;
+use Smart\Service\GenerateService;
+
 class Generate extends Backend {
-    /**
-     * 构造函数
-     * Generate constructor.
-     */
-    public function __construct(Request $request) {
-        parent::__construct($request);
-        $this->_initClassName( $this->controller );
-        $this->service = ServiceManager::make(  GenerateService::class);
-    }
+	/**
+	 * 构造函数
+	 * Generate constructor.
+	 */
+	public function __construct(Request $request) {
+		parent::__construct($request);
+		$this->_initClassName($this->controller);
+		$this->service = ServiceManager::make(GenerateService::class);
 
-    public function index() {
+	}
 
-        $this->_init( '代码生成' );
+	public function index() {
 
-        $this->_addData( 'tables', $this->service->getTables() );
+		$this->_init('代码生成');
 
-        //uri
-        $this->_addParam( 'uri', [
-            'getSystemInfo'     => full_uri( 'Backend/Generate/get_system_info' ),
-            'createSystem'      => full_uri( 'Backend/Generate/create_system' ),
-            'createApi'         => full_uri( 'Backend/Generate/create_api' ),
-            'destroySystemFile' => full_uri( 'Backend/Generate/destroy_system_file' ),
-        ] );
+		$this->_addData('tables', $this->service->getTables());
 
-        $this->_addParam( [
-            'type'                    => $this->service->type,
-            'module'                  => $this->service->module,
-            'viewType'                => $this->service->viewType,
-            'tableType'               => $this->service->tableType,
-            'apiVer'                  => $this->service->apiVer,
-            'apiParams'               => $this->service->apiParams,
-            'apiAuthUser'             => $this->service->apiAuthUser,
-            'systemDefault'           => [
-                'module'    => 'Backend',
-                'tableName' => $this->data['tables'][0]->tableName,
-            ],
-            'systemComponentsDefault' => [
-                'tableType' => 'grid',
-                'viewType'  => 'portlet',
-            ],
-            'apiDefault'              => [
-                'apiVersion' => 'v1',
-                'authUser'   => '1',
-            ],
-        ] );
+		//uri
+		$this->_addParam('uri', [
+			'getSystemInfo' => full_uri('Backend/Generate/get_system_info'),
+			'createSystem' => full_uri('Backend/Generate/create_system'),
+			'createApi' => full_uri('Backend/Generate/create_api'),
+			'destroySystemFile' => full_uri('Backend/Generate/destroy_system_file'),
+		]);
 
-        //需要引入的 css 和 js
-        $this->_addCssLib( 'node_modules/select2/dist/css/select2.min.css' );
-        $this->_addJsLib( 'node_modules/select2/dist/js/select2.min.js' );
-        $this->_addJsLib( 'node_modules/select2/dist/js/i18n/zh-CN.js' );
+		$this->_addParam([
+			'type' => $this->service->type,
+			'module' => $this->service->module,
+			'viewType' => $this->service->viewType,
+			'tableType' => $this->service->tableType,
+			'apiVer' => $this->service->apiVer,
+			'apiParams' => $this->service->apiParams,
+			'apiAuthUser' => $this->service->apiAuthUser,
+			'systemDefault' => [
+				'module' => 'Backend',
+				'tableName' => $this->data['tables'][0]->tableName,
+			],
+			'systemComponentsDefault' => [
+				'tableType' => 'grid',
+				'viewType' => 'portlet',
+			],
+			'apiDefault' => [
+				'apiVersion' => 'v1',
+				'authUser' => '1',
+			],
+		]);
 
+		//需要引入的 css 和 js
+		$this->_addCssLib('node_modules/select2/dist/css/select2.min.css');
+		$this->_addJsLib('node_modules/select2/dist/js/select2.min.js');
+		$this->_addJsLib('node_modules/select2/dist/js/i18n/zh-CN.js');
 
-        return $this->_displayWithLayout('backend::generate.index');
-    }
+		return $this->_displayWithLayout('backend::generate.index');
+	}
 
-    function get_system_info(Request $request) {
-        $type      = $request->input( 'type' );
-        $tableName = $request->input( 'tableName' );
-        $module    = $request->input( 'module' );
+	function get_system_info(Request $request) {
+		$type = $request->input('type');
+		$tableName = $request->input('tableName');
+		$module = $request->input('module');
 
-        $Generate = GenerateService::instance();
+		$Generate = GenerateService::instance();
 
-        $result = [];
-        if ( $type == 'system' ) {
-            $result = $Generate->getSystemInfo( $tableName, $module, TRUE );
-        }
+		$result = [];
+		if ($type == 'system') {
+			$result = $Generate->getSystemInfo($tableName, $module, TRUE);
+		}
 
-        return json( $result );
-    }
+		return json($result);
+	}
 
+	function create_system(Request $request) {
+		$data = $request->except('components._token');
 
-    function create_system(Request $request) {
-        $data = $request->except('components._token');
+		$result = $this->service->createSystem($data);
 
-        $result = $this->service->createSystem( $data );
+		return json($result);
+	}
 
-        return json( $result );
-    }
+	function create_api(Request $request) {
+		$data = [
+			'name' => $request->input('name'),
+			'directory' => $request->input('directory'),
+			'params' => $request->input('params'),
+			'desc' => $request->input('desc'),
+			'apiVersion' => $request->input('apiVersion'),
+			'authUser' => $request->input('authUser'),
+		];
 
-    function create_api(Request $request) {
-        $data = [
-            'name'       => $request->input( 'name' ),
-            'directory'  => $request->input( 'directory' ),
-            'params'     => $request->input( 'params' ),
-            'desc'       => $request->input( 'desc' ),
-            'apiVersion' => $request->input( 'apiVersion' ),
-            'authUser'   => $request->input( 'authUser' )
-        ];
+		$result = $this->service->createApi($data);
 
-        $result = $this->service->createApi( $data );
+		return json($result);
+	}
 
-        return json( $result );
-    }
+	function destroy_system_file(Request $request) {
+		$temp = $request->input('temp');
+		$tableName = $request->input('tableName');
+		$module = $request->input('module');
 
-    function destroy_system_file(Request $request) {
-        $temp      = $request->input( 'temp' );
-        $tableName = $request->input( 'tableName' );
-        $module    = $request->input( 'module' );
+		$result = $this->service->deleteSystemFile($module, $tableName, $temp);
 
-        $result = $this->service->deleteSystemFile( $module, $tableName, $temp );
-
-        return json( $result );
-    }
+		return json($result);
+	}
 
 }

@@ -49,7 +49,7 @@
 					<!-- 查询状态 end -->
 					<button type="submit" class="btn default" id="searchBtn"><i class="fa fa-search"></i> 查询</button>
 				</form> <!-- End Search Form -->
-	 {!! form_radio('status', $param['status'], 0, '状态') !!}
+
         <div class="table-scrollable">
   <table id="dataGrid" class="table table-hover">
     <tr>
