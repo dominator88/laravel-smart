@@ -63,7 +63,7 @@ class ModuleRole extends Backend {
 		//需要引入的 css 和 js
 		$this->_addJsLib('static/plugins/dmg-ui/TableGrid.js');
 
-		return $this->_displayWithLayout('Backend::modulerole.index');
+		return $this->_displayWithLayout('backend::modulerole.index');
 	}
 
 	//读取

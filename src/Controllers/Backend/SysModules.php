@@ -51,7 +51,7 @@ class SysModules extends Backend {
 
 		$this->_addJsLib('static/plugins/dmg-ui/TableGrid.js');
 
-		return $this->_displayWithLayout('Backend::SysModules.index');
+		return $this->_displayWithLayout('backend::sysmodules.index');
 	}
 
 	/**

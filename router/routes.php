@@ -69,6 +69,8 @@ Route::group(['prefix' => 'backend/sysuser', 'namespace' => 'Smart\Controllers\B
 
 	Route::post('upload', 'SysUser@upload');
 
+	Route::post('test', 'SysUser@test');
+
 });
 
 //区域管理
