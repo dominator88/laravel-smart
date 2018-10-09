@@ -377,6 +377,23 @@ Route::group(['prefix' => 'backend/simulator', 'namespace' => 'Smart\Controllers
 
 });
 
+//设置配置
+Route::group(['prefix' => 'backend/syssettings', 'namespace' => 'Smart\Controllers\Backend', 'middleware' => ['web']], function () {
+
+	Route::get('index', 'SysSettings@index');
+
+	Route::get('read', 'SysSettings@read');
+
+	Route::post('insert', 'SysSettings@insert');
+
+	Route::post('update/{id}', 'SysSettings@update');
+
+	Route::post('destroy', 'SysSettings@destroy');
+
+	Route::get('group/{group}', 'SysSettings@indexGroup');
+
+});
+
 //接口路由
 Route::group(['prefix' => 'api/{version}', 'namespace' => 'App\Http\Controllers\Api', 'middleware' => ['api']], function () {
 

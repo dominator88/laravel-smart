@@ -12,6 +12,7 @@
       <div class="col-md-12">
         <!-- start form -->
         <form id="addEditForm" class="form-horizontal">
+        {!! csrf_field() !!}
           <div class="form-body">
             {formItems}
           </div>
