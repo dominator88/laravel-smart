@@ -1,5 +1,7 @@
 <?php
 
+
+
 Route::group(['prefix' => 'backend/index', 'namespace' => 'Smart\Controllers\Backend', 'middleware' => ['web']], function () {
 	Route::get('index', 'Index@index');
 });

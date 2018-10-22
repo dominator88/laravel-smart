@@ -20,6 +20,7 @@ class CreateSysUserDeviceTable extends Migration {
 			$table->string('app_version', 20)->nullable();
 			$table->string('api_version', 20)->nullable();
 			$table->string('registration_id', 50)->nullable();
+			$table->tinyInteger('for_test')->default(0)->comment('是否测试账户');
 			$table->timestamps();
 		});
 	}

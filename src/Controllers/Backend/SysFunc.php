@@ -46,7 +46,7 @@ class SysFunc extends Backend {
 			'privilege' => $SysFuncPrivilege->name,
 			'alias' => $SysFuncPrivilege->alias,
 		]);
-		exit;
+
 		//需要引入的 css 和 js
 		$this->_addJsLib('static/plugins/dmg-ui/TreeGrid.js');
 

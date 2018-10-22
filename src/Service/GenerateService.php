@@ -241,7 +241,7 @@ class GenerateService {
 		foreach ($modules as $m) {
 			$tmp_module = array_merge($tmp_module, [ucfirst($m['symbol']) => $m['symbol']]);
 		}
-		$this->module = $tmp_module;
+		$this->module = $tmp_module ?: $this->module;
 
 		//初始化api版本号
 		$apiVersion = config('backend.api.apiVersion');
@@ -321,6 +321,7 @@ class GenerateService {
 		unset($identify['field']);
 
 		$func = $this->getFuncName($tableName);
+
 		$replaceData = [
 			'tableName' => $tableName,
 			'func' => $func,
