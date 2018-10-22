@@ -136,6 +136,8 @@ Route::group(['prefix' => 'backend/sysmerchant', 'namespace' => 'Smart\Controlle
 
 	Route::post('upload', 'SysMerchant@upload');
 
+	Route::get('read_album_catalog','SysMerchant@read_album_catalog');
+
 });
 
 //机构功能
