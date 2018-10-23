@@ -5,6 +5,7 @@ namespace Smart\Console\Commands;
 use Illuminate\Console\Command;
 use Smart\Auth\Database\AdminTableSeeder;
 use Smart\Models\SysUser;
+use Smart\Models\SysModule;
 
 class InstallCommand extends Command
 {
@@ -77,8 +78,13 @@ class InstallCommand extends Command
      * @param $module
      */
     public function initDirectory($module){
-        $this->makeDir($module);
-        $this->line('initDirectory success!');
+        if($module){
+            SysModule::FirstOrCreate(['name'=>$module , 'symbol'=>strtolower($module),'displayorder'=>0,'version'=>'1.0','author'=>'MR.Z','status'=>1]);
+        }else{
+            $this->makeDir($module);
+            $this->line('initDirectory success!');
+        }
+        
     }
 
     /**
@@ -102,6 +108,7 @@ class InstallCommand extends Command
         $this->laravel['files']->put( app_path($module).'/Controllers/IndexController.php' , $content);
         $this->line('initExampleController success!');
     }
+
 
     /**
      * 初始化视图
