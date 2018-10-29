@@ -205,6 +205,14 @@ class AdminTableSeeder extends Seeder {
 				'level' => 2,
 			]),
 
+			extend($default_func, [
+				'name' => '模块管理',
+				'icon' => '',
+				'uri' => 'backend/sysmodules/index',
+				'pid' => 5,
+				'level' => 2,
+			]),
+
 		]
 		);
 	}

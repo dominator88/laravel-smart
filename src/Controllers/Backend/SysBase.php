@@ -83,6 +83,7 @@ class SysBase extends  Controller{
             'destroy' => full_uri( $currentBaseUri . 'destroy' ) ,
         ];
 
+
     }
 
     public function _initClassName( $className ){

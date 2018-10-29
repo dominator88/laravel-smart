@@ -48,8 +48,10 @@ class SysModules extends Backend {
 		]);
 
 		//需要引入的 css 和 js
-
+		$this->_addJsLib( 'static/plugins/dmg-ui/Uploader.js' );
+		$this->_addJsLib( 'static/plugins/dmg-ui/AreaSelection.js' );
 		$this->_addJsLib('static/plugins/dmg-ui/TableGrid.js');
+		
 
 		return $this->_displayWithLayout('backend::sysmodules.index');
 	}

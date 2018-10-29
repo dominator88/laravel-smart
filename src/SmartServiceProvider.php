@@ -39,7 +39,8 @@ class SmartServiceProvider extends ServiceProvider {
 			}
 
 			if (file_exists(app_path() . '/' . ucfirst($module->symbol) . '/views')) {
-				$this->loadViewsFrom(app_path() . '/' . ucfirst($module->symbol) . '/views', ucfirst($module->symbol), ucfirst($module->symbol));
+
+				$this->loadViewsFrom(app_path() . '/' . ucfirst($module->symbol) . '/views', ucfirst($module->symbol));
 			}
 
 		}

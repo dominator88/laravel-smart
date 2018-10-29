@@ -18,8 +18,10 @@
     <!-- END PAGE BAR -->
 
     <!-- BEGIN PAGE TITLE-->
-    <h3 class="page-title"> 首页
+    <h3 class="page-title"> 首页  {!! Widget::button(['label'=>'按钮','size'=>'xlg','icon'=>'home']) !!}  
         <small>控制台 & 统计</small>
+    
+    
     </h3>
     <!-- END PAGE TITLE-->
 

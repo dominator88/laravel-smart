@@ -14,6 +14,11 @@ var optDelete = function ( value , row ) {
          '<i class="fa fa-trash"></i> 删除</a>';
 };
 
+var optIncome = function ( value , row ) {
+  return '<a class="btn btn-sm red destroyBtn" data-id="' + row.id + '" href="javascript:;">' +
+         '<i class="fa fa-trash"></i> 进入</a>';
+};
+
 //status
 var statusColor = [ 'default' , 'primary' , 'success' , 'info' ];
 var formatStatus = function ( value ) {
