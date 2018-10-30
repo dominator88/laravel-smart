@@ -237,11 +237,10 @@ class GenerateService {
 		//初始化Module
 		$sysModulesService = ServiceManager::make(SysModulesService::class);
 		$modules = $sysModulesService->getByCond(['status' => 1]);
-		$tmp_module = [];
+		
 		foreach ($modules as $m) {
-			$tmp_module = array_merge($tmp_module, [ucfirst($m['symbol']) => $m['symbol']]);
+			$this->module = array_merge($this->module, [ucfirst($m['symbol']) => $m['symbol']]);
 		}
-		$this->module = $tmp_module ?: $this->module;
 
 		//初始化api版本号
 		$apiVersion = config('backend.api.apiVersion');
