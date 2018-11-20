@@ -10,6 +10,7 @@ namespace Smart\Controllers\Backend;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+
 class Index extends Backend {
 	public function __construct(Request $request) {
 		parent::__construct($request);
@@ -19,7 +20,7 @@ class Index extends Backend {
 
 	public function index(Request $request) {
 		$this->_init('首页');
-
+ 
 		$this->_addJsLib('node_modules/waypoints/lib/jquery.waypoints.min.js');
 		$this->_addJsLib('node_modules/jquery.counterup/jquery.counterup.min.js');
 		$this->_addJsLib('node_modules/echarts/dist/echarts.min.js');

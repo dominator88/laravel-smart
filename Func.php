@@ -328,3 +328,42 @@ if (!function_exists('full_img_uri')) {
 		return config('backend.image.imgUri') . $imgUri;
 	}
 }
+
+if (!function_exists('css')) {
+	/**
+	 * 返回图片绝对路径
+	 *
+	 * @param $imgUri
+	 *
+	 * @return string
+	 */
+	function css() {
+		return  Mp\Service\Common\Asset::css();
+	}
+}
+
+if (!function_exists('js')) {
+	/**
+	 * 返回图片绝对路径
+	 *
+	 * @param $imgUri
+	 *
+	 * @return string
+	 */
+	function js() {
+		return  Mp\Service\Common\Asset::js();
+	}
+}
+
+if (!function_exists('script')) {
+	/**
+	 * 返回图片绝对路径
+	 *
+	 * @param $imgUri
+	 *
+	 * @return string
+	 */
+	function script() {
+		return  Mp\Service\Common\Asset::script();
+	}
+}
