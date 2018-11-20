@@ -338,7 +338,10 @@ if (!function_exists('css')) {
 	 * @return string
 	 */
 	function css() {
-		return  Mp\Service\Common\Asset::css();
+		if(class_exists(Mp\Service\Common\Asset::class)){
+			return  Mp\Service\Common\Asset::css();
+		}
+		
 	}
 }
 
@@ -351,7 +354,9 @@ if (!function_exists('js')) {
 	 * @return string
 	 */
 	function js() {
-		return  Mp\Service\Common\Asset::js();
+		if(class_exists(Mp\Service\Common\Asset::class)){
+			return  Mp\Service\Common\Asset::js();
+		}
 	}
 }
 
@@ -364,6 +369,8 @@ if (!function_exists('script')) {
 	 * @return string
 	 */
 	function script() {
-		return  Mp\Service\Common\Asset::script();
+		if(class_exists(Mp\Service\Common\Asset::class)){
+			return  Mp\Service\Common\Asset::script();
+		}
 	}
 }
