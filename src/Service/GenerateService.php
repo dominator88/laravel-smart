@@ -121,6 +121,9 @@ class GenerateService {
 	];
 
 	var $systemComponents = [
+		'traits' => [
+			'instanceTrait' => 'component/traits/instance_trait.txt',
+		],
 		'editor' => [
 			'controller' => [
 				'editorDecode' => 'component/editor/controller/editor_decode.txt',
@@ -431,6 +434,25 @@ class GenerateService {
 		}
 	}
 
+	private function createComponentTraits($temp, $tempContent, $value){
+		$component = 'traits';
+		if (!isset($this->systemComponents[$component])) {
+			return $tempContent;
+		}
+		$replaceData = [];
+		foreach($this->systemComponents[$component] as $keyword => $filePaths){
+
+			if ($keyword == $value) {
+				$replaceData[$keyword] = file_get_contents(SYSTEM_TEMP_BASE_PATH . $filePaths);
+			} else {
+				$replaceData[$keyword] = '';
+			}
+
+		}
+
+		return $this->replaceTmp($tempContent , $replaceData);
+	}
+
 	//table_type 组件
 	private function createComponentTableType($temp, $tempContent, $value) {
 		$component = 'tableType';
@@ -518,6 +540,8 @@ class GenerateService {
 		//print_r($replaceData);
 		return $this->replaceTmp($tempContent, $replaceData);
 	}
+
+
 
 	private function createComponentEditor($temp, $tempContent, $value, $data) {
 		$component = 'editor';
@@ -654,6 +678,7 @@ class GenerateService {
 
 	//创建 service
 	private function createService($data) {
+		 $data['components']['traits'] = 'instanceTrait';
 		$temp = $data['temp'];
 		//文件模板
 		$tempContent = file_get_contents(SYSTEM_TEMP_BASE_PATH . $this->systemTemps[$temp]);
@@ -715,10 +740,11 @@ class GenerateService {
 			'funcName' => $data['funcName'],
 			'tableName' => $data['tableName'],
 		];
-
+		
 		//加载组件
 		foreach ($data['components'] as $component => $value) {
 			$componentMethod = "createComponent" . ucfirst($component);
+
 			$tempContent = $this->$componentMethod($temp, $tempContent, $value, $data);
 		}
 		$fileContent = $this->replaceTmp($tempContent, $replaceData);

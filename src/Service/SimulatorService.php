@@ -19,17 +19,7 @@ use ReflectionClass;
 
 class SimulatorService extends BaseService {
 
-    //类实例
-    private static $instance;
-
-    //生成类单例
-    public static function instance() {
-        if ( self::$instance == NULL ) {
-            self::$instance = new SimulatorService();
-        }
-
-        return self::$instance;
-    }
+    use \Smart\Traits\Service\Instance;
 
     function readApi( $apiVersion ) {
 

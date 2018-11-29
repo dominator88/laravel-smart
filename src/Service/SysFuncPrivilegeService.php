@@ -38,6 +38,9 @@ class SysFuncPrivilegeService extends BaseService{
         'delete' => [ 'destroy' , 'delete' , 'remove' ] ,
     ];
 
+    public function getDefaultRow(){
+        
+    }
 
 
     public function getByCond($param){

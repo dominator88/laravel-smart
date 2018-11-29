@@ -16,7 +16,7 @@ class SysMerchantService extends BaseService {
     //引入 GridTable trait
     use \Smart\Traits\Service\GridTable,\Smart\Traits\Service\Instance;
 
-    protected $model_class = SysMerchant::class;
+    protected $model_class = SysMerchant::class;    
 
     public $forTest = [
         0 => '否' ,
