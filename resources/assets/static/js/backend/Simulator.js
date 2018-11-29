@@ -208,12 +208,13 @@ var Simulator = {
     var $token = $form.find( 'input[name="api_token"]' );
     var $merId = $form.find( 'input[name="merId"]' );
     var html = '';
+    console.log($token);
     if ( $token.length > 0 ) {
       html = '<select name="api_token" class="form-control">';
 
       for ( var i = 0 ; i < Param.testToken.length ; i ++ ) {
         var user = Param.testToken[ i ];
-        html += '<option value="' + user.token + '">' + user.token + ' (' + user.nickname + ' - ' + user.phone + ' )' + '</option>';
+        html += '<option value="' + user.api_token + '">' + user.api_token + ' (' + user.username + ' - ' + user.phone + ' )' + '</option>';
       }
       html += '</select>';
 

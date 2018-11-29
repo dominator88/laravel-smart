@@ -13,6 +13,8 @@ class SysUser extends Authenticatable {
 
 	public $timestamps = FALSE;
 
+	protected $fillable = ['id','module','username','password','icon','email','phone','status','api_token','signed_at','signed_ip','remember_token','name'];
+
 	use \Smart\Traits\Service\Scope;
 
 	public function sysMerchants() {

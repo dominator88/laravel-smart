@@ -130,6 +130,14 @@
                                 <?=form_checkbox_rows('roles', $param['roles'])?>
                             </div>
                         </div><!-- end item -->
+
+                         <!-- start item -->
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">api测试账户</label>
+                            <div class="col-md-7">
+                                <?=form_radios('for_test', $param['for_test'])?>
+                            </div>
+                        </div><!-- end item -->
                     </div>
                     <div class="form-actions" style="margin-bottom: 60px;">
                         <hr>

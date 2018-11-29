@@ -18,7 +18,9 @@ use JPush;
 class SysPushService extends BaseService {
 
     //引入 GridTable trait
-    use \Smart\Traits\Service\GridTable;
+    use \Smart\Traits\Service\GridTable,\Smart\Traits\Service\Instance;
+
+    protected $model_class = SysPush::class;
 
     public $catalog = [
         'alert' => '通知',
@@ -40,18 +42,7 @@ class SysPushService extends BaseService {
 
     private $jpush;
     //类实例
-    private static $instance;
-
-    //生成类单例
-    public static function instance() {
-        if ( self::$instance == NULL ) {
-            self::$instance        = new SysPushService();
-            self::$instance->setModel(new SysPush());
-            self::$instance->initJPush();
-        }
-
-        return self::$instance;
-    }
+    
 
     /**
      * 初始化 jpush 接口

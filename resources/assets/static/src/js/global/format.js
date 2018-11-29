@@ -70,3 +70,8 @@ var formatYes = function ( value ) {
   var data = [ '否' , '是' ];
   return '<span class="label label-sm label-' + yesColor[ value ] + '">' + data[ value ] + '</span>';
 };
+
+var formatTest = function ( value ) {
+  var data = [ '否' , '是' ];
+  return '<span class="label label-sm label-' + yesColor[ value ] + '">' + data[ value ] + '</span>';
+};

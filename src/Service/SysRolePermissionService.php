@@ -16,7 +16,9 @@ use Illuminate\Support\Facades\DB;
 class SysRolePermissionService extends BaseService {
 
     //引入 GridTable trait
-    use \Smart\Traits\Service\GridTable;
+    use \Smart\Traits\Service\GridTable,\Smart\Traits\Service\Instance;
+
+    protected $model_class = SysRolePermission::class;
 
     //状态
     public $status = [
@@ -24,18 +26,7 @@ class SysRolePermissionService extends BaseService {
         1 => '启用',
     ];
 
-    //类实例
-    private static $instance;
-
-    //生成类单例
-    public static function instance() {
-        if ( self::$instance == NULL ) {
-            self::$instance        = new SysRolePermissionService();
-            self::$instance->setModel(new SysRolePermission());
-        }
-
-        return self::$instance;
-    }
+    
 
     //根据条件查询
     function getByCond( $param ) {

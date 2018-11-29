@@ -13,8 +13,9 @@ use Smart\Models\SysRole;
 class SysRoleService extends BaseService {
 
 	//引入 GridTable trait
-	use \Smart\Traits\Service\GridTable;
+	use \Smart\Traits\Service\GridTable,\Smart\Traits\Service\Instance;
 
+	protected $model_class = SysRole::class;
 	//状态
 	var $status = [
 		0 => '禁用',
@@ -41,18 +42,10 @@ class SysRoleService extends BaseService {
 		4 => '4级',
 		5 => '5级',
 	];
-	//类实例
-	private static $instance;
+
 
 	//生成类单例
-	public static function instance() {
-		if (self::$instance == NULL) {
-			self::$instance = new SysRoleService();
-			self::$instance->setModel(new SysRole());
-		}
-
-		return self::$instance;
-	}
+	
 
 	//取默认值
 	function getDefaultRow() {

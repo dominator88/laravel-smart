@@ -13,7 +13,9 @@ use Smart\Models\MerAlbumCatalog;
 class MerAlbumService extends BaseService {
 
   	//引入 GridTable trait
-	use \Smart\Traits\Service\GridTable;
+	use \Smart\Traits\Service\GridTable,\Smart\Traits\Service\Instance;
+
+  protected $model_class = MerAlbum::class;
 
     public $albumCatalog;
 
@@ -31,19 +33,7 @@ class MerAlbumService extends BaseService {
         $this->albumTag = ServiceManager::make( MerAlbumTagService::class );
     }
 
-    //类实例
-	private static $instance;
 
-	//生成类单例
-	public static function instance() {
-		if ( self::$instance == NULL ) {
-			self::$instance = new MerAlbumService();
-			self::$instance->setModel(new MerAlbum());
-		}
-
-
-		return self::$instance;
-	}
 
   //取默认值
 	function getDefaultRow() {

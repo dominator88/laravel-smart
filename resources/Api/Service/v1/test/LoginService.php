@@ -27,7 +27,8 @@ class LoginService extends ApiService {
 	 */
 	public $defaultParams = [
 	  'get' => [
-	    
+      
+	//    'api_token' => [ 'token' , '0' , PARAM_REQUIRED ] ,
 	  ],
 	  'post' => [
 	    

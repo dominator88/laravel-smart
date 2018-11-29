@@ -11,7 +11,9 @@ use Smart\Models\SysFunc;
 
 class SysFuncService extends BaseService {
 
-	use \Smart\Traits\Service\TreeTable;
+	use \Smart\Traits\Service\TreeTable,\Smart\Traits\Service\Instance;
+
+	protected $model_class = SysFunc::class;
 
 	const DEFAULT_KEY = 'children';
 
@@ -33,16 +35,7 @@ class SysFuncService extends BaseService {
 
 	public $privilege = null;
 
-	private static $instance = null;
-
-	public static function instance() {
-		if (self::$instance == NULL) {
-			self::$instance = new SysFuncService();
-			self::$instance->setModel(new SysFunc());
-		}
-
-		return self::$instance;
-	}
+	
 
 	//默认行
 	public function getDefaultRow() {
@@ -97,7 +90,8 @@ class SysFuncService extends BaseService {
 		];
 		$param = extend($default, $param);
 
-		$data = $this->getModel()->status($param['status'])->module($param['module'])->isMenu($param['isMenu'])->module($param['module'])
+
+		$data = self::instance()->getModel()->status($param['status'])->module($param['module'])->isMenu($param['isMenu'])->module($param['module'])
 			->orderBy('level', 'ASC')
 			->orderBy('sort', 'ASC')
 			->get()

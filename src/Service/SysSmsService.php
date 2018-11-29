@@ -19,9 +19,9 @@ class SysSmsService extends BaseService {
     const CaptchaVerifyPeriod = 15; //验证码 验证有效期 单位:分钟
 
     //引入 GridTable trait
-    use \Smart\Traits\Service\GridTable;
+    use \Smart\Traits\Service\GridTable,\Smart\Traits\Service\Instance;
 
-
+    protected $model_class = SysSms::class;
 
     public $type = [
         'captcha' => '验证码'
@@ -34,18 +34,7 @@ class SysSmsService extends BaseService {
         1   => '已验证',
     ];
 
-    //类实例
-    private static $instance;
-
-    //生成类单例
-    public static function instance() {
-        if ( self::$instance == NULL ) {
-            self::$instance        = new SysSmsService();
-            self::$instance->setModel(new SysSms());
-        }
-
-        return self::$instance;
-    }
+    
 
     //取默认值
     function getDefaultRow() {

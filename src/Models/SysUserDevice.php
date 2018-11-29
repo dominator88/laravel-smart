@@ -15,7 +15,7 @@ class SysUserDevice extends Model {
 
 	public $timestamps = FALSE;
 
-	protected $fillable = ['for_test', 'token', 'device', 'api_version'];
+	protected $fillable = ['user_id','for_test', 'token', 'device', 'api_version'];
 
 	use \Smart\Traits\Service\Scope;
 

@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Smart\Models\SysUser as SysUserModel;
 use Smart\Service\SysRoleService;
 use Smart\Service\SysUserService;
+use Smart\Service\SysUserDeviceService;
 
 class SysUser extends Backend {
 
@@ -64,12 +65,14 @@ class SysUser extends Backend {
 		]);
 
 		$SysRole = SysRoleService::instance();
+		$sysUserDevice = SysUserDeviceService::instance();
 		//附加参数
 		$this->_addParam([
 			'defaultRow' => $this->service->getDefaultRow(),
 			'defaultPwd' => config('backend.defaultPwd'),
 			'status' => $this->service->status,
 			'roles' => $SysRole->getByModule($this->module),
+			'for_test' => $sysUserDevice->for_test,
 		]);
 
 		$this->_addCssLib('node_modules/jcrop-0.9.12/css/jquery.Jcrop.min.css');

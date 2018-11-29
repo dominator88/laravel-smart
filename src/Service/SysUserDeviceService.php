@@ -12,25 +12,23 @@ use Smart\Service\BaseService;
 class SysUserDeviceService extends BaseService {
 
 	//引入 GridTable trait
-	use \Smart\Traits\Service\GridTable;
+	use \Smart\Traits\Service\GridTable,\Smart\Traits\Service\Instance;
 
+	protected $model_class = SysUserDevice::class;
 	//状态
 	public $status = [
 		0 => '禁用',
 		1 => '启用',
 	];
 
-	//类实例
-	private static $instance;
+	public $for_test = [
+		0 => '否',
+		1 => '是',
+	];
 
-	//生成类单例
-	public static function instance() {
-		if (self::$instance == NULL) {
-			self::$instance = new SysUserDeviceService();
-			self::$instance->setModel(new SysUserDevice());
-		}
-		return self::$instance;
-	}
+	
+
+	
 
 	//取默认值
 	function getDefaultRow() {
@@ -80,6 +78,11 @@ class SysUserDeviceService extends BaseService {
 		$data = $model->getAll($param)->orderBy($param['sort'], $param['order'])->get($param['field'])->toArray();
 
 		return $data ? $data : [];
+	}
+
+	//生成token
+	public function generateToken(){
+
 	}
 
 }

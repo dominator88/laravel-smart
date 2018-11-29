@@ -13,13 +13,16 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Traits\Macroable;
 use Smart\Models\SysUser;
 use Smart\Models\SysUserRole;
+use Smart\Models\SysUserDevice;
 
 class SysUserService extends BaseService {
 
 	//引入 GridTable trait
-	use \Smart\Traits\Service\GridTable;
+	use \Smart\Traits\Service\GridTable,\Smart\Traits\Service\Instance;
 
 	use Macroable;
+
+	protected $model_class = SysUser::class;
 
 	//状态
 	public $status = [
@@ -27,19 +30,8 @@ class SysUserService extends BaseService {
 		1 => '启用',
 	];
 
-	//类实例
-	private static $instance;
 
-	//生成类单例
-	public static function instance() {
-		if (self::$instance == NULL) {
-			self::$instance = new SysUserService();
-			self::$instance->setModel(new SysUser());
-
-		}
-
-		return self::$instance;
-	}
+	
 
 	public $user = null;
 
@@ -95,7 +87,7 @@ class SysUserService extends BaseService {
 		if ($params['merchant']) {
 			return $this->getMerSysUserByCond($params);
 		}
-		$model = $this->getModel();
+		$model = self::instance()->getModel();
 
 		if ($params['withTest']) {
 			$model = $model->with('UserDevice');
@@ -184,7 +176,7 @@ class SysUserService extends BaseService {
 	 */
 	function uploadPwd($id, $data) {
 		try {
-			$this->getModel()->where('id', $id)->update($data);
+			self::instance()->getModel()->where('id', $id)->update($data);
 
 			return ajax_arr('更新成功', 0);
 		} catch (\Exception $e) {
@@ -211,9 +203,17 @@ class SysUserService extends BaseService {
 			unset($data['roles']);
 			$data['password'] = str2pwd(config('defaultPwd'));
 
-			$id = $this->getModel()->insertGetId($data);
+			$id = self::instance()->getModel()->insertGetId($data);
+			SysUserDevice::firstOrCreate(['user_id'=>$id]);
 			if ($id <= 0) {
 				throw new \Exception('创建用户失败');
+			}
+
+			if($data['for_test']){
+				$token = md5(http_build_query($data) . json_encode(['created_at' => time()]));
+				self::instance()->getModel()->api_token = $token;
+				self::instance()->getModel()->save();
+
 			}
 
 			//更新用户角色
@@ -237,21 +237,36 @@ class SysUserService extends BaseService {
 
 	//更新
 	function update($id, $data) {
+
 		DB::beginTransaction();
 		try {
 			$roles = [];
 			if (isset($data['roles'])) {
 				$roles = $data['roles'];
+				unset($data['roles']);
+			}
+			if (isset($data['for_test'])) {
+				$for_test = $data['for_test'];
+				unset($data['for_test']);
 			}
 
-			unset($data['roles']);
-			$ret = $this->getModel()->where('id', $id)->update($data);
-
+			
+			$ret = self::instance()->getModel()->where('id', $id)->update($data);
+			$sysUserDevice = SysUserDevice::firstOrCreate(['user_id'=>$id]);
+			$sysUserDevice->for_test = $for_test;
+			$sysUserDevice->save();
 			//更新用户角色
 			$SysUserRole = SysUserRoleService::instance();
 			$RoleResult = $SysUserRole->updateByUser($id, $roles);
 			if ($RoleResult['code'] > 0) {
 				throw new \Exception($RoleResult['msg']);
+			}
+			if($for_test){
+				$token = md5(http_build_query($data) . json_encode(['created_at' => time()]));
+				$sysUser = SysUser::find($id);
+				$sysUser->api_token = $token;
+				$sysUser->save();
+
 			}
 
 			DB::commit();
@@ -260,7 +275,6 @@ class SysUserService extends BaseService {
 		} catch (\Exception $e) {
 			DB::rollback();
 
-			//echo $this->getModel()->getLastSql();
 			return ajax_arr($e->getMessage(), 500);
 		}
 	}
@@ -273,7 +287,7 @@ class SysUserService extends BaseService {
 	 * @return array
 	 */
 	public function destroy($id) {
-		$model = $this->getModel();
+		$model = self::instance()->getModel();
 		try {
 			if ($id <= 2) {
 				throw new \Exception('系统用户不能删除');
@@ -303,7 +317,7 @@ class SysUserService extends BaseService {
 		try {
 			//  $data['password'] = str2pwd( $pwd );
 			$data['password'] = Hash::make($pwd);
-			$row = $this->getModel()->where('id', $id)->update($data);
+			$row = self::instance()->getModel()->where('id', $id)->update($data);
 			if ($row <= 0) {
 				return ajax_arr('未修改任何记录', 500);
 			}
@@ -315,7 +329,7 @@ class SysUserService extends BaseService {
 	}
 
 	public function setUser($id) {
-		$this->user = SysUser::find($id);
+		self::instance()->user = self::instance()->getModel()->find($id);
 	}
 
 	/**
