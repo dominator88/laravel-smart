@@ -1,3 +1,4 @@
+}
 /**
  * 接口调试 JS
  *
@@ -19,7 +20,7 @@ var Simulator = {
     self.initVersion();
   } ,
   initVersion: function(){
-    
+      
       var ret = {"v1":[{"version":"v1","text":"v1"}],"v2":[{"version":"v2","text":"v2"}]}
 
       var options = [];
@@ -48,6 +49,7 @@ var Simulator = {
     },
   //初始化action
   initApiUri : function (version='') {
+    self=this;
     $.get( Param.uri.readApi+"?version="+version , function ( ret ) {
       //console.log( ret ) ;
       var options = [];
@@ -71,7 +73,9 @@ var Simulator = {
       }
 
       $( '#actions' ).html( options.join( '' ) ).eq( 0 ).prop( 'selected' , true );
+      self.loadParams();
     } );
+   
   } ,
 
   //初始化按钮
@@ -101,9 +105,11 @@ var Simulator = {
       //version
      $ver = $version.find('option:selected').data( 'directory' )
       self.initApiUri($ver)
+
     });
     //action变化
     $actions.on( 'change' , function () {
+      self.config.method = '';
       $( '#selectActionBtn' ).trigger( 'click' );
     } );
 
