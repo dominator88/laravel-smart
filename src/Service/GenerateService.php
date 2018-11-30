@@ -33,6 +33,7 @@ class GenerateService {
 
 	public $apiVer = [
 		'v1' => 'v1',
+		'v2' => 'v2',
 
 	];
 
@@ -247,7 +248,7 @@ class GenerateService {
 
 		//初始化api版本号
 		$apiVersion = config('backend.api.apiVersion');
-		$this->apiVer = [$apiVersion => $apiVersion];
+	//	$this->apiVer = [$apiVersion => $apiVersion];
 
 	}
 

@@ -37,6 +37,7 @@
                                 <label class="col-md-2 control-label">接口uri</label>
                                 <div class="col-md-6">
                                     <span class="help-inline"> <?= $param['uri']['api'] ?> </span>
+                                    <select name="version" id="version" class="form-control input-inline input-mini"></select>
                                     <select name="actions" id="actions" class="form-control input-inline input-medium"></select>
                                 </div>
                                 <div class="col-md-3">

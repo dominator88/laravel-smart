@@ -38,7 +38,7 @@ class Simulator extends Backend {
 		$this->_addParam('uri', [
 			'readApi' => full_uri('backend/simulator/read_api'),
 			'readParams' => full_uri('backend/simulator/read_params'),
-			'api' => $this->baseUri . "api/{$this->apiVersion}/",
+			'api' => $this->baseUri . "api/",
 			'readme' => full_uri('backend/simulator/read_me'),
 		]);
 
@@ -64,12 +64,22 @@ class Simulator extends Backend {
 	}
 
 	//读取结果
-	function read_api() {
-
+	function read_api(Request $request) {
+		if($request->filled('version')){
+			$apiVersion = $request->input('version');
+		}else{
+			$apiVersion =  $this->apiVersion;
+		}
+		
 		//   $Simulator = SimulatorService::instance();
+		
+		$ret = $this->service->readApi($apiVersion);
 
-		$ret = $this->service->readApi($this->apiVersion);
+		return json($ret);
+	}
 
+	public function read_version(){  //TODO 版本控制未完成
+		$ret = $this->service->readVersion();
 		return json($ret);
 	}
 
@@ -78,8 +88,9 @@ class Simulator extends Backend {
 		$action = $request->input('action');
 		$action = ucfirst($action);
 		$method = $request->input('method', '');
+		$version = $request->input('version',$this->apiVersion);
 
-		$service = "App\\Api\\Service\\{$this->apiVersion}\\{$directory}\\{$action}Service";
+		$service = "App\\Api\\Service\\{$version}\\{$directory}\\{$action}Service";
 
 		$instance = $service::instance();
 

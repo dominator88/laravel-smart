@@ -21,6 +21,11 @@ class SimulatorService extends BaseService {
 
     use \Smart\Traits\Service\Instance;
 
+    private $apiVer = [
+        'v1' => 'v1',
+        'v2' => 'v2',
+    ];
+
     function readApi( $apiVersion ) {
 
         $dir   = app_path('Api') . '/Service/' . $apiVersion;
@@ -51,6 +56,10 @@ class SimulatorService extends BaseService {
 
 
         return $api;
+    }
+
+    public function readVersion(){
+        return $this->apiVer;
     }
 
     function _parser( $apiVersion, $subDir, $className ) {
