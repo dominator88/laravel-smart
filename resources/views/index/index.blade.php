@@ -18,7 +18,7 @@
     <!-- END PAGE BAR -->
 
     <!-- BEGIN PAGE TITLE-->
-    <h3 class="page-title"> 首页  {!! Widget::button(['label'=>'按钮','size'=>'xlg','icon'=>'home']) !!}  
+    <h3 class="page-title"> 首页  
         <small>控制台 & 统计</small>
     
     

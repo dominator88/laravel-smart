@@ -24,7 +24,7 @@ class SysUser extends Backend {
 		parent::__construct($request);
 		$this->_initClassName($this->controller);
 		$this->service = ServiceManager::make(SysUserService::class);
-	}
+	} 
 
 	/**
 	 * 页面显示接口
@@ -66,6 +66,7 @@ class SysUser extends Backend {
 
 		$SysRole = SysRoleService::instance();
 		$sysUserDevice = SysUserDeviceService::instance();
+
 		//附加参数
 		$this->_addParam([
 			'defaultRow' => $this->service->getDefaultRow(),

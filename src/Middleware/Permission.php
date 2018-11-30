@@ -25,7 +25,7 @@ class Permission {
 		$route = explode('.', $name);
 		list($module, $func, $privilege) = $route;
 		$sysUserService = ServiceManager::make(SysUserService::class);
-		$roles = $sysUserService->getById(Auth::id())->sysRole()->get();
+		$roles = $sysUserService->getById(Auth::id())->with('sysRole')->get();
 
 		$role = $roles->firstWhere('id', config('backend.superAdminId'));
 		if ($role) {

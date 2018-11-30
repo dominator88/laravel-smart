@@ -199,6 +199,11 @@ class SysUserService extends BaseService {
 				throw new \Exception('数据不能为空');
 			}
 
+			if (isset($data['for_test'])) {
+				$for_test = $data['for_test'];
+				unset($data['for_test']);
+			}
+
 			$roles = isset($data['roles']) ? $data['roles'] : [];
 			unset($data['roles']);
 			$data['password'] = str2pwd(config('defaultPwd'));
@@ -209,7 +214,7 @@ class SysUserService extends BaseService {
 				throw new \Exception('创建用户失败');
 			}
 
-			if($data['for_test']){
+			if($for_test){
 				$token = md5(http_build_query($data) . json_encode(['created_at' => time()]));
 				self::instance()->getModel()->api_token = $token;
 				self::instance()->getModel()->save();

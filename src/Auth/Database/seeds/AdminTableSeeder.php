@@ -35,7 +35,7 @@ class AdminTableSeeder extends Seeder {
 				'module' => 'backend',
 				'name' => '系统管理员',
 				'status' => 1,
-				'rank' => 10,
+				'rank' => 5,
 				'mer_id' => 0,
 				'desc' => '',
 

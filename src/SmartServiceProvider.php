@@ -30,17 +30,17 @@ class SmartServiceProvider extends ServiceProvider {
 		$this->loadRoutesFrom(__DIR__ . '/../router/routes.php');
 
 		$modules = explode(',', config('backend.module_ext'));
-		//列出状态正常的模块
-		$modules = SysModules::where('status', '1')->get();
+		//列出状态正常的模块  不可直接调用数据库
+	//	$modules = SysModules::where('status', '1')->get();
 
 		foreach ($modules as $module) {
-			if (file_exists(app_path() . '/' . ucfirst($module->symbol) . '/routes.php')) {
-				$this->loadRoutesFrom(app_path() . '/' . ucfirst($module->symbol) . '/routes.php');
+			if (file_exists(app_path() . '/' . ucfirst($module) . '/routes.php')) {
+				$this->loadRoutesFrom(app_path() . '/' . ucfirst($module) . '/routes.php');
 			}
 
-			if (file_exists(app_path() . '/' . ucfirst($module->symbol) . '/views')) {
+			if (file_exists(app_path() . '/' . ucfirst($module) . '/views')) {
 
-				$this->loadViewsFrom(app_path() . '/' . ucfirst($module->symbol) . '/views', ucfirst($module->symbol));
+				$this->loadViewsFrom(app_path() . '/' . ucfirst($module) . '/views', ucfirst($module));
 			}
 
 		}
