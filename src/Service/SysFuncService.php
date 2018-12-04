@@ -76,7 +76,7 @@ class SysFuncService extends BaseService {
 
 	public function getByUri($uri) {
 		return $this->getModel()->where('uri', $uri)->first();
-	}
+	} 
 
 	public function getByCond($param) {
 		$default = [

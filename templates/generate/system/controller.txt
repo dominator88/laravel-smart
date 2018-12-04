@@ -18,7 +18,6 @@ class {func} extends {module} {
 	 */
 	public function __construct(Request $request) {
 		parent::__construct($request);
-		$this->_initClassName( $this->controller );
 		$this->service = ServiceManager::make(  {func}Service::class );
 	}
 

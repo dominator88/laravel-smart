@@ -22,6 +22,8 @@ define( 'PARAM_POSITIVE' , 'positive' );
 
 class ApiService {
 
+    use \Smart\Traits\Service\Instance;
+
     public $debug           = TRUE;
     public $params          = [];
     public $defaultParams   = [];
@@ -55,18 +57,10 @@ class ApiService {
         505 => 'data exist'
     ];
 
-    private static $instance;
 
-
-
-    public static function instance() {
-        if ( self::$instance == NULL ) {
-            self::$instance = new ApiService();
-        }
-        return self::$instance;
+    public function params($params = []){
+        $this->params = $params;
     }
-
-
 
     public function getError( $code ) {
         return api_result( $this->code[ $code ] , $code );

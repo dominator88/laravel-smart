@@ -52,6 +52,7 @@ class SysBase extends  Controller{
         $this->module = strtolower($routes['module']);
         $this->controller = $routes['controller'];
         $this->action = $routes['action'];
+        $this->_initClassName($this->controller);
 
     }
 

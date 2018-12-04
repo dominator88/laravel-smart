@@ -27,6 +27,11 @@ class SmartServiceProvider extends ServiceProvider {
 
 		$this->loadViewsFrom(__DIR__ . '/../resources/views', 'backend');
 
+		if (config('backend.https')) {
+            \URL::forceScheme('https');
+            $this->app['request']->server->set('HTTPS', true);
+        }
+
 		$this->loadRoutesFrom(__DIR__ . '/../router/routes.php');
 
 		$modules = explode(',', config('backend.module_ext'));
