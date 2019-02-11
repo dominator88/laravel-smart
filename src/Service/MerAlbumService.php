@@ -92,26 +92,33 @@ public function getByCond( $param ) {
         if ( empty( $mer_id ) ) {
             unset( $data['mer_id'] );
         }
-        $id = $this->getmodel()->save( $data );
+        $merAlbum = $this->getmodel()->create( $data );
 
         $tags     = empty( $tags ) ? '默认相册' : $tags;
         if ( ! is_array( $tags ) ) {
             $tags = explode( ',', trim( $tags ) );
         }
         $data_tag  = [];
-        /*foreach( $tags as $tag){
-            array_push( $data_tag , new MerAlbumCatalog($tag));
-        }*/
-        $ret_save = $this->getmodel()->tag()->save($data_tag);
+        foreach( $tags as $tag){
+            array_push( $data_tag , new MerAlbumCatalog([
+              'tag' => $tag ,
+              'mer_id' => 0,
+              'sort' => 1,
+              'icon' => '',
+              'totals' => 1,
+            ]));
+        }
+
+        $ret_save = $merAlbum->tag()->saveMany($data_tag);
         //saveByTags( $mer_id, $tags, $id, $data['uri'] );
 
-        if ( $ret_save['code'] != 0 ) {
+        if ( !$ret_save ) {
             throw new \Exception( $ret_save['msg'] );
         }
 
 
 
-            return ajax_arr( '添加成功', 0, [ 'id' => $id ] );
+            return ajax_arr( '添加成功', 0, [ 'id' => $merAlbum->id ] );
 
     }
 

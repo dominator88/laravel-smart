@@ -21,7 +21,7 @@
         "toplan/laravel-sms": "~2.6",
         "intervention/image": "^2.3@dev",
         "laravel/dusk": "^2.0@dev",
-        "overtrue/easy-sms": "dev-master"
+        "overtrue/easy-sms": "1.1.*"
 
     },
     "require-dev": {

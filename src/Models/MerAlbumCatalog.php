@@ -12,6 +12,8 @@ class MerAlbumCatalog extends Model
 
     public $timestamps = FALSE;
 
+    public $fillable = ['tag','mer_id','sort','icon','totals'];
+
     use \Smart\Traits\Service\Scope;
 
     public function scopeKeyword( $query , $param){

@@ -233,6 +233,7 @@
 
     //显示模态框
     $this.on( 'click' , function ( e ) {
+      $uploaderFile.val('')
       settings = $( this ).data( 'uploader' );
       thisUploadObj = $this;
       e.preventDefault();

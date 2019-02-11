@@ -15,7 +15,7 @@ class {func}Service extends BaseService {
   {treeGridTrait}
   {instanceTrait}
 
-
+  protected $model_class = {func}::class;
   //状态
 	public $status = [
 		0 => '禁用',

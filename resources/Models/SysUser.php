@@ -30,6 +30,6 @@ class SysUser extends Authenticatable {
 	}
 
 	public function username() {
-		return 'username';
+		return 'name';
 	}
 }
