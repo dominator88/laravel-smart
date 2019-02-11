@@ -1,7 +1,7 @@
 <?php
 namespace Smart\Controllers\Backend;
 /**
- * SysModules Controller
+ * SysModule Controller
  *
  * @author MR.Z <zsh2088@gmail.com>
  * @version 2.0 , 2018-06-13
@@ -9,17 +9,17 @@ namespace Smart\Controllers\Backend;
 
 use Facades\Smart\Service\ServiceManager;
 use Illuminate\Http\Request;
-use Smart\Service\SysModulesService;
+use Smart\Service\SysModuleService;
 
-class SysModules extends Backend {
+class SysModule extends Backend {
 
 	/**
-	 * SysModules constructor.
+	 * SysModule constructor.
 	 */
 	public function __construct(Request $request) {
 		parent::__construct($request);
 		$this->_initClassName($this->controller);
-		$this->service = ServiceManager::make(SysModulesService::class);
+		$this->service = ServiceManager::make(SysModuleService::class);
 	}
 
 	//页面入口

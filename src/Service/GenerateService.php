@@ -10,7 +10,7 @@ namespace Smart\Service;
 
 use Facades\Smart\Service\ServiceManager;
 use Illuminate\Support\Facades\DB;
-use Smart\Service\SysModulesService;
+use Smart\Service\SysModuleService;
 
 define('SYSTEM_TEMP_BASE_PATH', __DIR__ . '/../../templates/generate/system/');
 define('API_TEMP_BASE_PATH', __DIR__ . '/../../templates/generate/api');
@@ -239,8 +239,8 @@ class GenerateService {
 
 	private function _init() {
 		//初始化Module
-		$sysModulesService = ServiceManager::make(SysModulesService::class);
-		$modules = $sysModulesService->getByCond(['status' => 1]);
+		$sysModuleService = ServiceManager::make(SysModuleService::class);
+		$modules = $sysModuleService->getByCond(['status' => 1]);
 		
 		foreach ($modules as $m) {
 			$this->module = array_merge($this->module, [ucfirst($m['symbol']) => $m['symbol']]);

@@ -5,7 +5,7 @@ namespace Smart\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SysModules extends Model
+class SysModule extends Model
 {
     public $table = 'sys_modules';
 

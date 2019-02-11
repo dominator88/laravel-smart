@@ -325,23 +325,23 @@ Route::group([
 ], function () {
 	Route::group(['prefix' => 'sysmodules'], function () {
 
-		Route::get('index', 'SysModules@index')->name('backend.sysmodules.index');
+		Route::get('index', 'SysModule@index')->name('backend.sysmodules.index');
 
-		Route::get('read_album_catalog', 'SysModules@read_album_catalog');
+		Route::get('read_album_catalog', 'SysModule@read_album_catalog');
 
-		Route::get('read', 'SysModules@read')->name('backend.sysmodules.read');
+		Route::get('read', 'SysModule@read')->name('backend.sysmodules.read');
 
-		Route::post('insert', 'SysModules@insert')->name('backend.sysmodules.insert');
+		Route::post('insert', 'SysModule@insert')->name('backend.sysmodules.insert');
 
-		Route::post('update/{id}', 'SysModules@update')->name('backend.sysmodules.update');
+		Route::post('update/{id}', 'SysModule@update')->name('backend.sysmodules.update');
 
-		Route::post('destroy', 'SysModules@destroy')->name('backend.sysmodules.destory');
+		Route::post('destroy', 'SysModule@destroy')->name('backend.sysmodules.destory');
 
-		Route::post('upload', 'SysModules@upload');
+		Route::post('upload', 'SysModule@upload');
 
-		Route::get('read_album', 'SysModules@read_album');
+		Route::get('read_album', 'SysModule@read_album');
 
-		Route::get('income', 'SysModules@income');
+		Route::get('income', 'SysModule@income');
 
 	});
 

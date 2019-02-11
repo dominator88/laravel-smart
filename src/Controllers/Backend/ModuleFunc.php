@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Smart\Service\SysFuncPrivilegeService;
 use Smart\Service\SysFuncService;
-use Smart\Service\SysModulesService;
+use Smart\Service\SysModuleService;
 
 class ModuleFunc extends Backend {
 
@@ -44,8 +44,8 @@ class ModuleFunc extends Backend {
 			'order' => $request->input('order', 'DESC'),
 		]);
 
-		$sysModules = ServiceManager::make(SysModulesService::class);
-		$module = $sysModules->getById($request->input('id', ''));
+		$sysModule = ServiceManager::make(SysModuleService::class);
+		$module = $sysModule->getById($request->input('id', ''));
 		//其他参数
 		$SysFuncPrivilege = SysFuncPrivilegeService::instance();
 		$this->_addParam([
@@ -72,7 +72,7 @@ class ModuleFunc extends Backend {
 	 * @return response->Json
 	 */
 	public function read(Request $request) {
-		$module_name = ServiceManager::make(SysModulesService::class)->getById($request->input('id'))->symbol;
+		$module_name = ServiceManager::make(SysModuleService::class)->getById($request->input('id'))->symbol;
 		$config = [
 			'module' => $module_name,
 			'status' => $request->input('status', ''),

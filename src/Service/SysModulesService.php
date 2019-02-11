@@ -1,21 +1,21 @@
 <?php
 namespace Smart\Service;
 /**
- * SysModules Service
+ * SysModule Service
  *
  * @author MR.Z <zsh2088@gmail.com>
  * @version 2.0 2018-06-13
  */
 
-use Smart\Models\SysModules;
+use Smart\Models\SysModule;
 use Smart\Service\BaseService;
 
-class SysModulesService extends BaseService {
+class SysModuleService extends BaseService {
 
 	//引入 GridTable trait
 	use \Smart\Traits\Service\GridTable,\Smart\Traits\Service\Instance;
 
-	protected $model_class = SysModules::class;
+	protected $model_class = SysModule::class;
 
 	//状态
 	public $status = [

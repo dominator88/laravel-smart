@@ -9,7 +9,7 @@ namespace Smart;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Smart\Models\SysModules;
+use Smart\Models\SysModule;
 
 class SmartServiceProvider extends ServiceProvider {
 
@@ -36,7 +36,7 @@ class SmartServiceProvider extends ServiceProvider {
 
 		$modules = explode(',', config('backend.module_ext'));
 		//列出状态正常的模块  不可直接调用数据库
-	//	$modules = SysModules::where('status', '1')->get();
+	//	$modules = SysModule::where('status', '1')->get();
 
 		foreach ($modules as $module) {
 			if (file_exists(app_path() . '/' . ucfirst($module) . '/routes.php')) {
@@ -103,8 +103,8 @@ class SmartServiceProvider extends ServiceProvider {
 	 */
 	/*protected function registerRoute() {
 		//列出启用模块
-		$sysModulesService = ServiceManager::make(SysModulesService::class);
-		$sysModules = $sysModulesService->getByCond(['status' => 1]);
+		$sysModuleService = ServiceManager::make(SysModuleService::class);
+		$sysModules = $sysModuleService->getByCond(['status' => 1]);
 		$modules = array_column($sysModules, 'symbol');
 		//	return $sysModules;
 		$sysFuncService = ServiceManager::make(sysFuncService::class);

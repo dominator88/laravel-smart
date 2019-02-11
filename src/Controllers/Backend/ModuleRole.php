@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Smart\Service\SysFuncPrivilegeService;
 use Smart\Service\SysFuncService;
-use Smart\Service\SysModulesService;
+use Smart\Service\SysModuleService;
 use Smart\Service\SysRolePermissionService;
 use Smart\Service\SysRoleService;
 
@@ -47,8 +47,8 @@ class ModuleRole extends Backend {
 			'sort' => $request->input('sort', 'id'),
 			'order' => $request->input('order', 'DESC'),
 		]);
-		$sysModules = ServiceManager::make(SysModulesService::class);
-		$module = $sysModules->getById($request->input('id', ''));
+		$sysModule = ServiceManager::make(SysModuleService::class);
+		$module = $sysModule->getById($request->input('id', ''));
 		//其他参数
 		$this->_addParam([
 			'defaultRow' => $this->service->getDefaultRow(),
@@ -68,7 +68,7 @@ class ModuleRole extends Backend {
 
 	//读取
 	function read(Request $request) {
-		$module_name = ServiceManager::make(SysModulesService::class)->getById($request->input('id'))->symbol;
+		$module_name = ServiceManager::make(SysModuleService::class)->getById($request->input('id'))->symbol;
 		$param = [
 			'module' => $module_name,
 			'status' => $request->input('status', ''),
