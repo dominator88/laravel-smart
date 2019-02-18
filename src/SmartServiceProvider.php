@@ -17,7 +17,8 @@ class SmartServiceProvider extends ServiceProvider{
     ];
 
     protected $routeMiddleware = [
-        'auth.token' => \Smart\Middleware\CheckToken::class
+        'auth.token' => \Smart\Middleware\CheckToken::class,
+        'auth.cors' => \Smart\Middleware\Cors::class,
     ];
 
     public function boot(){
