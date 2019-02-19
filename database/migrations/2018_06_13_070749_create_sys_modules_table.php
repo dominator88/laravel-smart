@@ -17,7 +17,7 @@ class CreateSysModulesTable extends Migration {
 			$table->string('symbol')->comment('标识');
 			$table->tinyInteger('displayorder')->default(0)->comment('排序序号');
 			$table->string('version')->default('1.0')->comment('版本号');
-			$table->string('作者')->nullable()->comment('作者');
+			$table->string('author')->nullable()->comment('作者');
 			$table->tinyInteger('status')->default(1)->comment('状态');
 			$table->string('thumb')->nullable()->comment('缩略图');
 			$table->string('desc')->nullable()->comment('描述');

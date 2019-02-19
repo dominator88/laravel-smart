@@ -23,6 +23,6 @@ class IndexController extends {module}
      */
     public function index()
     {
-        return view('{module}::index.index');
+        return view('{module}::Index.index');
     }
 }
