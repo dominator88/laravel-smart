@@ -25,8 +25,7 @@ class Simulator extends Backend {
 	 */
 	public function __construct(Request $request) {
 		parent::__construct($request);
-		$this->_initClassName($this->controller);
-		$this->service = ServiceManager::make(SimulatorService::class);
+
 		$this->apiVersion = config('backend.api.apiVersion');
 	}
 

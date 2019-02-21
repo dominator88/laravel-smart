@@ -17,12 +17,7 @@ class Generate extends Backend {
 	 * 构造函数
 	 * Generate constructor.
 	 */
-	public function __construct(Request $request) {
-		parent::__construct($request);
-		$this->_initClassName($this->controller);
-		$this->service = ServiceManager::make(GenerateService::class);
 
-	}
 
 	public function index() {
 

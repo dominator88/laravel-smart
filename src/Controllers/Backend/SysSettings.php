@@ -12,14 +12,7 @@ use Smart\Service\SysSettingsService;
 
 class SysSettings extends Backend {
 
-	/**
-	 * SysSettings constructor.
-	 */
-	public function __construct(Request $request) {
-		parent::__construct($request);
-		$this->_initClassName($this->controller);
-		$this->service = ServiceManager::make(SysSettingsService::class);
-	}
+
 
 	//页面入口
 	public function index(Request $request) {

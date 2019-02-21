@@ -14,14 +14,7 @@ use Illuminate\Http\Request;
 use Facades\Smart\Service\ServiceManager;
 class SysMail extends Backend {
 
-    /**
-     * SysMail constructor.
-     */
-    public function __construct(Request $request) {
-        parent::__construct($request);
-        $this->_initClassName( $this->controller );
-        $this->service = ServiceManager::make(  SysMailService::class);
-    }
+
 
     //页面入口
     public function index(Request $request) {

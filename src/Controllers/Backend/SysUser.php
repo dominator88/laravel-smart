@@ -20,11 +20,7 @@ class SysUser extends Backend {
 	/**
 	 * SysUser constructor.
 	 */
-	public function __construct(Request $request,SysUserService $service) {
-		parent::__construct($request);
-	//	$this->_initClassName($this->controller);
-		$this->service = $service;
-	} 
+
 
 	/**
 	 * 页面显示接口

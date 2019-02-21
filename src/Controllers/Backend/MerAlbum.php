@@ -18,11 +18,7 @@ class MerAlbum extends Backend{
 	/**
 	 * MerAlbum constructor.
 	 */
-	public function __construct(Request $request) {
-		parent::__construct($request);
-		$this->_initClassName( $this->controller );
-		$this->service = ServiceManager::make(  MerAlbumService::class );
-	}
+
 
 	//页面入口
 	public function index(Request $request ) {

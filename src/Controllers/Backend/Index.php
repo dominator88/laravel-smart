@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\DB;
 class Index extends Backend {
 	public function __construct(Request $request) {
 		parent::__construct($request);
-		$this->_initClassName($this->controller);
 
 	}
 

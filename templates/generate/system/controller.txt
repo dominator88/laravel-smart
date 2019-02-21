@@ -13,13 +13,7 @@ use App\{module}\Controllers\{module};
 
 class {func} extends {module} {
 
-	/**
-	 * {func} constructor.
-	 */
-	public function __construct(Request $request) {
-		parent::__construct($request);
-		$this->service = ServiceManager::make(  {func}Service::class );
-	}
+
 
 	//页面入口
 	public function index(Request $request) {

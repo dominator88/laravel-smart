@@ -20,15 +20,27 @@ class Backend extends SysBase{
 
 
     public function __construct(Request $request)
-    {
+    {   
         parent::__construct($request);
+        $this->_initService();
         $this->middleware('auth');
 
     }
 
+    private function _initService(){
+        $this->service = ServiceManager::make( 'Smart\\Service\\'.$this->controller.'Service');
+    }
+
     public function _init($pageTitle = '新页面'){
+        
         parent::_init($pageTitle);
         $SysFuncService = ServiceManager::make(SysFuncService::class );
+
+        $jsCode = <<<EOF
+            {$this->controller}.init();
+EOF;
+
+        $this->_addJsCode($jsCode);
       //  var_dump($SysFuncService->getMenuByRoles(1,'backend'));
         $this->user = Auth::user();
         $this->_addData(

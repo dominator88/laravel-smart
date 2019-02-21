@@ -27,6 +27,8 @@ class SysBase extends  Controller{
     public $action     = ''; //操作
     public $service    = NULL;
 
+    public $classJs = '';
+
 
 
     public $data = [
@@ -52,7 +54,7 @@ class SysBase extends  Controller{
         $this->module = strtolower($routes['module']);
         $this->controller = $routes['controller'];
         $this->action = $routes['action'];
-        $this->_initClassName($this->controller);
+        $this->_initClassJs();
 
     }
 
@@ -87,11 +89,10 @@ class SysBase extends  Controller{
 
     }
 
-    public function _initClassName( $className ){
+    public function _initClassJs( ){
 
-     //   $classNameArr    = explode( '/' , $className );
-     //   $this->className = $classNameArr[ count( $classNameArr ) - 2 ];
-        $this->className = $className;
+        $this->classJs = $this->classJs ?: $this->controller;
+        
 
     }
 
@@ -102,16 +103,15 @@ class SysBase extends  Controller{
      * @return string
      */
     public function _getPageJsPath() {
-        //$js_file_name = substr( preg_replace( '/[A-Z]/', '_\0', $this->className ), 1 );
 
-        return "static/js/{$this->module}/{$this->className}.js";
+        return "static/js/{$this->module}/{$this->classJs}.js";
     }
 
     public function _addJsLib($uri){
         $this->data['jsLib'][] = $uri;
     }
 
-    public function _addJsCode($code){
+    public function _addJsCode($code = ''){
         $this->data['jsCode'][] = $code;
     }
 
@@ -165,23 +165,24 @@ class SysBase extends  Controller{
         //引用页面JS文件
         if ( $this->data['initPageJs'] ) {
             $this->data['jsLib'][]  = $this->_getPageJsPath();
-            $this->data['jsCode'][] = $this->className . '.init();';
+            $this->className && $this->data['jsCode'][] = $this->className . '.init();';
         }
         foreach ( $this->data['jsLib'] as $item ) {
             $html[] = '<script src="' . $item . '" type="text/javascript"></script>';
         }
+        if($this->data['jsCode']){
 
-        $html[] = '<script type="text/javascript">';
-        $html[] = 'var Param = ' . json_encode( $this->data['param'] );
-        $html[] = '$(function(){';
+            $html[] = '<script type="text/javascript">';
+            $html[] = 'var Param = ' . json_encode( $this->data['param'] );
+            $html[] = '$(function(){';
 
-        foreach ( $this->data['jsCode'] as $row ) {
-            $html[] = $row;
+            foreach ( $this->data['jsCode'] as $row ) {
+                $html[] = $row;
+            }
+
+            $html[] = '});';
+            $html[] = '</script>';
         }
-
-        $html[] = '});';
-        $html[] = '</script>';
-
         return join( "\n" , $html );
     }
 

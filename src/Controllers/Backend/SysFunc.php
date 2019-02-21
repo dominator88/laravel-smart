@@ -13,11 +13,7 @@ use Smart\Service\SysFuncPrivilegeService;
 use Smart\Service\SysFuncService;
 
 class SysFunc extends Backend {
-	public function __construct(Request $request) {
-		parent::__construct($request);
-		$this->_initClassName($this->controller);
-		$this->service = ServiceManager::make(SysFuncService::class);
-	}
+
 
 	public function index(Request $request) {
 		$this->_init('系统功能');

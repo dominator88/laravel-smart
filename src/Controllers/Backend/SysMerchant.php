@@ -13,14 +13,7 @@ use Facades\Smart\Service\ServiceManager;
 
 class SysMerchant extends Backend {
 
-    /**
-     * SysMerchant constructor.
-     */
-    public function __construct(Request $request) {
-        parent::__construct($request);
-        $this->_initClassName( $this->controller );
-        $this->service = ServiceManager::make(  SysMerchantService::class);
-    }
+
 
     //页面入口
     public function index(Request $request) {
