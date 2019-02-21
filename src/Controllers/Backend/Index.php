@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\DB;
 
 
 class Index extends Backend {
+	
+	protected $autoload_service = 0;
+
 	public function __construct(Request $request) {
 		parent::__construct($request);
 

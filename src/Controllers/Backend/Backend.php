@@ -17,17 +17,18 @@ use Mp\Facades\Widget;
 
 class Backend extends SysBase{
 
-
+    protected $autoload_service = 1;
 
     public function __construct(Request $request)
     {   
         parent::__construct($request);
-        $this->_initService();
+        $this->autoload_service && $this->_initService();
         $this->middleware('auth');
 
     }
 
     private function _initService(){
+
         $this->service = ServiceManager::make( 'Smart\\Service\\'.$this->controller.'Service');
     }
 
