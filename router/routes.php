@@ -399,7 +399,7 @@ Route::group(['prefix' => 'backend/syssettings', 'namespace' => 'Smart\Controlle
 });
 
 //接口路由
-Route::group(['prefix' => 'api/{version}', 'namespace' => 'App\Http\Controllers\Api', 'middleware' => ['api']], function () {
+Route::group(['prefix' => 'api/{version}', 'namespace' => 'App\Http\Controllers\Api', 'middleware' => ['api','auth.cors']], function () {
 
 	Route::any('{direction}/{action}', 'Index@index');
 
