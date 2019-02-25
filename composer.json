@@ -52,8 +52,7 @@
         "laravel": {
             "providers": [
                 "Smart\\SmartServiceProvider",
-                "Intervention\\Image\\ImageServiceProvider",
-                "Barryvdh\\Cors\\ServiceProvider"
+                "Intervention\\Image\\ImageServiceProvider"
             ],
             "aliases": {
                 "Image": "Intervention\\Image\\Facades\\Image"
