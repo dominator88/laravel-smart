@@ -29,12 +29,15 @@ class SimulatorService extends BaseService {
     function readApi( $apiVersion ) {
 
         $dir   = app_path('Api') . '/Service/' . $apiVersion;
-        $filesystem = new Filesystem();
+
+        $filesystem = resolve('files');
+    //    var_dump($filesystem);
         $dirs = $filesystem->directories($dir);
 
         $api   = [];
 
         foreach( $dirs as $dir ){
+            
             $files = $filesystem->allFiles($dir);
             foreach($files  as $file){
                 $filename = $file->getRelativePathname();

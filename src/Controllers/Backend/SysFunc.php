@@ -16,7 +16,7 @@ class SysFunc extends Backend {
 
 
 	public function index(Request $request) {
-		$this->_init('系统功能');
+		$this->_init('系统功能'); 
 
 		//uri
 		$this->_addParam('uri', [

@@ -22,6 +22,12 @@ class MerRole extends Backend {
      * SysRole constructor.
      */
 
+    protected $autoload_service = false;
+
+    public function __construct(Request $request){
+        parent::__construct($request);
+        $this->service = ServiceManager::make( SysRoleService::class );
+    }
 
     //页面入口
     public function index(Request $request) {

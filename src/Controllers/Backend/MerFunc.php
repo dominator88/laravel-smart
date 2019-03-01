@@ -18,6 +18,12 @@ class MerFunc extends Backend {
     /**
      * MerFunc constructor.
      */
+    protected $autoload_service = 0;
+
+    public function __construct(Request $request){
+        parent::__construct($request);
+        $this->service = ServiceManager::make( SysFuncService::class );
+    }
 
 
     //页面入口
@@ -40,7 +46,7 @@ class MerFunc extends Backend {
         ] );
 
         //其他参数
-        $SysFuncPrivilege = SysFuncPrivilegeService::instance();
+        $SysFuncPrivilege = ServiceManager::make( SysFuncPrivilegeService::class );
         $this->_addParam( [
             'defaultRow' => $this->service->getDefaultRow(),
             'module'     => $this->curModule,

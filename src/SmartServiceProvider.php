@@ -37,7 +37,6 @@ class SmartServiceProvider extends ServiceProvider {
 
 		$modules = explode(',', config('backend.module_ext'));
 		//列出状态正常的模块  不可直接调用数据库
-	//	$modules = SysModule::where('status', '1')->get();
 
 		foreach ($modules as $module) {
 			if (file_exists(app_path() . '/' . ucfirst($module) . '/routes.php')) {

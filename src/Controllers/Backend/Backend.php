@@ -24,7 +24,6 @@ class Backend extends SysBase{
         parent::__construct($request);
         $this->autoload_service && $this->_initService();
         $this->middleware('auth');
-
     }
 
     private function _initService(){
