@@ -69,6 +69,13 @@
                             <div class="form-body">
                                 <!-- start item -->
                                 <div class="form-group">
+                                    <label class="col-md-3 control-label">模块</label>
+                                    <div class="col-md-7">
+                                        {!! form_radios('module',$param['modules']) !!}
+                                    </div>
+                                </div><!-- end item -->
+                                <!-- start item -->
+                                <div class="form-group">
                                     <label class="col-md-3 control-label">名称</label>
                                     <div class="col-md-7">
                                         <input type="text" name="name" placeholder="名称" class="form-control"

@@ -25,11 +25,7 @@ class GenerateService {
 	];
 
 	//模块
-	public $module = [
-		'Backend' => 'Backend',
-		'Mp' => 'Mp',
-
-	];
+	public $module = [];
 
 	public $apiVer = [
 		'v1' => 'v1',
@@ -240,11 +236,14 @@ class GenerateService {
 	private function _init() {
 		//初始化Module
 		$sysModuleService = ServiceManager::make(SysModuleService::class);
-		$modules = $sysModuleService->getByCond(['status' => 1]);
+	//	$modules = $sysModuleService->getByCond(['status' => 1]);
 		
-		foreach ($modules as $m) {
+	/*	foreach ($modules as $m) {
 			$this->module = array_merge($this->module, [ucfirst($m['symbol']) => $m['symbol']]);
-		}
+		}*/
+		$modules = explode(',',config('backend.module_ext'));
+        $modules = array_combine($modules, $modules);
+        $this->module = $modules;
 
 		//初始化api版本号
 		$apiVersion = config('backend.api.apiVersion');
@@ -290,6 +289,7 @@ class GenerateService {
 
 	//取单个表信息
 	public function getSystemInfo($tableName, $module, $returnFieldInfo = FALSE) {
+		$module = ucfirst($module);
 		$fieldInfo = $this->getTableField($tableName);
 
 		if (!$fieldInfo || empty($fieldInfo)) {
@@ -740,6 +740,7 @@ class GenerateService {
 			'date' => $data['date'],
 			'funcName' => $data['funcName'],
 			'tableName' => $data['tableName'],
+			'funcNameLower' => strtolower($data['funcName']),
 		];
 		
 		//加载组件

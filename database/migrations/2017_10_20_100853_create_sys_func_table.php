@@ -17,7 +17,7 @@ class CreateSysFuncTable extends Migration
             $table->increments('id');
             $table->integer('pid')->default(0);
             $table->tinyInteger('sort')->default(1);
-            $table->enum('module' , ['backend' , 'mp']);
+            $table->string('module',40);
             $table->tinyInteger('is_menu')->default(0);
             $table->tinyInteger('is_func')->default(0);
             $table->string('color')->nullable();

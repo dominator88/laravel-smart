@@ -32,6 +32,8 @@ class Generate extends Backend {
 			'createApi' => full_uri('Backend/Generate/create_api'),
 			'destroySystemFile' => full_uri('Backend/Generate/destroy_system_file'),
 		]);
+		$modules = explode(',',config('backend.module_ext'));
+        $modules = array_combine($modules, $modules);
 
 		$this->_addParam([
 			'type' => $this->service->type,
@@ -41,6 +43,7 @@ class Generate extends Backend {
 			'apiVer' => $this->service->apiVer,
 			'apiParams' => $this->service->apiParams,
 			'apiAuthUser' => $this->service->apiAuthUser,
+		//	'modules' => $modules,
 			'systemDefault' => [
 				'module' => 'Backend',
 				'tableName' => $this->data['tables'][0]->tableName,
@@ -84,7 +87,7 @@ class Generate extends Backend {
 		$result = $this->service->createSystem($data);
 
 		return json($result);
-	}
+	} 
 
 	function create_api(Request $request) {
 		$data = [

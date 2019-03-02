@@ -14,17 +14,25 @@ use Smart\Service\SysFuncService;
 use Illuminate\Http\Request;
 
 class MerFunc extends Backend {
-    private $curModule = 'mp';
+    private $curModule = 'admin';
     /**
      * MerFunc constructor.
      */
-    protected $autoload_service = 0;
+
+    public $autoload_service = 0;
+
+    public $controller = 'SysFunc';
 
     public function __construct(Request $request){
         parent::__construct($request);
-        $this->service = ServiceManager::make( SysFuncService::class );
-    }
+        $this->service = ServiceManager::make( \Smart\Service\SysFuncService::class );
 
+        $jsCode = <<<EOF
+            {$this->controller}.init();
+EOF;
+
+            $this->_addJsCode($jsCode);
+    }
 
     //页面入口
     public function index(Request $request) {
@@ -34,6 +42,9 @@ class MerFunc extends Backend {
         $this->_addParam( 'uri', [
             'updatePrivilege' => full_uri( 'Backend/MerFunc/update_privilege', [ 'funcId' => '' ] ),
         ] );
+
+        $modules = explode(',',config('backend.module_ext'));
+        $modules = array_combine($modules, $modules);
 
         //查询参数
         $this->_addParam( 'query', [
@@ -49,12 +60,13 @@ class MerFunc extends Backend {
         $SysFuncPrivilege = ServiceManager::make( SysFuncPrivilegeService::class );
         $this->_addParam( [
             'defaultRow' => $this->service->getDefaultRow(),
-            'module'     => $this->curModule,
+            'module'     => '',
             'status'     => $this->service->status,
             'isMenu'     => $this->service->isMenu,
             'isFunc'     => $this->service->isFunc,
             'privilege'  => $SysFuncPrivilege->name,
-            'alias'      => $SysFuncPrivilege->alias
+            'alias'      => $SysFuncPrivilege->alias,
+            'modules'     => $modules,
         ] );
 
         //需要引入的 css 和 js

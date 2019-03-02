@@ -38,16 +38,21 @@ if (!function_exists('form_radios')) {
 	 * @return mixed|string
 	 */
 	function form_radios($name, $data, $checked_value = 0) {
-		$html = '';
+		$html = [];
+		$i = 0;
 		foreach ($data as $key => $val) {
-			$html .= '<label class="radio-inline"><input name="' . $name . '" type="radio" value="' . $key . '" >' . $val . '</label>';
+
+			if($val == (string)$checked_value || ($checked_value==0 && $i++ == 0)){
+				$html[] = '<label class="radio-inline"><input name="' . $name . '" type="radio" value="' . $key . '"  checked>' . $val . '</label>';
+			}else{
+				$html[] = '<label class="radio-inline"><input name="' . $name . '" type="radio" value="' . $key . '" >' . $val . '</label>';
+			}
+			
 		}
 
-		if ($checked_value >= 0) {
-			$html = str_replace('value="' . $checked_value . '"', "value='$checked_value' checked", $html);
-		}
+		
 
-		return $html;
+		return join('',$html);
 	}
 }
 if (!function_exists('form_radio')) {

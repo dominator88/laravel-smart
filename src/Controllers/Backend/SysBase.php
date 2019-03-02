@@ -29,7 +29,7 @@ class SysBase extends  Controller{
 
     public $classJs = '';
 
-
+    protected $autoload_service = 1;
 
     public $data = [
         'pageTitle'  => '' , //页面title
@@ -56,7 +56,27 @@ class SysBase extends  Controller{
         $this->action = $routes['action'];
         $this->_initClassJs();
 
+        if($this->autoload_service){
+
+            $this->_initService();
+            $jsCode = <<<EOF
+            {$this->controller}.init();
+EOF;
+
+            $this->_addJsCode($jsCode);
+        }
+
     }
+
+    private function _initService(){
+       if(class_exists('Smart\\Service\\'.$this->controller.'Service')){
+            $this->service = ServiceManager::make( 'Smart\\Service\\'.$this->controller.'Service');
+       }elseif(class_exists('App\\Service\\'.$this->controller.'Service')){
+        $this->service = ServiceManager::make( 'App\\Service\\'.$this->controller.'Service');
+       }
+        
+    }
+
 
     private function parseRouteAction($routeAction){
        // $routeAction = 'App\Http\Controllers\Backend\SysFunc@index';
