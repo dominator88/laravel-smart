@@ -14,7 +14,7 @@ use Smart\Service\SysFuncService;
 use Illuminate\Http\Request;
 
 class MerFunc extends Backend {
-    private $curModule = 'admin';
+    
     /**
      * MerFunc constructor.
      */

@@ -28,7 +28,11 @@ class MerRole extends Backend {
     public function __construct(Request $request){
         parent::__construct($request);
         $this->service = ServiceManager::make( \Smart\Service\SysRoleService::class );
+        $jsCode = <<<EOF
+            {$this->controller}.init();
+EOF;
 
+            $this->_addJsCode($jsCode);
     }
 
     //页面入口
