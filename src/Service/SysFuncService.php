@@ -66,6 +66,7 @@ class SysFuncService extends BaseService {
 		$roleIds = explode(',', $roleIds);
 		if ($roleIds == config('backend.superAdminId') || in_array(config('backend.superAdminId'), $roleIds)) {
 			$result = $this->getByCond(['isMenu' => 1, 'status' => 1, 'module' => $module]);
+			
 			//如果是系统管理员
 			return $result;
 		} else {
@@ -81,7 +82,7 @@ class SysFuncService extends BaseService {
 	public function getByCond($param) {
 		$default = [
 			'field' => ['*'],
-			'module' => 'backend',
+		//	'module' => 'backend',
 			'isMenu' => '',
 			'pid' => 0,
 			'status' => '',
@@ -89,7 +90,6 @@ class SysFuncService extends BaseService {
 			'key' => self::DEFAULT_KEY,
 		];
 		$param = extend($default, $param);
-
 
 		$data = self::instance()->getModel()->status($param['status'])->module($param['module'])->isMenu($param['isMenu'])->module($param['module'])
 			->orderBy('level', 'ASC')

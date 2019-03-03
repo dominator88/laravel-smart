@@ -81,8 +81,9 @@ EOF;
      * @return \Json
      */
     function read(Request $request) {
+        $module = $request->module ?: explode(',',config('backend.module_ext'));
         $param = [
-            'module'        => $this->curModule,
+            'module'        => $module ,
             'sort'          => $request->input( 'sort', 'id' ),
             'order'         => $request->input( 'order', 'DESC' ),
             'withPrivilege' => TRUE

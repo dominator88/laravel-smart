@@ -22,7 +22,7 @@ class SysFunc extends Model {
 
 	public function scopeModule($query, $param = '') {
 		if ($param) {
-			return $query->where('module', $param);
+			return $query->whereIn('module', (array)$param);
 		}
 	}
 

@@ -24,6 +24,7 @@ class SysFunc extends Backend {
 		]);
 		//查询参数
 		$this->_addParam('query', [
+			'module' => 'backend',
 			'keyword' => $request->input('keyword', ''),
 			'status' => $request->input('status', ''),
 			'page' => $request->input('page', 1),
@@ -56,6 +57,7 @@ class SysFunc extends Backend {
 	 */
 	function read(Request $request) {
 		$config = [
+			'module' => $request->input('module',''),
 			'status' => $request->input('status', ''),
 			'keyword' => $request->input('keyword', ''),
 			'sort' => $request->input('sort', 'id'),

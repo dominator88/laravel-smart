@@ -27,11 +27,32 @@
             </div>
             <div class="portlet-body">
 
+                <!-- Start Search Form -->
+                <form class="form-inline" id="searchForm">
+                    <!-- 查询关键字 start -->
+                    <div class="form-group">
+                        <label>关键字: </label>
+                        <input type="text" class="form-control" name="keyword" placeholder="查询关键字">
+                    </div>
+                    <!-- 查询关键字 end -->
+                    <!-- 查询状态 start -->
+                    <div class="form-group">
+                        <label>模块: </label>
+                        <select class="form-control" name="module">
+                            <option selected="" value="">不限</option>
+                            <?= form_options($param['modules']) ?>
+                        </select>
+                    </div>
+                    <!-- 查询状态 end -->
+                    <button type="submit" class="btn default" id="searchBtn"><i class="fa fa-search"></i> 查询</button>
+                </form> <!-- End Search Form -->
+
                 <div class="table-scrollable">
                     <table id="treeGrid" class="table table-hover">
                         <tr>
                             <th width="40" data-field="id">ID</th>
                             <th width="280" data-field="name" data-formatter="formatName">名称</th>
+                            <th width="40" data-field="module">模块</th>
                             <th width="40" data-field="sort">排序</th>
                             <th width="80" data-field="is_menu" data-formatter="formatIsFunc">是否菜单</th>
                             <th width="80" data-field="is_func" data-formatter="formatIsMenu">是否功能</th>

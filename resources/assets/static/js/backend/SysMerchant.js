@@ -171,7 +171,7 @@ var SysMerchant = {
       onSuccess : function ( ret ) {
         tips.success( ret.msg );
         if ( ret.code == 0 ) {
-          setImgPreview.set( 'icon' , ret.data.uri );
+          setImgPreview.set( 'icon' , ret.data.savePath );
         }
       } ,
       onChooseAlbum : function ( uri ) {

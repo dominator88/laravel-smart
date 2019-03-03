@@ -69,6 +69,7 @@ EOF;
     }
 
     private function _initService(){
+
        if(class_exists('Smart\\Service\\'.$this->controller.'Service')){
             $this->service = ServiceManager::make( 'Smart\\Service\\'.$this->controller.'Service');
        }elseif(class_exists('App\\Service\\'.$this->controller.'Service')){
