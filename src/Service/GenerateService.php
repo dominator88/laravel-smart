@@ -11,6 +11,7 @@ namespace Smart\Service;
 use Facades\Smart\Service\ServiceManager;
 use Illuminate\Support\Facades\DB;
 use Smart\Service\SysModuleService;
+use Illuminate\Support\Str;
 
 define('SYSTEM_TEMP_BASE_PATH', __DIR__ . '/../../templates/generate/system/');
 define('API_TEMP_BASE_PATH', __DIR__ . '/../../templates/generate/api');
@@ -374,7 +375,7 @@ class GenerateService {
 		foreach ($tmp as $s) {
 			$name .= ucfirst($s);
 		}
-
+		$name = Str::singular($name);
 		return $name;
 	}
 
