@@ -19,7 +19,9 @@ use Illuminate\Support\Str;
 class MerUserService extends BaseService {
 
     //引入 GridTable trait
-    use \Smart\Traits\Service\GridTable;
+    use \Smart\Traits\Service\GridTable,\Smart\Traits\Service\Instance;
+
+    protected $model_class = MerUser::class;
 
 
     const INSERT_CHECK_NICKNAME = TRUE; //注册是否检查昵称唯一
@@ -50,21 +52,7 @@ class MerUserService extends BaseService {
         1 => '启用' ,
     ];
 
-    //类实例
-    private static $instance;
-
-
-
-    //生成类单例
-    public static function instance() {
-        if ( self::$instance == NULL ) {
-            self::$instance        = new MerUserService();
-            self::$instance->setModel(new MerUser()) ;
-        }
-
-
-        return self::$instance;
-    }
+   
 
     //取默认值
     function getDefaultRow() {

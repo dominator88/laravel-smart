@@ -17,7 +17,9 @@ use App\Mail\Captcha;
 class SysMailService extends BaseService {
 
     //引入 GridTable trait
-    use \Smart\Traits\Service\GridTable;
+    use \Smart\Traits\Service\GridTable,\Smart\Traits\Service\Instance;
+
+    protected $model_class = SysMail::class;
 
     private $timeCap = 600;
 
@@ -38,18 +40,6 @@ class SysMailService extends BaseService {
 
     public $error = '';
 
-    //类实例
-    private static $instance;
-
-    //生成类单例
-    public static function instance() {
-        if ( self::$instance == NULL ) {
-            self::$instance        = new SysMailService();
-            self::$instance->setModel(new SysMail());
-        }
-
-        return self::$instance;
-    }
 
     public function setError( $error ) {
         $this->error = $error;

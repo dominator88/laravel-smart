@@ -16,11 +16,51 @@ var Simulator = {
     $.extend(this.config, config);
     self.initApiUri();
     self.initBtn();
-  },
 
+    self.initVersion();
+  },
+  initVersion: function() {
+
+    var ret = {
+      "v1": [{
+        "version": "v1",
+        "text": "v1"
+      }],
+      "v2": [{
+        "version": "v2",
+        "text": "v2"
+      }]
+    }
+
+    var options = [];
+    for (var version in ret) {
+
+      if (!ret.hasOwnProperty(version)) {
+        continue;
+      }
+      var item = ret[version];
+      console.log(item)
+      options.push('<optgroup label="' + version + '">');
+      if (ret[version].length > 0) {
+        for (var i in item) {
+          if (!item.hasOwnProperty(i)) {
+            continue;
+          }
+          var row = item[i];
+          options.push('<option value="' + row.version + '" data-directory="' + row.text + '">' + row.version + '/' + ' (' + row.text + ')' + '</option>');
+        }
+      }
+      options.push('</optgroup>');
+    }
+
+    $('#version').html(options.join('')).eq(0).prop('selected', true);
+
+  },
   //初始化action
-  initApiUri: function() {
-    $.get(Param.uri.readApi, function(ret) {
+
+  initApiUri: function(version = '') {
+    self = this;
+    $.get(Param.uri.readApi + "?version=" + version, function(ret) {
       //console.log( ret ) ;
       var options = [];
       for (var name in ret) {
@@ -43,7 +83,9 @@ var Simulator = {
       }
 
       $('#actions').html(options.join('')).eq(0).prop('selected', true);
+      self.loadParams();
     });
+
   },
 
   //初始化按钮
@@ -53,6 +95,7 @@ var Simulator = {
     var $headerForm = $('#headerForm');
     var $signatureStr = $('#signatureStr');
     var $apiResponse = $('#apiResponse');
+    var $version = $('#version');
 
     //显示隐藏header
     $('#showOrHideHeader').on('click', function(e) {
@@ -66,9 +109,17 @@ var Simulator = {
         $(this).removeClass('grey').addClass('green').text('显示');
       }
     });
+    $version.on('change', function() {
+      var $version = $('#version');
 
+      //version
+      $ver = $version.find('option:selected').data('directory')
+      self.initApiUri($ver)
+
+    });
     //action变化
     $actions.on('change', function() {
+      self.config.method = '';
       $('#selectActionBtn').trigger('click');
     });
 
@@ -96,7 +147,7 @@ var Simulator = {
       e.preventDefault();
       loading.start();
 
-      var apiUri = Param.uri.api + self.config.directory + '/' + self.config.action;
+      var apiUri = Param.uri.api + self.config.version + '/' + self.config.directory + '/' + self.config.action;
 
       //时间戳
       var timestamp = Date.parse(new Date()) / 1000;
@@ -180,15 +231,22 @@ var Simulator = {
     var $actions = $('#actions');
     var $signatureStr = $('#signatureStr');
     var $apiResponse = $('#apiResponse');
+    var $version = $('#version');
+
+    //version
+    $ver = $version.find('option:selected').data('directory')
+
 
     self.config.arrayCount = 0;
     self.config.directory = $actions.find('option:selected').data('directory');
     self.config.action = $actions.val();
+    self.config.version = $ver
 
     var data = {
       directory: self.config.directory,
       action: self.config.action,
-      method: self.config.method
+      method: self.config.method,
+      version: self.config.version
     };
 
     loading.start();
@@ -208,12 +266,13 @@ var Simulator = {
     var $token = $form.find('input[name="api_token"]');
     var $merId = $form.find('input[name="merId"]');
     var html = '';
+    console.log($token);
     if ($token.length > 0) {
       html = '<select name="api_token" class="form-control">';
 
       for (var i = 0; i < Param.testToken.length; i++) {
         var user = Param.testToken[i];
-        html += '<option value="' + user.api_token + '">' + user.api_token + ' (' + user.nickname + ' - ' + user.phone + ' )' + '</option>';
+        html += '<option value="' + user.api_token + '">' + user.api_token + ' (' + user.username + ' - ' + user.phone + ' )' + '</option>';
       }
       html += '</select>';
 

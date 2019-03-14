@@ -5,7 +5,7 @@
  * @version 2.0 , {date}
  */
 
-var {funcLower} = {
+var  {funcName}  = {
     token : $('input[name=_token]').val(),
     config : {} ,
 	init : function () {

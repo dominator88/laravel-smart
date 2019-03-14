@@ -15,8 +15,9 @@ use Smart\Models\MerSysUser;
 class MerSysUserService extends BaseService {
 
     //引入 GridTable trait
-    use \Smart\Traits\Service\GridTable;
+    use \Smart\Traits\Service\GridTable,\Smart\Traits\Service\Instance;
 
+    protected $model_class = MerSysUser::class;
 
     //状态
     public $status = [
@@ -24,18 +25,6 @@ class MerSysUserService extends BaseService {
         1 => '启用' ,
     ];
 
-    //类实例
-    private static $instance;
-
-    //生成类单例
-    public static function instance() {
-        if ( self::$instance == NULL ) {
-            self::$instance        = new MerSysUserService();
-            self::$instance->setModel(new MerSysUser()) ;
-        }
-
-        return self::$instance;
-    }
 
     //取默认值
     function getDefaultRow() {

@@ -17,11 +17,7 @@ class SysArea extends Backend {
     /**
      * SysArea constructor.
      */
-    public function __construct(Request $request) {
-        parent::__construct($request);
-        $this->_initClassName( $this->controller );
-        $this->service = ServiceManager::make(  SysAreaService::class);
-    }
+
 
     //页面入口
     public function index(Request $request) {

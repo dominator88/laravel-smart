@@ -129,6 +129,8 @@
 创建模块
 
    `php artisan smart:install 模块名`
+  
+>  创建模块后,需要在 **.env** 文件中将模块加入到 *MODULE_EXT* 配置中,以逗号分隔
 
 执行上面命令后,会在app目录下生成对应模块
 

@@ -11,7 +11,9 @@ use Illuminate\Support\Facades\DB;
 
 class SysFuncPrivilegeService extends BaseService{
 
-    use \Smart\Traits\Service\TreeTable;
+    use \Smart\Traits\Service\TreeTable,\Smart\Traits\Service\Instance;
+
+    protected $model_class = SysFuncPrivilege::class;
 
     public $name = [
         'read'   => '查看' ,
@@ -36,15 +38,8 @@ class SysFuncPrivilegeService extends BaseService{
         'delete' => [ 'destroy' , 'delete' , 'remove' ] ,
     ];
 
-    private static $instance = null;
-
-    public static function instance(){
-        if ( self::$instance == NULL ) {
-            self::$instance  = new SysFuncPrivilegeService();
-            self::$instance->setModel(new SysFuncPrivilege()) ;
-        }
-
-        return self::$instance;
+    public function getDefaultRow(){
+        
     }
 
 

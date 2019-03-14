@@ -21,10 +21,18 @@ class MerRole extends Backend {
     /**
      * SysRole constructor.
      */
-    public function __construct(Request $request) {
+    protected $autoload_service = false;
+
+    public $controller = 'SysRole';
+
+    public function __construct(Request $request){
         parent::__construct($request);
-        $this->_initClassName( $this->controller );
-        $this->service = ServiceManager::make(  SysRoleService::class);
+        $this->service = ServiceManager::make( \Smart\Service\SysRoleService::class );
+        $jsCode = <<<EOF
+            {$this->controller}.init();
+EOF;
+
+            $this->_addJsCode($jsCode);
     }
 
     //页面入口
@@ -34,7 +42,7 @@ class MerRole extends Backend {
         //uri
         $this->_addParam( 'uri', [
             'getPermission'    => full_uri( 'backend/merrole/get_permission' ),
-            'getPrivilegeData' => full_uri('backend/merrole/get_privilegeData'),
+            'getPrivilegeData' => full_uri( 'backend/merrole/get_privilegeData'),
             'updatePermission' => full_uri( 'backend/merrole/update_permission' )
         ] );
 

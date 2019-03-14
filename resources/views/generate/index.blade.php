@@ -48,10 +48,7 @@
                                             <div class="form-group">
                                                 <label class="col-md-3 control-label">模块</label>
                                                 <div class="col-md-7">
-                                                    <label class="radio-inline">
-                                                        <input type="radio" checked value="Backend" name="module"> Backend 模块 </label>
-                                                    <label class="radio-inline">
-                                                        <input type="radio" value="Mp" name="module"> Mp 模块 </label>
+                                                    {!! form_radios('module',$param['module']) !!}
 
                                                 </div>
                                             </div><!-- end item -->

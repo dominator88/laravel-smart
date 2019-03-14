@@ -7,17 +7,8 @@
  */
 namespace Smart\Service;
 
-use Illuminate\Database\Eloquent\Model;
-
 class BaseService{
-    private  $model = null;
 
 
-    public  function getModel(){
-        return $this->model;
-    }
-    
-    public function setModel(Model $model){
-        return $this->model = $model;
-    }
+
 }

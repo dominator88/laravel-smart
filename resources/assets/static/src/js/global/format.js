@@ -14,6 +14,11 @@ var optDelete = function ( value , row ) {
          '<i class="fa fa-trash"></i> 删除</a>';
 };
 
+var optIncome = function ( value , row ) {
+  return '<a class="btn btn-sm red destroyBtn" data-id="' + row.id + '" href="javascript:;">' +
+         '<i class="fa fa-trash"></i> 进入</a>';
+};
+
 //status
 var statusColor = [ 'default' , 'primary' , 'success' , 'info' ];
 var formatStatus = function ( value ) {
@@ -62,6 +67,11 @@ var formatDate = function ( value ) {
 
 var yesColor = [ 'default' , 'primary' ];
 var formatYes = function ( value ) {
+  var data = [ '否' , '是' ];
+  return '<span class="label label-sm label-' + yesColor[ value ] + '">' + data[ value ] + '</span>';
+};
+
+var formatTest = function ( value ) {
   var data = [ '否' , '是' ];
   return '<span class="label label-sm label-' + yesColor[ value ] + '">' + data[ value ] + '</span>';
 };

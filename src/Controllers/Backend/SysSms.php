@@ -15,14 +15,7 @@ use Facades\Smart\Service\ServiceManager;
 
 class SysSms extends Backend {
 
-    /**
-     * SysSms constructor.
-     */
-    public function __construct(Request  $request) {
-        parent::__construct($request);
-        $this->_initClassName( $this->controller );
-        $this->service = ServiceManager::make(  SysSmsService::class);
-    }
+
 
     //页面入口
     public function index(Request $request) {

@@ -15,22 +15,24 @@ class CreateMerArticlesTable extends Migration
     {
         Schema::create('mer_articles', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('mer_id');
+            $table->integer('mer_id')->nullable();
             $table->integer('catalog_id');
-            $table->integer('sort');
-            $table->string('title');
-            $table->string('icon');
-            $table->string('tags');
-            $table->string('desc');
-            $table->text('content');
-            $table->tinyInteger('status');
+            $table->integer('sort')->default(999);
+            $table->string('title' , 200);
+            $table->string('icon' , 200)->nullable();
+            $table->string('tags' , 200)->nullable();
+            $table->string('desc' , 200)->nullable();
+            $table->text('content')->nullable();
+            $table->tinyInteger('status')->default(1);
             $table->dateTime('start_at');
             $table->dateTime('end_at');
-            $table->integer('comments');
-            $table->integer('likes');
-            $table->integer('pv');
-            $table->integer('favorites');
-            $table->integer('userId');
+            $table->integer('comments')->default(0);
+            $table->integer('likes')->default(0);
+            $table->integer('pv')->default(0);
+            $table->integer('favorites')->default(0);
+            $table->integer('userId')->default(1);
+
+
             $table->timestamps();
         });
     }

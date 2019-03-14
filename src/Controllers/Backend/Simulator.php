@@ -8,143 +8,150 @@
 
 namespace Smart\Controllers\Backend;
 
-
-
-use Smart\Service\MerUserService;
+use cebe\markdown\MarkdownExtra;
+use Facades\Smart\Service\ServiceManager;
+use Illuminate\Http\Request;
 use Smart\Service\SimulatorService;
 use Smart\Service\SysMerchantService;
-use cebe\markdown\MarkdownExtra;
-use Illuminate\Http\Request;
-use Facades\Smart\Service\ServiceManager;
+use Smart\Service\SysUserService;
 
 class Simulator extends Backend {
 
-    public $deviceOsVersion = '10.0.0';
-    public $apiVersion      = 'v1';
+	public $deviceOsVersion = '10.0.0';
+	public $apiVersion = 'v1';
 
-    /**
-     * Simulator constructor.
-     */
-    public function __construct(Request $request ) {
-        parent::__construct($request);
-        $this->_initClassName( $this->controller );
-        $this->service = ServiceManager::make(  SimulatorService::class);
-        $this->apiVersion = config('backend.api.apiVersion');
-    }
+	/**
+	 * Simulator constructor.
+	 */
+	public function __construct(Request $request) {
+		parent::__construct($request);
 
-    //页面入口
-    public function index() {
-        $this->_init( '接口模拟器' );
+		$this->apiVersion = config('backend.api.apiVersion');
+	}
 
-        //uri
-        $this->_addParam( 'uri' , [
-            'readApi'    => full_uri( 'backend/simulator/read_api' ) ,
-            'readParams' => full_uri( 'backend/simulator/read_params' ) ,
-            'api'        => $this->baseUri . "api/{$this->apiVersion}/" ,
-            'readme'     => full_uri( 'backend/simulator/read_me' ) ,
-        ] );
+	//页面入口
+	public function index() {
+		$this->_init('接口模拟器');
 
-        $MerUser     = MerUserService::instance();
-        $SysMerchant = SysMerchantService::instance();
-        //其他参数
-        $this->_addParam( [
-            'deviceOsVersion' => $this->deviceOsVersion ,
-            'apiVersion'      => $this->apiVersion ,
-            'secret'          => config( 'backend.secret' ) ,
-            'testToken'       => $MerUser->getForTest() ,
-            'testMer'         => $SysMerchant->getForTest() ,
-            'defaultValue'    => [
-                'token' => '' , //取一个token
-                'merId' => 1
-            ]
-        ] );
+		//uri
+		$this->_addParam('uri', [
+			'readApi' => full_uri('backend/simulator/read_api'),
+			'readParams' => full_uri('backend/simulator/read_params'),
+			'api' => $this->baseUri . "api/",
+			'readme' => full_uri('backend/simulator/read_me'),
+		]);
 
-        //需要引入的 css 和 js
-        $this->_addJsLib( 'static/plugins/jquery-md5/jQuery.md5.js' );
+		$SysUser = SysUserService::instance();
+		$SysMerchant = SysMerchantService::instance();
+		//其他参数
+		$this->_addParam([
+			'deviceOsVersion' => $this->deviceOsVersion,
+			'apiVersion' => $this->apiVersion,
+			'secret' => config('backend.secret'),
+			'testToken' => $SysUser->getForTest(),
+			'testMer' => $SysMerchant->getForTest(),
+			'defaultValue' => [
+				'token' => '', //取一个token
+				'merId' => 1,
+			],
+		]);
 
-        return $this->_displayWithLayout('backend::simulator.index');
-    }
+		//需要引入的 css 和 js
+		$this->_addJsLib('static/plugins/jquery-md5/jQuery.md5.js');
 
-    //读取结果
-    function read_api() {
+		return $this->_displayWithLayout('backend::simulator.index');
+	}
 
-     //   $Simulator = SimulatorService::instance();
+	//读取结果
+	function read_api(Request $request) {
+		if($request->filled('version')){
+			$apiVersion = $request->input('version');
+		}else{
+			$apiVersion =  $this->apiVersion;
+		}
+		
+		//   $Simulator = SimulatorService::instance();
+		
+		$ret = $this->service->readApi($apiVersion);
 
-        $ret = $this->service->readApi( $this->apiVersion );
+		return json($ret);
+	}
 
-        return json( $ret );
-    }
+	public function read_version(){  //TODO 版本控制未完成
+		$ret = $this->service->readVersion();
+		return json($ret);
+	}
 
-    function read_params(Request $request) {
-        $directory = $request->input( 'directory' );
-        $action    = $request->input( 'action' );
-        $action    = ucfirst( $action );
-        $method    = $request->input( 'method' , '' );
+	function read_params(Request $request) {
+		$directory = $request->input('directory');
+		$action = $request->input('action');
+		$action = ucfirst($action);
+		$method = $request->input('method', '');
+		$version = $request->input('version',$this->apiVersion);
 
-        $service = "App\\Api\\Service\\{$this->apiVersion}\\{$directory}\\{$action}Service";
+		$service = "App\\Api\\Service\\{$version}\\{$directory}\\{$action}Service";
 
-        $instance = $service::instance();
+		$instance = $service::instance();
 
-        if ( empty( $method ) ) {
-            $key    = array_keys( $instance->allowRequestMethod );
-            $method = $key[0];
-        }
+		if (empty($method)) {
+			$key = array_keys($instance->allowRequestMethod);
+			$method = $key[0];
+		}
 
-        $data['method']             = $method;
-        $data['allowRequestMethod'] = $instance->allowRequestMethod;
-        $data['defaultParams']      = $instance->defaultParams[ $method ];
+		$data['method'] = $method;
+		$data['allowRequestMethod'] = $instance->allowRequestMethod;
+		$data['defaultParams'] = $instance->defaultParams[$method];
 
-        $data['defaultResponse']    = $this->_fixDefaultResponse( $instance->defaultResponse[ $method ] );
+		$data['defaultResponse'] = $this->_fixDefaultResponse($instance->defaultResponse[$method]);
 
-        return view('backend::simulator.params')->with($data);
+		return view('backend::simulator.params')->with($data);
 
-    }
+	}
 
-    /**
-     * 优化前台显示 default response
-     *
-     * @param $defaultResponse
-     *
-     * @return string
-     */
-    private function _fixDefaultResponse( $defaultResponse ) {
-        foreach ( $defaultResponse as $key => &$item ) {
-            if ( is_array( $item ) ) {
-                if ( isset( $item[0] ) ) {
-                    $item = $item[0];
-                } else {
-                    foreach ( $item as $k => &$i ) {
-                        if ( is_array( $i ) ) {
-                            if ( isset( $i[0] ) ) {
-                                $i = $i[0];
-                            }
-                        }
-                    }
-                }
-            }
-        }
+	/**
+	 * 优化前台显示 default response
+	 *
+	 * @param $defaultResponse
+	 *
+	 * @return string
+	 */
+	private function _fixDefaultResponse($defaultResponse) {
+		foreach ($defaultResponse as $key => &$item) {
+			if (is_array($item)) {
+				if (isset($item[0])) {
+					$item = $item[0];
+				} else {
+					foreach ($item as $k => &$i) {
+						if (is_array($i)) {
+							if (isset($i[0])) {
+								$i = $i[0];
+							}
+						}
+					}
+				}
+			}
+		}
 
-        return json_encode( $defaultResponse , JSON_UNESCAPED_UNICODE );
-    }
+		return json_encode($defaultResponse, JSON_UNESCAPED_UNICODE);
+	}
 
-    //文档
-    function read_me() {
-        $this->_init( '文档' );
-        $parser = new MarkdownExtra();
-        $readme = $parser->parse( file_get_contents( base_path() . './README.md' ) );
+	//文档
+	function read_me() {
+		$this->_init('文档');
+		$parser = new MarkdownExtra();
+		$readme = $parser->parse(file_get_contents(base_path() . './README.md'));
 
-        $this->_addData( 'readme' , $readme );
+		$this->_addData('readme', $readme);
 
-        $this->_addParam( 'uri' , [
-            'menu' => '/backend/simulator/index' ,
-        ] );
+		$this->_addParam('uri', [
+			'menu' => '/backend/simulator/index',
+		]);
 
-        $this->_addJsLib( 'static/js/backend/SimulatorReadme.js' );
-        $this->data['initPageJs'] = FALSE;
-        $this->data['jsCode'][]   = 'SimulatorReadme.init()';
+		$this->_addJsLib('static/js/backend/SimulatorReadme.js');
+		$this->data['initPageJs'] = FALSE;
+		$this->data['jsCode'][] = 'SimulatorReadme.init()';
 
-
-        return $this->_displayWithLayout( 'backend::readme' );
-    }
+		return $this->_displayWithLayout('backend::readme');
+	}
 
 }

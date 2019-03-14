@@ -19,27 +19,25 @@ use ReflectionClass;
 
 class SimulatorService extends BaseService {
 
-    //类实例
-    private static $instance;
+    use \Smart\Traits\Service\Instance;
 
-    //生成类单例
-    public static function instance() {
-        if ( self::$instance == NULL ) {
-            self::$instance = new SimulatorService();
-        }
-
-        return self::$instance;
-    }
+    private $apiVer = [
+        'v1' => 'v1',
+        'v2' => 'v2',
+    ];
 
     function readApi( $apiVersion ) {
 
         $dir   = app_path('Api') . '/Service/' . $apiVersion;
-        $filesystem = new Filesystem();
+
+        $filesystem = resolve('files');
+    //    var_dump($filesystem);
         $dirs = $filesystem->directories($dir);
 
         $api   = [];
 
         foreach( $dirs as $dir ){
+            
             $files = $filesystem->allFiles($dir);
             foreach($files  as $file){
                 $filename = $file->getRelativePathname();
@@ -61,6 +59,10 @@ class SimulatorService extends BaseService {
 
 
         return $api;
+    }
+
+    public function readVersion(){
+        return $this->apiVer;
     }
 
     function _parser( $apiVersion, $subDir, $className ) {

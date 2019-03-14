@@ -12,6 +12,8 @@ class MerAlbumCatalog extends Model
 
     public $timestamps = FALSE;
 
+    public $fillable = ['tag','mer_id','sort','icon','totals'];
+
     use \Smart\Traits\Service\Scope;
 
     public function scopeKeyword( $query , $param){
@@ -25,6 +27,10 @@ class MerAlbumCatalog extends Model
         }else{
             return $query->where('mer_id' , $param);
         }
+    }
+
+    public function album(){
+        return $this->belongsToMany( MerAlbum::class , 'mer_album_tag' , 'catalog_id' , 'album_id' );
     }
     //
 }

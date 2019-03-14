@@ -12,6 +12,7 @@ use App\Api\Service\v1\ApiService;
 
 class {name}Service extends ApiService {
 
+  use \Smart\Traits\Service\Instance;
   //允许的请求方式
 	public $allowRequestMethod = [
 	  'get'  => 'GET - 取{desc}',
@@ -53,15 +54,6 @@ class {name}Service extends ApiService {
      'delete' => []
 	];
 
-  private static $instance;
-	public static function instance( $params = [] ) {
-		if ( self::$instance == NULL ) {
-			self::$instance = new {name}Service();
-			self::$instance->params = $params ;
-		}
-
-		return self::$instance;
-	}
 
   /**
    * 接口响应方法

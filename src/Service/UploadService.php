@@ -152,7 +152,7 @@ class UploadService {
      */
     private function afterUploadSuccess() {
         //文件相对路径
-        $this->relativePath .= DIRECTORY_SEPARATOR .$this->fileInfo ;
+        $this->relativePath = $this->fileInfo ;
 
         //修改文件权限
         //chmod( $this->relativePath, 0777 );
@@ -330,7 +330,7 @@ class UploadService {
     private function saveAsAlbum() {
         if ( $this->param['saveAsAlbum'] !== FALSE ) {
             $data = [
-                'uri'      => $this->result['savePath'],
+                'uri'      => $this->result['uri'],
                 'size'     => $this->result['size'],
                 'img_size' => "{$this->result['width']}*{$this->result['height']}",
                 'mimes'    => $this->result['mimes'],

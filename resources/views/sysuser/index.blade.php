@@ -6,7 +6,7 @@
     <!-- BEGIN PAGE BAR -->
     <div class="page-bar">
         <ul class="page-breadcrumb">
-            <li> <a href="<?= $param['uri']['base']?>">首页</a> <i class="fa fa-circle"></i> </li>
+            <li> <a href="<?=$param['uri']['base']?>">首页</a> <i class="fa fa-circle"></i> </li>
             <li> <span>系统设置</span> </li>
         </ul>
     </div>
@@ -18,7 +18,7 @@
             <div class="portlet-title">
                 <div class="caption">
                     <i class="icon-settings font-dark"></i>
-                    <span class="caption-subject font-dark bold uppercase"><?= $param['pageTitle'] ?></span>
+                    <span class="caption-subject font-dark bold uppercase"><?=$param['pageTitle']?></span>
                 </div>
                 <div class="actions">
                     <a href="javascript:;" class="btn btn-circle blue" id="addNewBtn">
@@ -45,6 +45,7 @@
                             <option value="1">启用</option>
                         </select>
                     </div>
+
                     <!-- 查询状态 end -->
                     <button type="submit" class="btn default" id="searchBtn"><i class="fa fa-search"></i> 查询</button>
                 </form> <!-- End Search Form -->
@@ -60,6 +61,7 @@
                             <th width="80" data-field="status" data-formatter="formatStatus">状态</th>
                             <th width="100" data-field="created_at" data-formatter="formatDate">创建时间</th>
                             <th width="160" data-field="signed_at" data-formatter="formatDatetime">最后登录</th>
+                            <th width="160" data-field="user_device" data-formatter="formatTest">测试</th>
                             <th width="60" data-formatter="optResetPwd"></th>
                             <th width="60" data-formatter="optEdit"></th>
                             <th width="60" data-formatter="optDelete"></th>
@@ -111,7 +113,7 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">账号状态</label>
                             <div class="col-md-7">
-                                <?= form_radios('status' , $param['status'] ) ?>
+                                <?=form_radios('status', $param['status'])?>
                             </div>
                         </div><!-- end item -->
                         <!-- start item -->
@@ -125,7 +127,15 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">角色</label>
                             <div class="col-md-7">
-                                <?= form_checkbox_rows( 'roles' , $param['roles']  ) ?>
+                                <?=form_checkbox_rows('roles', $param['roles'])?>
+                            </div>
+                        </div><!-- end item -->
+
+                         <!-- start item -->
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">api测试账户</label>
+                            <div class="col-md-7">
+                                <?=form_radios('for_test', $param['for_test'])?>
                             </div>
                         </div><!-- end item -->
                     </div>
@@ -149,5 +159,6 @@
     </div>
 
 </div>
+
 <!-- END CONTENT BODY -->
     @stop

@@ -1,0 +1,2 @@
+	//引入 Instance
+	use \Smart\Traits\Service\Instance;

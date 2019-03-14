@@ -17,8 +17,14 @@ class MerAlbum extends Model {
 
     use \Smart\Traits\Service\Scope;
 
+    protected $fillable = ['mer_id','sort','uri','size','mimes','img_size','desc','status'];
+
     public function scopeKeyword( $query , $param){
         if($param)
             return $query->where('name' , 'like' , "%{$param}%");
+    }
+
+    public function tag(){
+        return $this->belongsToMany( MerAlbumCatalog::class , 'mer_album_tag' , 'album_id' , 'catalog_id' );
     }
 }

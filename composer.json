@@ -1,15 +1,13 @@
 {
-    "name":  "dominator88/laravel-smart",
+    "name": "dominator88/laravel-smart",
     "description": "后台管理系统.能快速度进行移动端开发.集成多个常见工具包.",
-    "keywords": ["admin", "laravel" ,"grid" ,"api" ],
+    "keywords": ["admin", "laravel", "grid", "api"],
     "homepage": "https://github.com/dominator88/laravel-smart",
     "license": "MIT",
-    "authors": [
-        {
-            "name": "mr.z",
-            "email": "zsh2088@gmail.com"
-        }
-    ],
+    "authors": [{
+        "name": "mr.z",
+        "email": "zsh2088@gmail.com"
+    }],
     "type": "library",
     "require": {
         "php": ">=7.0.0",
@@ -20,8 +18,8 @@
         "guzzlehttp/guzzle": "^6.2@dev",
         "toplan/laravel-sms": "~2.6",
         "intervention/image": "^2.3@dev",
-        "laravel/dusk": "^2.0@dev"
-
+        "laravel/dusk": "^2.0@dev",
+        "overtrue/easy-sms": "1.1.*"
     },
     "require-dev": {
         "phpunit/phpunit": "~6.0"
@@ -35,7 +33,8 @@
         "psr-4": {
             "Smart\\": "src/"
 
-        },"files": [
+        },
+        "files": [
             "Func.php"
         ]
     },
@@ -44,14 +43,13 @@
 
 
         },
-        "classmap":[
+        "classmap": [
             "tests/TestCase.php"
 
         ]
     },
     "extra": {
-
-        "laravel":{
+        "laravel": {
             "providers": [
                 "Smart\\SmartServiceProvider",
                 "Intervention\\Image\\ImageServiceProvider"

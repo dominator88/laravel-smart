@@ -13,22 +13,27 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Smart\Service\SysFuncService;
 use Facades\Smart\Service\ServiceManager;
+use Mp\Facades\Widget;
 
 class Backend extends SysBase{
 
-
+    
 
     public function __construct(Request $request)
-    {
+    {   
         parent::__construct($request);
         $this->middleware('auth');
 
     }
 
-    public function _init($pageTitle = '新页面'){
-        parent::_init($pageTitle);
+    
 
+    public function _init($pageTitle = '新页面'){
+        
+        parent::_init($pageTitle);
         $SysFuncService = ServiceManager::make(SysFuncService::class );
+
+
       //  var_dump($SysFuncService->getMenuByRoles(1,'backend'));
         $this->user = Auth::user();
         $this->_addData(

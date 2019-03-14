@@ -19,11 +19,7 @@ class MerSysUser extends Backend {
     /**
      * SysMerUser constructor.
      */
-    public function __construct(Request  $request) {
-        parent::__construct($request);
-        $this->_initClassName( $this->controller );
-        $this->service = ServiceManager::make(  SysUserService::class);
-    }
+
 
     /**
      * 页面显示接口
