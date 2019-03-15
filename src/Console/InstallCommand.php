@@ -51,6 +51,7 @@ class InstallCommand extends Command
             $this->initController($module);
             $this->initExampleController($module);
             $this->initMigration($module);
+            $this->initMiddleware($module);
         }else{
 
          $this->initData($module);
@@ -114,6 +115,11 @@ class InstallCommand extends Command
     public function initMigration($module){
         $this->makeDir('migrations');
         $this->line('init migration success!');
+    }
+
+    public function initMiddleware($module){
+        $this->makeDir('middlewares');
+        $this->line('init middlewares success!');
     }
 
 
