@@ -47,8 +47,10 @@ class InstallCommand extends Command
             $this->initDirectory($module);
             $this->initView( $module );
             $this->initRoutes($module);
+            $this->initConfig($module);
             $this->initController($module);
             $this->initExampleController($module);
+            $this->initMigration($module);
         }else{
 
          $this->initData($module);
@@ -109,6 +111,11 @@ class InstallCommand extends Command
         $this->line('initExampleController success!');
     }
 
+    public function initMigration($module){
+        $this->makeDir('migrations');
+        $this->line('init migration success!');
+    }
+
 
     /**
      * 初始化视图
@@ -135,6 +142,13 @@ class InstallCommand extends Command
         $this->laravel['files']->put(app_path($module).'/routes.php' , $content);
         $this->line('initRoutes success!');
 
+    }
+
+    public function initConfig($module){
+        $config_path = 'config.txt';
+        $content  = $this->getContent($config_path , ['module' => $module]);
+        $this->laravel['files']->put(app_path($module).'/config.php' , $content);
+        $this->line('initConfig success!');
     }
 
     protected  function getContent($path , $param){

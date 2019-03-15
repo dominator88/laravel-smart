@@ -26,11 +26,11 @@ public function getByCond( $param ) {
     return $model->count();
   }
   if($param['getAll'] === FALSE){
-    $model = $model->get()->forPage($param['page'] , $param['pageSize']);
+    $model = $model->get()->forPage($param['page'] , $param['pageSize'])->values();
   }else{
     $model = $model->get();
   }
-  $data = $model->->orderBy($param['sort'], $param['order'])->toArray();
+  $data = $model->toArray();
 
 
   return $data ? $data : [ ];

@@ -39,13 +39,20 @@ class SmartServiceProvider extends ServiceProvider {
 		//列出状态正常的模块  不可直接调用数据库
 
 		foreach ($modules as $module) {
+			//加载模块路由
 			if (file_exists(app_path() . '/' . ucfirst($module) . '/routes.php')) {
 				$this->loadRoutesFrom(app_path() . '/' . ucfirst($module) . '/routes.php');
 			}
 
+			//加载模块视图
 			if (file_exists(app_path() . '/' . ucfirst($module) . '/views')) {
 
 				$this->loadViewsFrom(app_path() . '/' . ucfirst($module) . '/views', ucfirst($module));
+			}
+
+			//加载模块迁移文件
+			if(file_exists(app_path().'/'.ucfirst($module).'/migrations')){
+				$this->loadMigrationsFrom(app_path().'/'.ucfirst($module).'/migrations');
 			}
 
 		}
@@ -78,7 +85,10 @@ class SmartServiceProvider extends ServiceProvider {
 	public function register() {
 
 		$this->mergeConfigFrom(__DIR__ . '/../config/backend.php', 'backend');
+
 		$this->registerRouteMiddleware();
+
+		$this->registerModuleRouteMiddleware();
 
 		$this->commands($this->commands);
 	}
@@ -94,6 +104,21 @@ class SmartServiceProvider extends ServiceProvider {
 			app('router')->aliasMiddleware($key, $middleware);
 		}
 
+	}
+
+	protected function registerModuleRouteMiddleware(){
+		$modules = explode(',', config('backend.module_ext'));
+
+		foreach($modules as $module){
+			if (file_exists(app_path() . '/' . ucfirst($module) . '/config.php')) {
+				$module_lower = strtolower($module);
+				$this->mergeConfigFrom(app_path() . '/' . ucfirst($module) . '/config.php',$module_lower);
+				$middlewares = config($module_lower.'.middlewares');
+				foreach($middlewares as $key => $middleware){
+					app('router')->aliasMiddleware($module_lower.'.'.$key, $middleware);
+				}
+			}
+		}
 	}
 
 	/**

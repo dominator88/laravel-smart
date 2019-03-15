@@ -36,7 +36,7 @@ class {func} extends {module} {
             'order'    => $request->input( 'order', 'DESC' ),
 		] );
 
-    {uploadParam}
+    	{uploadParam}
 
 		//其他参数
 		$this->_addParam( [
@@ -53,7 +53,7 @@ class {func} extends {module} {
 		{gridJs}
     {treeGridJs}
 
-		return $this->_displayWithLayout('{moduleLower}::{funcNameLower}.index');
+		return $this->_displayWithLayout('{module}::{funcNameLower}.index');
 	}
 
 	{gridRead}
