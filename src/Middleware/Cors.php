@@ -3,7 +3,7 @@
 namespace Smart\Middleware;
 
 use Closure;
-use App\Api\Service\v1\ApiService;
+
 
 class Cors
 {
@@ -15,15 +15,7 @@ class Cors
      * @return mixed
      */
 
-    protected $api = NULL;
 
-
-
-    public function __construct()
-    {
-        $this->api = ApiService::instance();
-        $this->api->debug = false;
-    }
 
     public function handle($request, Closure $next)
     {

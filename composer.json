@@ -19,7 +19,10 @@
         "toplan/laravel-sms": "~2.6",
         "intervention/image": "^2.3@dev",
         "laravel/dusk": "^2.0@dev",
-        "overtrue/easy-sms": "1.1.*"
+        "overtrue/easy-sms": "1.1.*",
+        "prettus/l5-repository": "^2.6",
+        "spatie/laravel-permission": "^2.36"
+
     },
     "require-dev": {
         "phpunit/phpunit": "~6.0"
