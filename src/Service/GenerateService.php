@@ -65,8 +65,8 @@ class GenerateService {
 	//文件存储路径 		ucfirst()
 	protected $filePath = [
 		//   'model'      => base_path('common/model/{func}.php'),
-		'model' => APP_PATH . '/Models/{func}.php',
-		'service' => APP_PATH . '/Service/{func}Service.php',
+		'model' => APP_PATH . '/{module}/Models/{func}.php',
+		'service' => APP_PATH . '/{module}/Service/{func}Service.php',
 		'controller' => APP_PATH . '/{moduleLower}/controllers/{func}.php',
 		'js' => 'static/js/{moduleLower}/{func}.js',
 		//   'view'       => BASE_PATH . '/resources/views/{module}/{funcLower}/index.html',
@@ -663,6 +663,7 @@ class GenerateService {
 
 		//替换的数据
 		$replaceData = [
+			'module' => $data['module'],
 			'func' => $data['func'],
 			'date' => $data['date'],
 			'funcName' => $data['funcName'],
@@ -693,6 +694,7 @@ class GenerateService {
 
 		//替换的数据
 		$replaceData = [
+			'module' => $data['module'],
 			'func' => $data['func'],
 			'date' => $data['date'],
 			'funcName' => $data['funcName'],

@@ -38,6 +38,7 @@ class EloquentUserProvider extends BaseUserProvider
                 $query->where($key, $value);
                 $flag = true;
             }
+
         }
 
         return $query->first();

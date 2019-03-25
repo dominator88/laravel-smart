@@ -10,6 +10,8 @@ namespace Smart;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Smart\Models\SysModule;
+use Smart\Extentions\EloquentUserProvider;
+use Illuminate\Support\Facades\Auth;
 
 class SmartServiceProvider extends ServiceProvider {
 
@@ -90,6 +92,8 @@ class SmartServiceProvider extends ServiceProvider {
 
 		$this->registerModuleRouteMiddleware();
 
+		$this->registerAuthProvider();
+
 		$this->commands($this->commands);
 	}
 
@@ -119,6 +123,12 @@ class SmartServiceProvider extends ServiceProvider {
 				}
 			}
 		}
+	}
+
+	protected function registerAuthProvider(){
+		Auth::provider('authenEloquent', function ($app, $config) {
+            return new EloquentUserProvider($app->make('hash'), $config['model']);
+        });
 	}
 
 

@@ -15,6 +15,7 @@ use Smart\Service\SysAreaService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Smart\Service\UploadService;
+use Illuminate\Support\Str;
 
 class SysBase extends  Controller{
 
@@ -69,11 +70,13 @@ EOF;
     }
 
     private function _initService(){
-
+        
        if(class_exists('Smart\\Service\\'.$this->controller.'Service')){
             $this->service = ServiceManager::make( 'Smart\\Service\\'.$this->controller.'Service');
+       }elseif(class_exists('App\\'.$this->module.'\\Service\\'.$this->controller.'Service')){
+            $this->service = ServiceManager::make( 'App\\'.$this->module.'\\Service\\'.$this->controller.'Service');
        }elseif(class_exists('App\\Service\\'.$this->controller.'Service')){
-        $this->service = ServiceManager::make( 'App\\Service\\'.$this->controller.'Service');
+            $this->service = ServiceManager::make( 'App\\Service\\'.$this->controller.'Service');
        }
         
     }

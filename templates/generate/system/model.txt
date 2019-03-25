@@ -1,4 +1,4 @@
-<?php namespace App\Models;
+<?php namespace App\{module}\Models;
 /**
  * {funcName} Model
  *

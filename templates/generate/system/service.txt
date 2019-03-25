@@ -1,4 +1,4 @@
-<?php namespace App\Service;
+<?php namespace App\{module}\Service;
 /**
  * {funcName} Service
  *
@@ -7,7 +7,7 @@
  */
 
 use App\Models\{func};
-use Smart\Service\BaseService;
+use Smart\Service\BaseService; 
 
 class {func}Service extends BaseService {
 
