@@ -92,7 +92,7 @@ class SmartServiceProvider extends ServiceProvider {
 
 		$this->registerModuleRouteMiddleware();
 
-		$this->registerAuthProvider();
+		$this->registerProvider();
 
 		$this->commands($this->commands);
 	}
@@ -125,11 +125,19 @@ class SmartServiceProvider extends ServiceProvider {
 		}
 	}
 
-	protected function registerAuthProvider(){
+	protected function registerProvider(){
+		//注册认证服务
 		Auth::provider('authenEloquent', function ($app, $config) {
             return new EloquentUserProvider($app->make('hash'), $config['model']);
         });
+
+        //注册短信服务
+        $this->app->singleton('sms' , function($app){
+        	
+        	return new \Overtrue\EasySms\EasySms($app['config']['sms']['sms']);
+        });
 	}
+
 
 
 }
