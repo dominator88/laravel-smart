@@ -110,7 +110,9 @@ EOF;
             'destroy' => full_uri( $currentBaseUri . 'destroy' ) ,
         ];
 
-
+        $this->_addParam( 'uri', [
+            'chPwd'       => full_uri( 'backend/auth/changepassword' ),
+        ]);
     }
 
     public function _initClassJs( ){
