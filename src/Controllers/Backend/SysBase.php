@@ -103,16 +103,14 @@ EOF;
             'img'     => config( 'backend.image.imgUri' ) ,
             'menu'    => "" ,
             'this'    => full_uri( $currentBaseUri . $this->action ) ,
-            'chPwd'   => full_uri( "{$this->baseUri}{$this->module}/auth/changePassword" ) ,
+            'chPwd'   => full_uri( "backend/auth/changePassword" ) ,
             'read'    => full_uri( $currentBaseUri . 'read' ) ,
             'insert'  => full_uri( $currentBaseUri . 'insert' ) ,
             'update'  => full_uri( $currentBaseUri . 'update' , [ 'id' => '' ] ) ,
             'destroy' => full_uri( $currentBaseUri . 'destroy' ) ,
         ];
 
-        $this->_addParam( 'uri', [
-            'chPwd'       => full_uri( 'backend/auth/changepassword' ),
-        ]);
+        
     }
 
     public function _initClassJs( ){
