@@ -17,6 +17,12 @@ class Index extends Backend {
 
 	public function __construct(Request $request) {
 		parent::__construct($request);
+		
+            $jsCode = <<<EOF
+            {$this->controller}.init();
+EOF;
+
+            $this->_addJsCode($jsCode);
 
 	}
 
@@ -43,7 +49,13 @@ class Index extends Backend {
 		$this->_addData('stat', $stat);
 		$this->_addParam('charts', $charts);
 
-		return $this->_displayWithLayout('backend::index/index');
+		$this->_addParam( 'uri', [
+			
+			'chPwd'       => full_uri( 'backend/auth/changepassword' ),
+			
+		] );
+
+		return $this->_displayWithLayout('backend::index.index');
 
 	}
 

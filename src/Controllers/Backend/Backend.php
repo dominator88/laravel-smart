@@ -31,6 +31,10 @@ class Backend extends SysBase{
     public function _init($pageTitle = '新页面'){
         
         parent::_init($pageTitle);
+
+        $this->_addParam( 'uri', [
+            'chPwd'       => full_uri( 'backend/auth/changepassword' ),
+        ]);
         $SysFuncService = ServiceManager::make(SysFuncService::class );
 
 

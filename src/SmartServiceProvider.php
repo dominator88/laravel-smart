@@ -24,6 +24,7 @@ class SmartServiceProvider extends ServiceProvider {
 		'auth.token' => \Smart\Middleware\CheckToken::class,
 		'auth.permission' => \Smart\Middleware\Permission::class,
 		'auth.cors' =>\Smart\Middleware\Cors::class,
+		'auth.resetPassword' => \Smart\Middleware\ResetPassword::class,
 	];
 
 	public function boot() {

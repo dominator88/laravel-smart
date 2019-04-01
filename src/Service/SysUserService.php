@@ -333,6 +333,8 @@ class SysUserService extends BaseService {
 		}
 	}
 
+	
+
 	public function setUser($id) {
 		self::instance()->user = self::instance()->getModel()->find($id);
 	}

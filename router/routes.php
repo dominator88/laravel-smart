@@ -1,10 +1,22 @@
 <?php
 
-
+use Illuminate\Routing\Router;
+Route::group([
+    'prefix'=>strtolower('Backend' ),
+    'namespace' => 'Smart\\Controllers\\Backend' ,
+    'middleware'=> ['web']
+],function(Router $router ){
+	$router->group(['prefix' => 'auth','middleware' => ['auth.resetPassword']],function($router){
+		$router->post('changepassword' , 'AuthController@changePassword');
+	});
+	
+});
 
 Route::group(['prefix' => 'backend/index', 'namespace' => 'Smart\Controllers\Backend', 'middleware' => ['web']], function () {
 	Route::get('index', 'Index@index');
 });
+
+
 
 //系统功能
 Route::group(['prefix' => 'backend/sysfunc', 'namespace' => 'Smart\Controllers\Backend', 'middleware' => ['web']], function () {

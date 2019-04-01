@@ -66,6 +66,7 @@
             </div>
             <div class="modal-body">
                 <form id="chPwdForm" class="form-horizontal">
+                    {{ csrf_field() }}
                     <div class="form-body">
                         <div class="form-group">
                             <div class="col-md-12">
