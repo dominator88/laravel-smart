@@ -228,6 +228,7 @@ var MerFunc = {
 			uri: Param.uri.read,
 			field: 'name', //显示箭头的字段
 			param: Param.query, //查询参数
+			expandAll: true,
 			rowStyle: function(row) {
 				if (row.status == 0) {
 					return 'warning';

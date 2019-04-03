@@ -67,6 +67,7 @@ EOF;
             'privilege'  => $SysFuncPrivilege->name,
             'alias'      => $SysFuncPrivilege->alias,
             'modules'     => $modules,
+
         ] );
 
         //需要引入的 css 和 js
