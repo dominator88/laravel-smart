@@ -12,6 +12,8 @@ use Illuminate\Support\ServiceProvider;
 use Smart\Models\SysModule;
 use Smart\Extentions\EloquentUserProvider;
 use Illuminate\Support\Facades\Auth;
+use File;
+use App;
 
 class SmartServiceProvider extends ServiceProvider {
 
@@ -95,6 +97,8 @@ class SmartServiceProvider extends ServiceProvider {
 
 		$this->registerProvider();
 
+		$this->registerModuleProvider();
+
 		$this->commands($this->commands);
 	}
 
@@ -138,6 +142,49 @@ class SmartServiceProvider extends ServiceProvider {
         	return new \Overtrue\EasySms\EasySms($app['config']['sms']['sms']);
         });
 	}
+
+	protected function registerModuleProvider(){
+		$modules = explode(',', config('backend.module_ext'));
+
+		foreach($modules as $module){
+			$dir = app_path() . '/' . ucfirst($module) . '/Providers';
+			$this->loadProviders($dir);
+			
+		}
+	}
+
+
+
+	private function loadProviders($directory)
+    {
+        //$mainServiceProviderNameStartWith = 'Main';
+
+        if (File::isDirectory($directory)) {
+
+            $files = File::allFiles($directory);
+
+            foreach ($files as $file) {
+            	
+                if (File::isFile($file)) {
+                	$path = File::dirname($file);
+	            	$startClass = substr($path,strrpos($path, 'app'));
+	            	
+	            	$name = File::name($file);
+	            	
+	            	$serviceProviderClass = str_replace('/','\\',ucfirst($startClass).'\\'.$name);
+                	$this->loadProvider($serviceProviderClass);
+                }
+            }
+        }
+    }
+
+    /**
+     * @param $providerFullName
+     */
+    private function loadProvider($providerFullName)
+    {
+        App::register($providerFullName);
+    }
 
 
 

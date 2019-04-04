@@ -1,0 +1,22 @@
+<?php
+
+namespace App\{module}\Providers;
+
+use Illuminate\Support\ServiceProvider;
+
+class MainProvider extends ServiceProvider{
+    /**
+     * 在容器中注册绑定.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        
+    }
+
+    public function boot(){
+
+    }
+
+}

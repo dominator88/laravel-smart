@@ -52,6 +52,7 @@ class InstallCommand extends Command
             $this->initExampleController($module);
             $this->initMigration($module);
             $this->initMiddleware($module);
+            $this->initProviders($module);
         }else{
 
          $this->initData($module);
@@ -120,6 +121,15 @@ class InstallCommand extends Command
     public function initMiddleware($module){
         $this->makeDir('middlewares');
         $this->line('init middlewares success!');
+    }
+
+    public function initProviders($module){
+        $this->directory = app_path($module);
+        $this->makeDir('Providers');
+        $providers_path = 'providers/mainproviders.txt';
+        $content = $this->getContent($providers_path , ['module' =>  $module]);
+        $this->laravel['files']->put( app_path($module).'/Providers/MainProvider.php' , $content);
+        $this->line('init providers success!');
     }
 
 
