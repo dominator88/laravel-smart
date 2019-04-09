@@ -73,7 +73,7 @@ EOF;
         
        if(class_exists('Smart\\Service\\'.$this->controller.'Service')){
             $this->service = ServiceManager::make( 'Smart\\Service\\'.$this->controller.'Service');
-       }elseif(class_exists('App\\'.$this->module.'\\Service\\'.$this->controller.'Service')){
+       }elseif(class_exists('App\\'.ucfirst($this->module).'\\Service\\'.$this->controller.'Service')){
             $this->service = ServiceManager::make( 'App\\'.$this->module.'\\Service\\'.$this->controller.'Service');
        }elseif(class_exists('App\\Service\\'.$this->controller.'Service')){
             $this->service = ServiceManager::make( 'App\\Service\\'.$this->controller.'Service');
