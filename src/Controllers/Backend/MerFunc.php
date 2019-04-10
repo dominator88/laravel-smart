@@ -83,14 +83,19 @@ EOF;
      */
     function read(Request $request) {
         $module = $request->module ?: explode(',',config('backend.module_ext'));
-        $param = [
+        
+        $config = [
             'module'        => $module ,
+            'page'     => $request->input( 'page', 1 ),
+            'pageSize' => $request->input( 'pageSize', 10 ),
             'sort'          => $request->input( 'sort', 'id' ),
             'order'         => $request->input( 'order', 'DESC' ),
             'withPrivilege' => TRUE
         ];
 
-        $data['rows'] = $this->service->getByCond( $param );
+        $data['rows']    = $this->service->getByCond( $config );
+        $config['count'] = TRUE;
+        $data['total']   = $this->service->getByCond( $config );
 
         return json( ajax_arr( '查询成功', 0, $data ) );
     }

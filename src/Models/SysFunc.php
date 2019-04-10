@@ -30,8 +30,12 @@ class SysFunc extends Model {
 		return $this->belongsToMany(\Smart\Models\SysRolePermission::class, 'sys_func_privilege', 'id', 'func_id');
 	}
 
-	public function sysFuncPrivileges() {
+	public function privilege() {
 		return $this->hasMany(\Smart\Models\SysFuncPrivilege::class, 'func_id');
 	}
+
+	public function children(){
+        return $this->hasMany( SysFunc::class , 'pid');
+    }
 
 }

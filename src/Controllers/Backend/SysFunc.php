@@ -60,12 +60,17 @@ class SysFunc extends Backend {
 			'module' => $request->input('module',''),
 			'status' => $request->input('status', ''),
 			'keyword' => $request->input('keyword', ''),
+			'page'     => $request->input( 'page', 1 ),
+	    	'pageSize' => $request->input( 'pageSize', 10 ),
 			'sort' => $request->input('sort', 'id'),
 			'order' => $request->input('order', 'DESC'),
+			'module' => 'backend',
 			'withPrivilege' => TRUE,
 		];
 
-		$data['rows'] = $this->service->getByCond($config);
+		$data['rows']    = $this->service->getByCond( $config );
+		$config['count'] = TRUE;
+		$data['total']   = $this->service->getByCond( $config );
 
 		return response()->json(ajax_arr('查询成功', 0, $data));
 	}

@@ -86,35 +86,50 @@ class SysFuncService extends BaseService {
 			'isMenu' => '',
 			'pid' => 0,
 			'status' => '',
+			'page'     => 1 ,
+            'pageSize' => 10 ,
 			'withPrivilege' => FALSE,
 			'key' => self::DEFAULT_KEY,
+			'getAll' => FALSE,
 		];
-		$param = extend($default, $param);
+		$func = function (&$arr) use (&$func){
+          foreach($arr as &$val){
+            if(isset($val['children'])){
 
-		$data = self::instance()->getModel()->status($param['status'])->module($param['module'])->isMenu($param['isMenu'])->module($param['module'])
-			->orderBy('level', 'ASC')
-			->orderBy('sort', 'ASC')
-			->get()
-			->toArray();
+              if( empty($val['children'])){
+                unset($val['children']);
+              }else{
+                $func($val['children']);
+              }
+            }
+          }
+          return $arr;
+          
+        };
 
-		if ($param['withPrivilege']) {
-			$data = $this->withPrivilege($data);
-		}
+        $param = extend( $default , $param );
+        $model = $this->getModel()->where('pid',0);
+        if($param['module']){
+        	$model = $model->whereIn('module',(array)$param['module']);
+        }
+    //    echo $model->find(1)->level;
+        if ( isset($param['count']) && $param['count'] ) {
+            return $model->count();
+        }
 
-		$result = [];
-		$index = [];
+        if($param['getAll'] === FALSE){
+          $model = $model->with('children.privilege','privilege')->get()->forPage($param['page'] , $param['pageSize'])->values();
+        }else{
+          $model = $model->with('children.privilege','privilege')->get()->values();
+        }
+        $data = $model->toArray();
 
-		foreach ($data as $row) {
-			if ($row['pid'] == $param['pid']) {
-				$result[$row['id']] = $row;
-				$index[$row['id']] = &$result[$row['id']];
-			} else {
-				$index[$row['pid']][$param['key']][$row['id']] = $row;
-				$index[$row['id']] = &$index[$row['pid']][$param['key']][$row['id']];
-			}
-		}
-		$tree_data = $this->treeToArray($result, $param['key']);
-		return $tree_data;
+
+
+        $data = $func($data);
+        
+
+        return $data ? $data : [];
 	}
 
 	/**
