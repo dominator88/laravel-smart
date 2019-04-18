@@ -29,6 +29,25 @@
                 </div>
             </div>
             <div class="portlet-body">
+                <!-- Start Search Form -->
+                <form class="form-inline" id="searchForm">
+                    <!-- 查询关键字 start -->
+                    <div class="form-group">
+                        <label>关键字: </label>
+                        <input type="text" class="form-control" name="keyword" placeholder="查询关键字">
+                    </div>
+                    <!-- 查询关键字 end -->
+                    <!-- 查询状态 start -->
+                    <div class="form-group">
+                        <label>模块: </label>
+                        <select class="form-control" name="module">
+                            <option selected="" value="">不限</option>
+                            <?= form_options($param['modules']) ?>
+                        </select>
+                    </div>
+                    <!-- 查询状态 end -->
+                    <button type="submit" class="btn default" id="searchBtn"><i class="fa fa-search"></i> 查询</button>
+                </form> <!-- End Search Form -->
 
                 <div class="table-scrollable">
                     <table id="dataGrid" class="table table-hover">
@@ -72,7 +91,13 @@
                         <form id="addEditForm" class="form-horizontal">
                             {!! csrf_field() !!}
                             <div class="form-body">
-
+                                <!-- start item -->
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">模块</label>
+                                    <div class="col-md-7">
+                                        {!! form_radios('module',$param['modules']) !!}
+                                    </div>
+                                </div><!-- end item -->
                                 <!-- start item -->
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">名称</label>

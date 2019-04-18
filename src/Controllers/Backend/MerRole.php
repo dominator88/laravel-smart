@@ -46,6 +46,9 @@ EOF;
             'updatePermission' => full_uri( 'backend/merrole/update_permission' )
         ] );
 
+        $modules = explode(',',config('backend.module_ext'));
+        $modules = array_combine($modules, $modules);
+
         //查询参数
         $this->_addParam( 'query', [
             'keyword'  => $request->input( 'keyword', '' ),
@@ -61,7 +64,8 @@ EOF;
         $this->_addParam( [
             'defaultRow' => $this->service->getDefaultRow(),
             'status'     => $this->service->status,
-            'rank'       => $this->service->rank
+            'rank'       => $this->service->rank,
+            'modules'    => $modules,   
         ] );
 
         //需要引入的 css 和 js
@@ -80,7 +84,7 @@ EOF;
             'pageSize' => $request->input( 'pageSize', 10 ),
             'sort'     => $request->input( 'sort', 'id' ),
             'order'    => $request->input( 'order', 'DESC' ),
-            'module'   => 'backend',
+            'module'   => $request->input( 'module', '' ),
         ];
 
         $data['rows']   = $this->service->getByCond( $param );
@@ -97,13 +101,14 @@ EOF;
      */
     public function insert(Request $request) {
         $data = $request->except( '_token' );
-        $data['module'] = 'mp';
+        $data['module'] = $request->module;
 
         return json( $this->service->insert( $data ) );
     }
 
     function get_permission(Request $request) {
         $roleId = $request->input( 'roleId' );
+        $role = $this->service->getById($roleId);
 
         $SysFuncPrivilege      = SysFuncPrivilegeService::instance();
         $data['privilegeName'] = $SysFuncPrivilege->name;
@@ -114,7 +119,7 @@ EOF;
         //取所有功能与操作
         $SysFunc          = SysFuncService::instance();
         $data['funcData'] = $SysFunc->getByCond( [
-            'module'        => 'adminplat',
+            'module'        => $role->module,
             'status'        => 1,
             'withPrivilege' => TRUE,
         ] );

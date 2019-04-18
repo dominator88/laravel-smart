@@ -16,7 +16,7 @@ class CreateSysRoleTable extends Migration
         Schema::create('sys_role', function (Blueprint $table) {
             $table->increments('id');
             $table->tinyInteger('sort')->default(0);
-            $table->enum('module' , ['backend' , 'mp']);
+            $table->string('module' )->default('backend')->comment('模块');
             $table->integer('mer_id')->default(0);
             $table->string('name');
             $table->tinyInteger('status');
