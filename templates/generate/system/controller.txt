@@ -8,7 +8,7 @@
 
 use Facades\Smart\Service\ServiceManager;
 use Illuminate\Http\Request;
-use App\Service\{func}Service;
+use App\{module}\Service\{func}Service;
 use App\{module}\Controllers\{module};
 
 class {func} extends {module} {

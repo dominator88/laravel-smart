@@ -55,6 +55,35 @@ if (!function_exists('form_radios')) {
 		return join('',$html);
 	}
 }
+
+if (!function_exists('form_radio_rows')) {
+	/**
+	 * 水平radio   改良
+	 *
+	 * @param $name
+	 * @param $data
+	 * @param int $checked_value
+	 *
+	 * @return mixed|string
+	 */
+	function form_radio_rows($name, $data, $key = 'id', $val = 'name', $checked_value = 0) {
+		$html = [];
+		foreach ($data as  $item) {
+
+			if($val == (string)$checked_value || $checked_value==0 ){
+				$html[] = '<label class="radio-inline"><input name="' . $name . '" type="radio" value="' . $item[$key] . '"  checked>' . $item[$val] . '</label>';
+			}else{
+				$html[] = '<label class="radio-inline"><input name="' . $name . '" type="radio" value="' . $item[$key] . '" >' . $item[$val] . '</label>';
+			}
+			
+		}
+
+		
+
+		return join('',$html);
+	}
+}
+
 if (!function_exists('form_radio')) {
 	function form_radio($name, $data, $checked_value = 0, $title) {
 		$data = [

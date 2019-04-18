@@ -80,7 +80,7 @@ EOF;
             'pageSize' => $request->input( 'pageSize', 10 ),
             'sort'     => $request->input( 'sort', 'id' ),
             'order'    => $request->input( 'order', 'DESC' ),
-            'module'   => 'mp',
+            'module'   => 'backend',
         ];
 
         $data['rows']   = $this->service->getByCond( $param );
@@ -114,7 +114,7 @@ EOF;
         //取所有功能与操作
         $SysFunc          = SysFuncService::instance();
         $data['funcData'] = $SysFunc->getByCond( [
-            'module'        => 'mp',
+            'module'        => 'adminplat',
             'status'        => 1,
             'withPrivilege' => TRUE,
         ] );

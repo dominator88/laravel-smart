@@ -4,9 +4,11 @@ namespace Smart\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
 class SysUser extends Authenticatable {
 	use Notifiable;
+	use HasRoles;
 	protected $table = 'sys_user';
 
 	public $primaryKey = 'id';
