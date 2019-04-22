@@ -257,8 +257,10 @@ class GenerateService {
 	 * @return \Collection
 	 */
 	public function getTables() {
+		$connection_name = config('database.default');
+		$connections = config('database.connections');
 		$data = DB::table('information_schema.tables')
-			->where('TABLE_SCHEMA', config('database.connections.mysql.database'))
+			->where('TABLE_SCHEMA', $connections[$connection_name]['database'])
 			->get(['table_name as tableName'])->toArray();
 
 		return $data ? $data : [];
