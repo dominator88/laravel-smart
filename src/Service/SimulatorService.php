@@ -6,6 +6,7 @@
  * Time: 17:06
  */
 namespace Smart\Service;
+use Smart\Lib\Discover;
 
 /**
  * 接口模拟器 Service
@@ -27,60 +28,15 @@ class SimulatorService extends BaseService {
     ];
 
     function readApi( $apiVersion ) {
-
-        $dir   = app_path('Api') . '/Service/' . $apiVersion;
-
-        $filesystem = resolve('files');
-    //    var_dump($filesystem);
-        $dirs = $filesystem->directories($dir);
-
-        $api   = [];
-
-        foreach( $dirs as $dir ){
-            
-            $files = $filesystem->allFiles($dir);
-            foreach($files  as $file){
-                $filename = $file->getRelativePathname();
-                $class = substr( $filename, 0, strripos($filename , 'Service.php'));
-                $file_dir = $filesystem->dirname($file);
-                $file = substr($file_dir , strripos($file_dir , '/' ) + 1) ;
-                $name = $this->_parser( $apiVersion ,$file , $class);
-                if ( ! $name ) {
-                    continue;
-                }
-                $api[ $file ][] = [
-                    'directory' => $file,
-                    'action'    => strtolower( $class ),
-                    'text'      => $name
-                ];
-            }
-        }
-
-
-
-        return $api;
+        $discover = new Discover;
+        $services = $discover->service($apiVersion);
+        return $services;
+        
     }
 
     public function readVersion(){
         return $this->apiVer;
     }
 
-    function _parser( $apiVersion, $subDir, $className ) {
-        $api = "App\\Api\\Service\\{$apiVersion}\\{$subDir}\\{$className}Service";
-        //echo $api;
-        $ref = new ReflectionClass( $api );
-        $doc = $ref->getDocComment();
-        preg_match( '#^/\*\*(.*)\*/#s', $doc, $comment );
-        $comment = trim( $comment [1] );
-        preg_match_all( '#^\s*\*(.*)#m', $comment, $lines );
-
-        $name = trim( $lines[1][0] );
-        preg_match_all( '/@deprecated([^@]*)/', $comment, $matches );
-
-        if ( empty( $matches[0] ) ) {
-            return $name;
-        } else {
-            return FALSE;
-        }
-    }
+    
 }

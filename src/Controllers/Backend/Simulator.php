@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Smart\Service\SimulatorService;
 use Smart\Service\SysMerchantService;
 use Smart\Service\SysUserService;
+use Smart\Lib\Discover;
 
 class Simulator extends Backend {
 
@@ -32,7 +33,8 @@ class Simulator extends Backend {
 	//页面入口
 	public function index() {
 		$this->_init('接口模拟器');
-
+		
+	//	var_dump($services);exit;
 		//uri
 		$this->_addParam('uri', [
 			'readApi' => full_uri('backend/simulator/read_api'),
@@ -43,6 +45,24 @@ class Simulator extends Backend {
 
 		$SysUser = SysUserService::instance();
 		$SysMerchant = SysMerchantService::instance();
+
+/*		$versions = [
+			'v1' => [
+				[
+					'version' => 'v1',
+					'text' => 'v1',
+				]
+			],
+			'v2' => [
+				[
+					'version' => 'v2',
+					'text' => 'v2',
+				]
+			],
+		];*/
+
+		$discover = new Discover;
+        $versions = $discover->version();
 		//其他参数
 		$this->_addParam([
 			'deviceOsVersion' => $this->deviceOsVersion,
@@ -50,11 +70,12 @@ class Simulator extends Backend {
 			'secret' => config('backend.secret'),
 			'testToken' => $SysUser->getForTest(),
 			'testMer' => $SysMerchant->getForTest(),
+			'versions' => $versions,
 			'defaultValue' => [
 				'token' => '', //取一个token
 				'merId' => 1,
 			],
-		]);
+		]); 
 
 		//需要引入的 css 和 js
 		$this->_addJsLib('static/plugins/jquery-md5/jQuery.md5.js');
