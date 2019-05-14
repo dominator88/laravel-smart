@@ -13,7 +13,7 @@
      
 **简介**
 --------
-- 基于 laravel 5 
+- 基于 laravel 5.5 
 - 系统管理平台
 - 商户管理平台
 - RBAC 用户权限管理
@@ -45,6 +45,8 @@
 - 运行下面命令来发布资源,以及安装数据库
     
     `php artisan vendor:publish --provider="Smart\SmartServiceProvider"`
+
+    `php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider" --tag="migrations"`
         
     `php artisan make:auth`
     
