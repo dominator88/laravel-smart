@@ -2,11 +2,12 @@
 @section('content')
 <!-- BEGIN CONTENT BODY -->
 <div class="page-content">
+    <!-- BEGIN PAGE HEADER-->
     <!-- BEGIN PAGE BAR -->
     <div class="page-bar">
         <ul class="page-breadcrumb">
-            <li><a href="<?= $param['uri']['module'] ?>">首页</a> <i class="fa fa-circle"></i></li>
-            <li><span><?= $param['pageTitle'] ?></span></li>
+            <li> <a href="<?=$param['uri']['base']?>">首页</a> <i class="fa fa-circle"></i> </li>
+            <li> <span>系统设置</span> </li>
         </ul>
     </div>
     <!-- END PAGE BAR -->
@@ -16,186 +17,157 @@
         <div class="portlet light bordered" id="tablePortlet">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="icon-settings"></i>
-                    <span class="caption-subject uppercase"><?= $param['pageTitle'] ?></span>
+                    <i class="icon-settings font-dark"></i>
+                    <span class="caption-subject font-dark bold uppercase"><?=$param['pageTitle']?></span>
                 </div>
                 <div class="actions">
                     <a href="javascript:;" class="btn btn-circle blue" id="addNewBtn">
                         <i class="fa fa-plus"></i> 新增
                     </a>
-                    <a href="javascript:;" class="btn btn-circle red" id="destroySelectBtn">
-                        <i class="fa fa-trash"></i> 删除
-                    </a>
                 </div>
             </div>
             <div class="portlet-body">
+
                 <!-- Start Search Form -->
                 <form class="form-inline" id="searchForm">
                     <!-- 查询关键字 start -->
                     <div class="form-group">
                         <label>关键字: </label>
-                        <input type="text" class="form-control" name="keyword" placeholder="查询关键字">
+                        <input type="text" class="form-control" name="keyword" id="keyword" placeholder="查询关键字">
                     </div>
                     <!-- 查询关键字 end -->
+                     <!-- 查询状态 start -->
+                    <div class="form-group">
+                        <label>模块: </label>
+                        <select class="form-control" name="module"  id="module">
+                            <option selected="" value="">不限</option>
+                            <?= form_options($param['modules']) ?>
+                        </select>
+                    </div>
+                    <!-- 查询状态 end -->
                     <!-- 查询状态 start -->
                     <div class="form-group">
                         <label>状态: </label>
-                        <select class="form-control" name="status">
+                        <select class="form-control" name="status" id="status">
                             <option selected="" value="">不限</option>
-                            <?= form_options($param['status']) ?>
+                            <option value="0">禁用</option>
+                            <option value="1">启用</option>
                         </select>
                     </div>
+
                     <!-- 查询状态 end -->
                     <button type="submit" class="btn default" id="searchBtn"><i class="fa fa-search"></i> 查询</button>
                 </form> <!-- End Search Form -->
 
+                <!-- Start DateGrid -->
                 <div class="table-scrollable">
                     <table id="dataGrid" class="table table-hover">
                         <tr>
-                            <th width="40" data-field="id"></th>
+                            <th width="40" data-field="id">ID</th>
                             <th width="80" data-field="icon" data-formatter="formatIcon">头像</th>
-                            <th width="200" data-field="昵称" data-formatter="formatName">昵称</th>
-                            <!--<th width="80" data-field="bucks">零钱</th>-->
-                            <!--<th width="80" data-field="points">积分</th>-->
-                            <th width="80" data-field="reg_from" data-formatter="formatRegFrom">注册类型</th>
+                            <th width="160" data-field="username" data-formatter="formatUsername">用户名</th>
+                            <th width="80" data-field="phone">手机号码</th>
                             <th width="80" data-field="status" data-formatter="formatStatus">状态</th>
-                            <th width="120" data-field="reg_at" data-formatter="formatDate">注册时间</th>
-                            <th width="120" data-field="login_at" data-formatter="formatDate">最后登录时间</th>
-                            <th width="40" data-formatter="optResetPwd"></th>
+                            <th width="100" data-field="created_at" data-formatter="formatDate">创建时间</th>
+                            <th width="160" data-field="signed_at" data-formatter="formatDatetime">最后登录</th>
+                            <th width="160" data-field="user_device" data-formatter="formatTest">测试</th>
+                            <th width="60" data-formatter="optResetPwd"></th>
                             <th width="60" data-formatter="optEdit"></th>
                             <th width="60" data-formatter="optDelete"></th>
                             <th>&nbsp;</th>
                         </tr>
                     </table>
-                </div>
-
+                </div><!-- End DateGrid -->
 
             </div>
         </div> <!-- Main Portlet Start -->
 
-        <!-- BEGIN ADD EDIT PORTLET -->
-        <div class="portlet box green-meadow" id="addEditPortlet" style="display: none;">
+        <div class="portlet box red" id="addEditPortlet" style="display: none">
             <div class="portlet-title">
                 <div class="caption caption-md">
                     <i class="icon-settings"></i>
-                    <span class="caption-subject uppercase"></span>
+                    <span class="caption-title uppercase"></span>
                 </div>
             </div>
             <div class="portlet-body">
-                <!-- start add edit form  -->
-                <div class="row">
-                    <div class="col-md-12">
-                        <!-- start form -->
-                        <form id="addEditForm" class="form-horizontal">
-                            <div class="form-body">
-                                <!-- start item -->
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">昵称</label>
-                                    <div class="col-md-7">
-                                        <input type="text" name="nickname" placeholder="昵称" class="form-control"
-                                               data-valid="required" data-tips="请输入正确的昵称">
-                                    </div>
-                                </div><!-- end item -->
-
-                                <!-- start item -->
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">手机</label>
-                                    <div class="col-md-7">
-                                        <input type="text" name="phone" placeholder="手机" class="form-control"
-                                               data-valid="required" data-tips="请输入正确的手机">
-                                    </div>
-                                </div><!-- end item -->
-
-                                <!-- start item -->
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">性别</label>
-                                    <div class="col-md-7">
-                                        <?= form_radios('sex' , $param['sex'] ) ?>
-                                    </div>
-                                </div><!-- end item -->
-
-                                <!-- start item -->
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">用户头像</label>
-                                    <div class="col-md-7">
-                                        <div id="iconPreview" class="fit-img-preview"></div>
-                                        <button id="iconUploadBtn"></button>
-                                        <input type="text" name="icon" class="hide">
-                                    </div>
-                                </div><!-- end item -->
-
-                                <!-- start item -->
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">零钱</label>
-                                    <div class="col-md-7">
-                                        <input type="text" name="bucks" placeholder="用户零钱" class="form-control">
-                                    </div>
-                                </div><!-- end item -->
-                                <!-- start item -->
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">积分</label>
-                                    <div class="col-md-7">
-                                        <input type="text" name="points" placeholder="用户积分" class="form-control">
-                                    </div>
-                                </div><!-- end item -->
-                                <!-- start item -->
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">状态</label>
-                                    <div class="col-md-7">
-                                        <?= form_radios('status' , $param['status'] ) ?>
-                                    </div>
-                                </div><!-- end item -->
-                                <!-- start item -->
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">注册类型</label>
-                                    <div class="col-md-7">
-                                        <?= form_radios('reg_from' , $param['regFrom']) ?>
-                                    </div>
-                                </div><!-- end item -->
-
-                                <!-- start item -->
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">是否测试用户</label>
-                                    <div class="col-md-7">
-                                        <?= form_radios('for_test' , ['否','是'])?>
-                                    </div>
-                                </div><!-- end item -->
-                                <!-- start item -->
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">注册IP</label>
-                                    <div class="col-md-7">
-                                        <input type="text" name="reg_ip" placeholder="注册IP" class="form-control" readonly>
-                                    </div>
-                                </div><!-- end item -->
-                                <!-- start item -->
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">登录IP</label>
-                                    <div class="col-md-7">
-                                        <input type="text" name="login_ip" placeholder="登录IP" class="form-control" readonly>
-                                    </div>
-                                </div><!-- end item -->
+                <!-- start form -->
+                <form id="addEditForm" class="form-horizontal">
+                    {!! csrf_field() !!}
+                    <div class="form-body">
+                        <!-- start item -->
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">用户名</label>
+                            <div class="col-md-7">
+                                <input type="text" name="username" placeholder="用户名" class="form-control"
+                                       data-valid="required" data-tips="请输入正确的用户名">
                             </div>
-                            <div class="form-actions" style="margin-bottom: 60px;">
-                                <hr>
-                                <div class="row">
-                                    <div class="col-md-offset-3 col-md-7">
-                                        <button class="btn default btn-lg" id="closePortletBtn" type="button"><i
-                                                    class="fa fa-arrow-left"></i> 返回
-                                        </button>
-                                        <button class="btn red btn-lg" id="submitFormBtn" type="button"><i class="fa fa-check"></i> 提交
-                                        </button>
-                                    </div>
-                                </div>
+                        </div><!-- end item -->
+                        <!-- start item -->
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">头像</label>
+                            <div class="col-md-7">
+                                <div id="iconPreview" class="fit-img-preview"></div>
+                                <button id="iconUploadBtn"></button>
+                                <input type="text" name="icon" class="hide">
                             </div>
-                        </form><!-- END ADD EDIT FORM -->
+                        </div><!-- end item -->
+                        <!-- start item -->
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">手机号码</label>
+                            <div class="col-md-7">
+                                <input type="text" name="phone" placeholder="手机号码" class="form-control">
+                            </div>
+                        </div><!-- end item -->
+                        <!-- start item -->
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">账号状态</label>
+                            <div class="col-md-7">
+                                <?=form_radios('status', $param['status'])?>
+                            </div>
+                        </div><!-- end item -->
+                        <!-- start item -->
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Token</label>
+                            <div class="col-md-7">
+                                <input type="text" name="token" placeholder="登录Token" class="form-control" disabled>
+                            </div>
+                        </div><!-- end item -->
+                        <!-- start item -->
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">角色</label>
+                            <div class="col-md-7" id="roleForm">
+                                <?=form_checkbox_rows('roles', $param['roles'])?>
+                            </div>
+                        </div><!-- end item -->
+
+                         <!-- start item -->
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">api测试账户</label>
+                            <div class="col-md-7">
+                                <?=form_radios('for_test', $param['for_test'])?>
+                            </div>
+                        </div><!-- end item -->
                     </div>
-                </div>
-            </div><!-- END ADD EDIT PORTLET BODY -->
-        </div><!-- END ADD EDIT PORTLET  -->
+                    <div class="form-actions" style="margin-bottom: 60px;">
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-7">
+                                <button class="btn default btn-lg" id="closePortletBtn" type="button">
+                                    <i class="fa fa-arrow-left"></i> 返回
+                                </button>
+                                <button class="btn red btn-lg" id="submitFormBtn" type="button">
+                                    <i class="fa fa-check"></i> 提交
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form><!-- END ADD EDIT FORM -->
+            </div>
+        </div>
 
     </div>
+
 </div>
 
-
 <!-- END CONTENT BODY -->
-@stop
+    @stop
