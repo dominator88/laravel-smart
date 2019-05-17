@@ -55,7 +55,7 @@ class SysFuncService extends BaseService {
 	}
 
 	/**
-	 * 根据角色取菜单
+	 * 根据角色取菜单    取名错误,等废弃
 	 *
 	 * @param $roleIds
 	 * @param $module
@@ -73,6 +73,10 @@ class SysFuncService extends BaseService {
 			//如果是普通用户
 			return $this->_getMenuByRoles($roleIds, $module);
 		}
+	}
+
+	public function getMenuByRole($roleIds, $module){
+		return $this->_getMenuByRoles($roleIds, $module);
 	}
 
 	public function getByUri($uri) {

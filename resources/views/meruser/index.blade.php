@@ -66,6 +66,7 @@
                             <th width="40" data-field="id">ID</th>
                             <th width="80" data-field="icon" data-formatter="formatIcon">头像</th>
                             <th width="160" data-field="username" data-formatter="formatUsername">用户名</th>
+                            <th width="80" data-field="module">模块</th>
                             <th width="80" data-field="phone">手机号码</th>
                             <th width="80" data-field="status" data-formatter="formatStatus">状态</th>
                             <th width="100" data-field="created_at" data-formatter="formatDate">创建时间</th>
