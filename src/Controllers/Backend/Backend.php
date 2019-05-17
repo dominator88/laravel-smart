@@ -36,15 +36,21 @@ class Backend extends SysBase{
         $SysFuncService = ServiceManager::make(SysFuncService::class );
 
 
-      //  var_dump($SysFuncService->getMenuByRoles(1,'backend'));
-        $this->user = Auth::user();
-        $this->_addData(
-            'menuData',
-        //暂定超级管理员
-            $SysFuncService->getMenuByRoles(
-                Auth::id(),
-                $this->module )
-        );
+      $this->user = Auth::user();
+    
+        $sysRole = $this->user->sysRole;
+        $roles = $sysRole->pluck('id')->toArray();
+
+        $menuData = [];
+
+        if(Auth::id() == config('backend.superAdminId')){
+            $menuData = $SysFuncService->getByCond(['isMenu' => 1, 'status' => 1, 'module' => $this->module]);
+        }else{
+            $menuData = $SysFuncService->getMenuByRole(
+                $roles,
+                ucfirst($this->module) );
+        }
+        $this->_addData('menuData',$menuData);
         $this->_addData( 'user', $this->user );
 
     }
