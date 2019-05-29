@@ -7,7 +7,7 @@
  */
 namespace Smart\Service;
 use Illuminate\Support\Facades\DB;
-use Smart\Models\SysFunc;
+use Smart\Models\SysFunc; 
 
 class SysFuncService extends BaseService {
 
@@ -233,6 +233,30 @@ class SysFuncService extends BaseService {
 
 		return $sysUserService->$method($this);
 
+	}
+
+	public function getSymbol($id){
+
+		$sysFunc = $this->getModel()->find($id);
+
+		if(!empty($sysFunc)){
+			$uri_arr = explode('/',strtolower($sysFunc->uri));
+			
+			if(count($uri_arr) == 3){
+				return $uri_arr[0].'.'.$uri_arr[1];
+			}
+		}
+		return false;
+	}
+
+	public function findById($id){
+		return $this->getModel()->find($id);
+	}
+
+	public function getPermission($params){
+		$sysFuncs = $this->getModel()->where('module',$params['module'])->where('pid',0)->get();
+		
+		return $sysFuncs;
 	}
 
 }

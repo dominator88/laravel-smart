@@ -11,8 +11,15 @@ class SysFuncPrivilege extends Model {
 
 	public $timestamps = false;
 	//
+	public $fillable = ['name','node_id','func_id'];
 
+	use \Smart\Traits\Service\Scope;
+	
 	public function sysFunc() {
 		return $this->belongsTo(\Smart\Models\SysFunc::class, 'func_id');
+	}
+
+	public function node(){
+		return $this->belongsTo(\Smart\Models\SysPermissionNode::class, 'node_id');
 	}
 }

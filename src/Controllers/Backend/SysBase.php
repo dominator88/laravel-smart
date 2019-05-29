@@ -48,7 +48,7 @@ class SysBase extends  Controller{
 
     public function __construct(Request $request)
     {
-
+        
         $routeAction = Route::currentRouteAction();
         $routes = $this->parseRouteAction($routeAction);
         $this->baseUri = config('backend.baseUri');

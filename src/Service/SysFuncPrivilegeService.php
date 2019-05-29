@@ -6,8 +6,11 @@
  * Time: 17:35
  */
 namespace Smart\Service;
+use Facades\Smart\Service\ServiceManager;
 use Smart\Models\SysFuncPrivilege;
 use Illuminate\Support\Facades\DB;
+use Smart\Service\SysFuncService;
+use Smart\Service\SysPermissionNodeService;
 
 class SysFuncPrivilegeService extends BaseService{
 
@@ -105,50 +108,39 @@ class SysFuncPrivilegeService extends BaseService{
      * @return array
      */
     public function updateByFunc( $funcId  , $data = [] ) {
+        $sysFunc = ServiceManager::make(SysFuncService::class);
+        $sysFunc = $sysFunc->findById($funcId);
+        $new_nodes = $data['node_id'];
+        //旧
+        $oldPrivilege = $sysFunc->privilege;
+        $old_nodes = array_filter($oldPrivilege->pluck('node_id')->toArray());
 
-        $oldData = $this->getByFunc( $funcId );
-        $p       = [];
-        foreach ( $oldData as $item ) {
-            $p[] = $item['name'];
+        //获取两个数组交集 //不需要动的记录
+        $interset_arr = array_intersect($old_nodes,$new_nodes);
+
+        //清除老数组交集外的差集数组
+        $oldPrivilege_del = array_diff($old_nodes,$interset_arr);
+        //需要求权限结算对应的权限也删除掉
+        
+
+        $this->getModel()->whereIn('node_id',$oldPrivilege_del)->delete();
+        //新增新记录
+        $newPrivilege_add = array_diff($new_nodes, $interset_arr);
+
+        $sysPermissionNodeService = ServiceManager::make(SysPermissionNodeService::class);
+        $nodes = $sysPermissionNodeService->getByIds($newPrivilege_add);
+        $add_privilege = [];
+        foreach($nodes as $node){
+            $data = [
+                'name' => $node->symbol,
+                'node_id' => $node->id,
+            ];
+            array_push($add_privilege,$data);
         }
+        
+        $sysFunc->privilege()->createMany($add_privilege);
 
-        $data['name'] = isset($data['name']) ? $data['name'] : [];
-        $needAdd    = array_diff( $data['name'] , $p );
-        $needDelete = array_diff( $p , $data['name'] );
-
-        DB::beginTransaction();
-        try {
-            //如果有要添加的
-            if ( ! empty( $needAdd ) ) {
-                $addData = [];
-                foreach ( $needAdd as $name ) {
-                    $addData[] = [
-                        'func_id' => $funcId ,
-                        'name'    => $name
-                    ];
-
-                }
-                DB::table('sys_func_privilege')->insert($addData);
-
-            }
-
-            //如果有要删除的
-            if ( ! empty( $needDelete ) ) {
-                DB::table('sys_func_privilege')
-                    ->where( 'func_id' , $funcId )
-                    ->whereIn( 'name' ,  $needDelete )
-                    ->delete();
-
-            }
-
-            DB::commit();
-
-            return ajax_arr( '成功' , 0 );
-        } catch ( \Exception $e ) {
-            DB::rollback();
-
-            return ajax_arr( $e->getMessage() , 500 );
-        }
+        return ajax_arr('成功',0);
     }
 
     /**
@@ -172,6 +164,20 @@ class SysFuncPrivilegeService extends BaseService{
         }
 
         return $newData;
+    }
+
+    public function syncPermissions($roleId,$privileges){
+        $sysRoleService = ServiceManager::make(SysRoleService::class );
+        $sysRole = $sysRoleService->findById($roleId);
+        $privileges = $this->getModel()->whereIn('id',$privileges)->get();
+        $permissions = [];
+        foreach($privileges as $privilege){
+            array_push($permissions, $privilege->node->permission->id);
+        }
+       
+        $sysRole->role->syncPermissions($permissions);
+
+        return true;
     }
 
 }

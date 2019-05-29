@@ -9,9 +9,12 @@
 namespace Smart\Service;
 
 
-
+use Facades\Smart\Service\ServiceManager;
 use Smart\Models\SysRolePermission;
 use Illuminate\Support\Facades\DB;
+use Smart\Service\SysRoleService;
+use Smart\Service\SysFuncPrivilegeService;
+use Smart\Service\PermissionService;
 
 class SysRolePermissionService extends BaseService {
 
@@ -94,7 +97,26 @@ class SysRolePermissionService extends BaseService {
      * @return mixed
      */
     function getByRole( $roleId ) {
-        return $this->getModel()->where( 'role_id', $roleId )->get()->toArray();
+
+        //通过原roleid 获取 库roleId
+        $sysRoleService = ServiceManager::make(SysRoleService::class);
+        $sysRole = $sysRoleService->findById($roleId);
+        $permissions = $sysRole->role->permissions->pluck('id');
+        $permissionService = ServiceManager::make(PermissionService::class);
+        $permissions = $permissionService->getByIds($permissions);
+        $data = [];
+
+        foreach($permissions as $permission){
+            if(!empty($permission->node->privilege)){
+                $data_tmp = [
+                    'privilege_id' => $permission->node->privilege->id
+                ];
+                array_push($data, $data_tmp);
+            }
+            
+        }
+        return $data;
+     //   return $this->getModel()->where( 'role_id', $roleId )->get()->toArray();
     }
 
     /**
@@ -172,40 +194,16 @@ class SysRolePermissionService extends BaseService {
      * @return array
      */
     function updateRolePermission( $roleId, $privilegeArr ) {
-
-        DB::beginTransaction();
-        try {
-            $oldPrivilegeData = $this->getPrivilegeByRole( $roleId );
-
-            $needAdd    = array_diff( $privilegeArr, $oldPrivilegeData );
-            $needDelete = array_diff( $oldPrivilegeData, $privilegeArr );
-
-            if ( ! empty( $needDelete ) ) {
-                $this->getModel()
-                    ->where( 'role_id', $roleId )
-                    ->whereIn( 'privilege_id',  $needDelete )
-                    ->delete();
-             //   echo $this->getModel()->toSql();
-            }
-            if ( ! empty( $needAdd ) ) {
-                $addData = [];
-                foreach ( $needAdd as $privilegeId ) {
-                    $addData[] = [
-                        'role_id'      => $roleId,
-                        'privilege_id' => $privilegeId
-                    ];
-                }
-                $this->getModel()->insert( $addData );
-            }
-
-            DB::commit();
-
+        $sysRoleService = ServiceManager::make(SysRoleService::class );
+        $sysRole = $sysRoleService->findById($roleId);
+        $sysFuncPrivilege = ServiceManager::make(SysFuncPrivilegeService::class);
+        $result = $sysFuncPrivilege->syncPermissions($roleId,$privilegeArr);
+        
+        if($result){
             return ajax_arr( '修改权限成功了', 0 );
-        } catch ( \Exception $e ) {
-            DB::rollback();
-
-            return ajax_arr( $e->getMessage() . '--- here', 500 );
         }
+        return ajax_arr('修改失败', 500);
+     
     }
 
 }

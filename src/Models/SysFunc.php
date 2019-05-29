@@ -38,4 +38,6 @@ class SysFunc extends Model {
         return $this->hasMany( SysFunc::class , 'pid');
     }
 
+
+
 }
