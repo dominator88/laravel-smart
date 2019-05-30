@@ -49,6 +49,7 @@ class SysPermissionNodeService extends BaseService {
  public function getByCond( $param ) {
   $default = [
     'field'  => ['*' ],
+    'module' => '',
     'symbol' => '',
     'pid'    => 0,
     'status' => '',
@@ -76,7 +77,7 @@ class SysPermissionNodeService extends BaseService {
   }
 
 
-  $data = $this->getModel()->with('children')->symbol($param['symbol'])->status($param['status'])->where('pid',$param['pid'])->orderBy('level' , 'ASC')->orderBy('sort' , 'ASC')->get($param['field'])->toArray();
+  $data = $this->getModel()->with('children')->symbol($param['symbol'])->module($param['module'])->status($param['status'])->where('pid',$param['pid'])->orderBy('level' , 'ASC')->orderBy('sort' , 'ASC')->get($param['field'])->toArray();
 
   $data = $func($data);
 

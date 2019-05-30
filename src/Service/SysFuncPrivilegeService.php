@@ -180,4 +180,15 @@ class SysFuncPrivilegeService extends BaseService{
         return true;
     }
 
+    public function getPermissions($funcIds){
+        $funcs = $this->getModel()->whereIn('id',$funcIds)->get();
+        $permissions = [];
+        foreach($funcs as $func){
+            if(isset($func->node)){
+                array_push($permissions, $func->node->permission_id);
+            }
+        }
+        return $permissions;
+    }
+
 }

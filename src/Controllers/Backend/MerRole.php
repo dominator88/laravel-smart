@@ -41,9 +41,9 @@ EOF;
 
         //uri
         $this->_addParam( 'uri', [
-            'getPermission'    => full_uri( 'backend/merrole/get_permission' ),
-            'getPrivilegeData' => full_uri( 'backend/merrole/get_privilegeData'),
-            'updatePermission' => full_uri( 'backend/merrole/update_permission' )
+            'getPermission'    => full_uri( 'backend/merrole/getpermission' ),
+            'getPrivilegeData' => full_uri( 'backend/merrole/getprivilegeData'),
+            'updatePermission' => full_uri( 'backend/merrole/updatepermission' )
         ] );
 
         $modules = explode(',',config('backend.module_ext'));
@@ -142,6 +142,33 @@ EOF;
         $ret               = $SysRolePermission->updateRolePermission( $roleId, $privilegeArr );
 
         return json( $ret );
+    }
+
+    //得到permission配置页面 非 js 渲染
+    public function getPermission(Request $request){
+        $params = [
+            'module' => $request->module ?: 'backend',
+        ];
+        $sysFuncs = $this->service->getPermission($params); 
+        
+        return $this->_displayWithLayout('backend::merrole.permission')->with('funcData',$sysFuncs);
+    }
+
+    //更新授权
+    function updatePermission(Request $request) {
+        $roleId = $request->input('roleId');
+        $privilegeArr = $request->input('privilegeArr');
+
+        $SysRolePermission = ServiceManager::make(SysRolePermissionService::class);
+        $ret = $SysRolePermission->updateRolePermission($roleId, $privilegeArr);
+
+        return response()->json($ret);
+    }
+
+    function getPrivilegeData(Request $request) {
+        $roleId = $request->input('roleId');
+        $sysRolePermission = ServiceManager::make(SysRolePermissionService::class);
+        return response()->json($sysRolePermission->getByRole($roleId));
     }
 
 

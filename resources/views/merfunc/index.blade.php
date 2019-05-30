@@ -190,7 +190,7 @@
                             <div class="form-body">
                                 <!-- start item -->
                                 <div class="form-group">
-                                    <div class="col-md-10 col-md-offset-2">
+                                    <div class="col-md-10 col-md-offset-2"  id="privilegeNode">
                                         <?php foreach( $param['privilege'] as $key => $val ) :?>
                                         <div class="checkbox">
                                             <label>
@@ -213,5 +213,5 @@
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-</div><!-- /.END PRIVILEGE MODAL -->
+</div><!-- /.END PRIVILEGE MODAL --> 
     @stop

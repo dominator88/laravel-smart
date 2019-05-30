@@ -2,12 +2,30 @@
 
 use Illuminate\Routing\Router;
 Route::group([
-    'prefix'=>strtolower('Backend' ),
-    'namespace' => 'Smart\\Controllers\\Backend' ,
-    'middleware'=> ['web']
+	'prefix'=>strtolower('Backend' ),
+	'namespace' => 'Smart\\Controllers\\Backend' ,
+	'middleware'=> ['web']
 ],function(Router $router ){
 	$router->group(['prefix' => 'auth','middleware' => ['auth.resetPassword']],function($router){
 		$router->post('changepassword' , 'AuthController@changePassword');
+	});
+
+	
+//权限节点
+	$router->group(['prefix' => 'syspermissionnode'] , function($router){
+
+		$router->get('index' , 'SysPermissionNode@index');
+
+		$router->get('read', 'SysPermissionNode@read');
+
+		$router->post('insert' , 'SysPermissionNode@insert');
+
+		$router->post('update/{id}' ,'SysPermissionNode@update');
+
+		$router->post('destroy','SysPermissionNode@destroy');
+
+		$router->post('getprivilege','SysPermissionNode@getPrivilege');
+
 	});
 	
 });
@@ -53,6 +71,8 @@ Route::group(['prefix' => 'backend/sysrole', 'namespace' => 'Smart\Controllers\B
 	Route::post('insert', 'SysRole@insert');
 
 	Route::post('destroy', 'SysRole@destroy');
+
+
 
 });
 
@@ -187,6 +207,12 @@ Route::group(['prefix' => 'backend/merrole', 'namespace' => 'Smart\Controllers\B
 	Route::post('get_privilegedata', 'MerRole@get_privilegeData');
 
 	Route::post('update_permission', 'MerRole@update_permission');
+
+	Route::post('getpermission', 'MerRole@getPermission');
+
+	Route::post('getprivilegedata', 'MerRole@getPrivilegeData');
+
+	Route::post('updatepermission', 'MerRole@updatePermission');
 
 });
 
@@ -409,6 +435,8 @@ Route::group(['prefix' => 'backend/syssettings', 'namespace' => 'Smart\Controlle
 	Route::get('group/{group}', 'SysSettings@indexGroup');
 
 });
+
+
 
 //接口路由
 Route::group(['prefix' => 'api/{version}', 'namespace' => 'App\Http\Controllers\Api', 'middleware' => ['api','auth.cors']], function () {

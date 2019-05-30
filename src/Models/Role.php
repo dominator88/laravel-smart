@@ -16,4 +16,10 @@ class Role extends RoleModel {
     public $timestamps = FALSE;
 
     use \Smart\Traits\Service\Scope;
+
+    public function sysRole(){
+    	return $this->hasOne(SysRole::class, 'role_id');
+    }
 }
+
+

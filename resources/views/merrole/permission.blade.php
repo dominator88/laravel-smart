@@ -1,47 +1,64 @@
 
 <ul class="permission">
-    <?php foreach( $funcData as $row ) :?>
+    @foreach($funcData as $row)
     <li class="func-tree">
-        <div class="func-node" data-func-id="<?= $row['id']?>">
-            <span class="func" data-id="<?= $row['id']?>"><?= $row['name'] ?></span>
+        <div class="func-node" data-func-id="{{ $row->id }}">
+            <span class="func" data-id="{{ $row->id }}">{{ $row->name }}</span>
             <span class="func-opt-row" >
-        <?php foreach( $row['privilege'] as $p ) :?>
-                <span class="func-opt" data-id="<?= $p['id']?>"><i class="fa fa-square-o"></i> <?= $privilegeName[$p['name']] ?></span>
-                <?php endforeach ; ?>
+       <!--权限节点-->
+            @if($row->privilege->count() > 0)
+                @foreach($row->privilege as $privilege)
+                 @if(isset($privilege->node))
+                <span class="func-opt" data-id="{{ $privilege->id }}"><i class="fa fa-square-o"></i> 
+                   
+                    {{ $privilege->node->name }}
+                    
+                </span>
+                @endif
+                @endforeach
+            @endif
       </span>
         </div>
-        <?php if ( isset( $row['children'] ) ) :?>
+        @if($row->children->count() > 0)
         <ul class="sub-permission">
-            <?php foreach( $row['children'] as $children ) :?>
+            @foreach($row->children as $children)
             <li class="func-tree">
-                <div class="func-node" data-func-id="<?= $children['id']?>">
-                    <span class="func" data-id="<?= $children['id']?>"><?= $children['name'] ?></span>
+                <div class="func-node" data-func-id="{{ $children->id }}">
+                    <span class="func" data-id="{{ $children->id }}">{{ $children->name }}</span>
                     <span class="func-opt-row">
-            <?php foreach( $children['privilege'] as $p ) :?>
-                        <span class="func-opt" data-id="<?= $p['id']?>"><i class="fa fa-square-o"></i> <?= $privilegeName[$p['name']] ?></span>
-                        <?php endforeach ; ?>
+           @if($children->privilege->count() > 0)
+                @foreach($children->privilege as $privilege)
+                @if(isset($privilege->node))
+                <span class="func-opt" data-id="{{ $privilege->id }}"><i class="fa fa-square-o"></i> {{ $privilege->node->name }}</span>
+                @endif
+                @endforeach
+            @endif
           </span>
                 </div>
-                <?php if ( isset( $children['children'] ) ) :?>
+                @if($children->children->count() > 0)
                 <ul class="sub-permission">
-                    <?php foreach( $children['children'] as $row ) :?>
+                    @foreach($children->children as $cchildren)
                     <li class="func-tree">
-                        <div class="func-node" data-func-id="<?= $row['id']?>">
-                            <span class="func" data-id="<?= $row['id']?>"><?= $row['name'] ?></span>
+                        <div class="func-node" data-func-id="{{ $cchildren->id }}">
+                            <span class="func" data-id="{{ $cchildren->id }}">{{ $cchildren->name }}</span>
                             <span class="func-opt-row">
-                <?php foreach( $row['privilege'] as $p) :?>
-                                <span class="func-opt" data-id="<?= $p['id']?>"><i class="fa fa-square-o"></i> <?= $privilegeName[$p['name']] ?></span>
-                                <?php endforeach ; ?>
+                @if($cchildren->privilege->count() > 0)
+                @foreach($cchildren->privilege as $privilege)
+                @if(isset($privilege->node))
+                <span class="func-opt" data-id="{{ $privilege->id }}"><i class="fa fa-square-o"></i> {{ $privilege->node->name }}</span>
+                @endif
+                @endforeach
+            @endif
               </span>
                         </div>
                     </li>
-                    <?php endforeach ; ?>
+                    @endforeach
                 </ul>
-                <?php endif ;?>
+                @endif
             </li>
-            <?php endforeach ; ?>
+            @endforeach
         </ul>
-        <?php endif ; ?>
+       @endif
     </li>
-    <?php endforeach ; ?>
+    @endforeach
 </ul>

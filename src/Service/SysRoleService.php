@@ -10,6 +10,7 @@ namespace Smart\Service;
 
 use Smart\Models\SysRole;
 use Facades\Smart\Service\ServiceManager;
+use Smart\Models\Role;
 
 class SysRoleService extends BaseService {
 
@@ -141,7 +142,7 @@ class SysRoleService extends BaseService {
       //优化创建模块角色
       $role = Role::where('name',$data['name'])->first();
       if(empty($role)){
-        $role = Role::create(['name'=>$data['name'],'guard_name'=>'Cms']);
+        $role = Role::create(['name'=>$data['name'],'guard_name'=>'admin']);
       }
       $data['role_id'] = $role->id;
       
@@ -165,7 +166,7 @@ class SysRoleService extends BaseService {
     try {
       $role = Role::where('name',$data['name'])->first();
       if(empty($role)){
-        $role = Role::create(['name'=>$data['name'],'guard_name'=>'Cms']);
+        $role = Role::create(['name'=>$data['name'],'guard_name'=>'admin']);
       }
       $data['role_id'] = $role->id;
       $rows = $this->getModel()->where( 'id' , $id )->update( $data );
@@ -202,12 +203,24 @@ class SysRoleService extends BaseService {
     }
   }
 
-  public function getPermission(){
+  public function getPermission($params){
     $params = [
-      'module' => 'Cms'
-    ];
+      'module' => $params['module'],
+    ]; 
     $sysFuncService = ServiceManager::make(SysFuncService::class);
-    $cmsFuncs = $sysFuncService->getPermission($params); 
-    return $cmsFuncs;
+    $sysFuncs = $sysFuncService->getPermission($params); 
+    
+    return $sysFuncs;
+  }
+
+  public function getRoles($roles){
+  	$sysRoles = $this->getModel()->whereIn('id',$roles)->get();
+  	$roles = [];
+  	foreach($sysRoles as $sysRole){
+  		if(isset($sysRole->role)){
+  			array_push($roles, $sysRole->role);
+  		}	
+  	}
+  	return $roles;
   }
 }

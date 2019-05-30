@@ -112,4 +112,14 @@ class SysRole extends Backend {
 		return response()->json($ret);
 	}
 
+	//得到permission配置页面 非 js 渲染
+	public function getPermission(Request $request){
+		$params = [
+			'module' => $request->module ?: 'backend',
+		];
+		$cmsFuncs = $this->service->getPermission($params); 
+		
+		return $this->_displayWithLayout('Cms::sysrole.permission')->with('funcData',$cmsFuncs);
+	}
+
 }

@@ -14,6 +14,7 @@ use Illuminate\Support\Traits\Macroable;
 use Smart\Models\SysUser;
 use Smart\Models\SysUserRole;
 use Smart\Models\SysUserDevice;
+use Facades\Smart\Service\ServiceManager;
 
 class MerUserService extends BaseService {
 
@@ -54,6 +55,7 @@ class MerUserService extends BaseService {
             'created_at' => date('Y-m-d H:i:s'),
         ];
     }
+
 
     /**
      * 根据条件查询
@@ -99,7 +101,7 @@ class MerUserService extends BaseService {
             return $model->count();
         } else {
             $data = $model
-                ->orderBy($params['sort'], $params['order'])->get()->toArray();
+                ->orderBy($params['sort'], $params['order'])->get();
 
         }
 
@@ -112,7 +114,7 @@ class MerUserService extends BaseService {
         if ($params['withRoles']) {
             $data = $this->getRoles($data);
         }
-
+        $data = $data->toArray();
         return $data ? $data : [];
     }
 
@@ -124,13 +126,29 @@ class MerUserService extends BaseService {
      * @return mixed
      */
     private function getRoles($data) {
-        $SysUserRole = SysUserRoleService::instance();
+        /*$SysUserRole = SysUserRoleService::instance();
 
         foreach ($data as &$item) {
             $item['roles'] = $SysUserRole->getByUser($item['id']);
+        }*/
+        $sysRoles = [];
+        foreach($data as &$item){
+           //var_dump($item->roles->toArray());
+            $item->role = $this->getRole($item);
+            
         }
 
         return $data;
+    }
+
+    private function getRole($user){
+        $roles = $user->roles;
+        $sysRoles = [];
+        foreach($roles as $role){
+            array_push($sysRoles, $role->sysRole);
+        }
+
+        return $sysRoles;
     }
 
     /**
@@ -208,6 +226,7 @@ class MerUserService extends BaseService {
             unset($data['roles']);
             $data['password'] = str2pwd(config('defaultPwd'));
 
+
             $id = self::instance()->getModel()->insertGetId($data);
             SysUserDevice::firstOrCreate(['user_id'=>$id]);
             if ($id <= 0) {
@@ -261,11 +280,15 @@ class MerUserService extends BaseService {
             $sysUserDevice->for_test = $for_test;
             $sysUserDevice->save();
             //更新用户角色
-            $SysUserRole = SysUserRoleService::instance();
+            /*$SysUserRole = SysUserRoleService::instance();
             $RoleResult = $SysUserRole->updateByUser($id, $roles);
+
             if ($RoleResult['code'] > 0) {
                 throw new \Exception($RoleResult['msg']);
-            }
+            }*/
+
+            $this->updateRoles($id, $roles);
+
             if($for_test){
                 $token = md5(http_build_query($data) . json_encode(['created_at' => time()]));
                 $sysUser = SysUser::find($id);
@@ -348,5 +371,17 @@ class MerUserService extends BaseService {
         $data = DB::table('sys_user as su')->leftJoin('sys_user_device as sud', 'su.id', '=', 'sud.user_id')->where('sud.for_test', 1)->get()->toArray();
         return $data;
     }
+
+    //更新用户角色
+    private function updateRoles($id,$roleIds){
+        $user = $this->getModel()->find($id);
+        $sysRoleService = ServiceManager::make(SysRoleService::class );
+        $roles = $sysRoleService->getRoles($roleIds);
+
+        $user->syncRoles($roles);
+        return true;
+    }
+
+
 
 }

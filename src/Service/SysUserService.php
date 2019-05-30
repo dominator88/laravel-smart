@@ -14,6 +14,8 @@ use Illuminate\Support\Traits\Macroable;
 use Smart\Models\SysUser;
 use Smart\Models\SysUserRole;
 use Smart\Models\SysUserDevice;
+use Smart\Service\ServiceManager;
+use Smart\Service\SysFuncPrivilegeService;
 
 class SysUserService extends BaseService {
 
@@ -347,6 +349,22 @@ class SysUserService extends BaseService {
 	public function getForTest() {
 		$data = DB::table('sys_user as su')->leftJoin('sys_user_device as sud', 'su.id', '=', 'sud.user_id')->where('sud.for_test', 1)->get()->toArray();
 		return $data;
+	}
+
+	//用户是否拥有某个功能的权限
+	public function hasAnyPermission($id ,$funcIds, $guard_name = 'admin'){
+		$user = $this->getModel()->find($id);
+		//获取所有功能id
+		$sysFuncPrivilege = ServiceManager::make(SysFuncPrivilegeService::class );
+		$permissions = $sysFuncPrivilege->getPermissions($funcIds);
+		return $user->hasAnyPermission($permissions, $guard_name);
+	}
+
+	//获取用户拥有的权限
+	public function permissions($id){
+		$sysUser = $this->getModel()->find($id);
+		$permissions = $sysUser->permissions;
+		
 	}
 
 }

@@ -95,6 +95,14 @@
                 <form id="addEditForm" class="form-horizontal">
                     {!! csrf_field() !!}
                     <div class="form-body">
+
+                         <!-- start item -->
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">模块</label>
+                                    <div class="col-md-7">
+                                        {!! form_radios('module',$param['modules']) !!}
+                                    </div>
+                                </div><!-- end item -->
                         <!-- start item -->
                         <div class="form-group">
                             <label class="col-md-3 control-label">用户名</label>

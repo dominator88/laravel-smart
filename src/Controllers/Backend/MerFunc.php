@@ -18,7 +18,7 @@ class MerFunc extends Backend {
     /**
      * MerFunc constructor.
      */
-
+ 
     public $autoload_service = 0;
 
     public $controller = 'SysFunc';
@@ -40,7 +40,8 @@ EOF;
 
         //uri
         $this->_addParam( 'uri', [
-            'updatePrivilege' => full_uri( 'Backend/MerFunc/update_privilege', [ 'funcId' => '' ] ),
+            'updatePrivilege' => full_uri('backend/menu/updatePrivilege'),
+            'permissionNodeGetPrivilege' => full_uri( 'backend/SysPermissionNode/getPrivilege'),
         ] );
 
         $modules = explode(',',config('backend.module_ext'));

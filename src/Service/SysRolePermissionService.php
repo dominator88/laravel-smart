@@ -101,19 +101,23 @@ class SysRolePermissionService extends BaseService {
         //通过原roleid 获取 库roleId
         $sysRoleService = ServiceManager::make(SysRoleService::class);
         $sysRole = $sysRoleService->findById($roleId);
-        $permissions = $sysRole->role->permissions->pluck('id');
-        $permissionService = ServiceManager::make(PermissionService::class);
-        $permissions = $permissionService->getByIds($permissions);
         $data = [];
+        if(isset($sysRole->role->permissions)){
 
-        foreach($permissions as $permission){
-            if(!empty($permission->node->privilege)){
-                $data_tmp = [
-                    'privilege_id' => $permission->node->privilege->id
-                ];
-                array_push($data, $data_tmp);
-            }
+            $permissions = $sysRole->role->permissions->pluck('id');
+            $permissionService = ServiceManager::make(PermissionService::class);
+            $permissions = $permissionService->getByIds($permissions);
             
+
+            foreach($permissions as $permission){
+                if(!empty($permission->node->privilege)){
+                    $data_tmp = [
+                        'privilege_id' => $permission->node->privilege->id
+                    ];
+                    array_push($data, $data_tmp);
+                }
+                
+            }
         }
         return $data;
      //   return $this->getModel()->where( 'role_id', $roleId )->get()->toArray();

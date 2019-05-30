@@ -16,4 +16,6 @@ class SysRolePermission extends Model {
 	public function sysFuncs() {
 		return $this->belongsToMany(Smart\Models\SysFunc::class, 'sys_func_privilege', 'func_id', 'id');
 	}
+
+	
 }
