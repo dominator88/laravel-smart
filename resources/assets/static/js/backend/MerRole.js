@@ -153,6 +153,7 @@ var MerRole = {
 			var url = Param.uri.getPermission;
 			var data = {
 				roleId: id,
+				module: roleData.module,
 				_token: self.token
 			};
 			$.post(url, data, function(res) {

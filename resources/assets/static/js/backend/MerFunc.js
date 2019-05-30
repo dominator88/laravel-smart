@@ -1,5 +1,5 @@
 /**
- * MerFunc JS
+ * Menu JS
  *
  * @author MR.Z <zsh2088@gmail.com>
  * @version 2.0 , 2016-09-12
@@ -46,7 +46,7 @@ var MerFunc = {
 		});
 	},
 
-	//显示 modal
+	//显示 modal 
 	setPortletShow: function(type) {
 		var $addEditModal = $('#addEditModal');
 
@@ -155,14 +155,37 @@ var MerFunc = {
 			var $form = $('#privilegeForm');
 			$form[0].reset();
 
-			if (!empty(privilege)) {
-				$.each(privilege, function(index, item) {
-					$form.find('input[value="' + item.name + '"]').prop('checked', true);
-				});
+			//获取当前页面下所有的权限节点
+			data = {
+				'menu_id': id,
+				'module': data.module,
+				_token: self.token
 			}
 
-			$form.attr('action', Param.uri.updatePrivilege + '/' + id);
-			$('#privilegeModal').modal('show');
+			$('#privilegeNode').empty();
+			$.post(Param.uri.permissionNodeGetPrivilege, data)
+				.fail(function(res) {
+					tips.error(res.responseText);
+				})
+				.done(function(res) {
+					rows = res.data.rows;
+
+					$.each(rows, function(index, item) {
+						node = '<div class="checkbox"><label><input type="checkbox" name="node_id[]" value="' + item.id + '">' + item.name + '</label> </div>';
+						$(node).appendTo('#privilegeNode');
+					});
+
+					if (!empty(privilege)) {
+						$.each(privilege, function(index, item) {
+							$form.find('input[value="' + item.node_id + '"]').prop('checked', true);
+						});
+					}
+
+					$form.attr('action', Param.uri.updatePrivilege + '/' + id);
+					$('#privilegeModal').modal('show');
+				});
+
+
 		});
 
 		//更新权限

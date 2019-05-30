@@ -101,6 +101,7 @@ var MerUser = {
 			data = {
 				module: row.module
 			}
+
 			$('#roleForm').empty()
 			//设置角色组
 			$.get(Param.uri.merRoleRead, data)
@@ -116,16 +117,17 @@ var MerUser = {
 						label = '<label class="checkbox-inline"><input name="roles[]" type="checkbox" value="' + value.id + '">' + value.name + '</label>';
 						$('#roleForm').append(label)
 					})
+					//console.log(row.roles);
+					$.each(row.role, function(index, item) {
+						$('input[name="roles[]"][value="' + item.id + '"]').prop('checked', true);
+					});
 
 				});
 
 			$form.reloadForm(row);
 			setImgPreview.set('icon', row.icon);
 
-			//console.log(row.roles);
-			$.each(row.roles, function(index, item) {
-				$('input[name="roles[]"][value="' + item.role_id + '"]').prop('checked', true);
-			});
+
 
 			$form.attr('action', Param.uri.update + '/' + row.id);
 		});
@@ -287,7 +289,7 @@ window.onpopstate = function(event) {
 var formatUsername = function(value, row) {
 	var html = value + '<br>';
 	$.each(row.roles, function(index, role) {
-		html += '<span class="badge badge-default ">' + role.role_name + '</span>';
+		html += '<span class="badge badge-default ">' + role.name + '</span>';
 	});
 	return html;
 };

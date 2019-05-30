@@ -86,12 +86,13 @@ class SysPermissionNodeService extends BaseService {
 
 public function getPrivilege($param){
   $default = [
+    'module' => '',
     'symbol' => '',
     'status' => '',
     'type' => '',
   ];
   $param  = extend( $default , $param );
-  return $this->getModel()->symbol($param['symbol'])->status($param['status'])->type($param['type'])->orderBy('sort', 'ASC')->get();
+  return $this->getModel()->symbol($param['symbol'])->module($param['module'])->status($param['status'])->type($param['type'])->orderBy('sort', 'ASC')->get();
 }
   
 

@@ -88,6 +88,7 @@ class SysPermissionNode extends Backend {
 		$symbol = $sysFuncService->getSymbol($menu_id);
 
 		$config = [
+			'module'  => $request->input( 'module', 'backend' ),
 			'status'    => 1,
 			'type' => 'func',
 			'symbol'    => $symbol,
