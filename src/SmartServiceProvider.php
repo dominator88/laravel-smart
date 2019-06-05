@@ -9,7 +9,6 @@ namespace Smart;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Smart\Models\SysModule;
 use Smart\Extentions\EloquentUserProvider;
 use Illuminate\Support\Facades\Auth;
 use File;

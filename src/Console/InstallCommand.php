@@ -5,7 +5,6 @@ namespace Smart\Console\Commands;
 use Illuminate\Console\Command;
 use Smart\Auth\Database\AdminTableSeeder;
 use Smart\Models\SysUser;
-use Smart\Models\SysModule;
 
 class InstallCommand extends Command
 {
@@ -82,12 +81,10 @@ class InstallCommand extends Command
      * @param $module
      */
     public function initDirectory($module){
-        if($module){
-            SysModule::FirstOrCreate(['name'=>$module , 'symbol'=>strtolower($module),'displayorder'=>0,'version'=>'1.0','author'=>'MR.Z','status'=>1]);
-        }else{
-            $this->makeDir($module);
-            $this->line('initDirectory success!');
-        }
+
+        $this->makeDir($module);
+        $this->line('initDirectory success!');
+        
         
     }
 

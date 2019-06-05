@@ -361,27 +361,7 @@ Route::group([
 	'namespace' => 'Smart\\Controllers\\Backend',
 	'middleware' => ['web', 'auth.permission'],
 ], function () {
-	Route::group(['prefix' => 'sysmodules'], function () {
 
-		Route::get('index', 'SysModule@index')->name('backend.sysmodules.index');
-
-		Route::get('read_album_catalog', 'SysModule@read_album_catalog');
-
-		Route::get('read', 'SysModule@read')->name('backend.sysmodules.read');
-
-		Route::post('insert', 'SysModule@insert')->name('backend.sysmodules.insert');
-
-		Route::post('update/{id}', 'SysModule@update')->name('backend.sysmodules.update');
-
-		Route::post('destroy', 'SysModule@destroy')->name('backend.sysmodules.destory');
-
-		Route::post('upload', 'SysModule@upload');
-
-		Route::get('read_album', 'SysModule@read_album');
-
-		Route::get('income', 'SysModule@income');
-
-	});
 
 	Route::group(['prefix' => 'modulefunc'], function () {
 		Route::get('index', 'ModuleFunc@index')->name('backend.modulefunc.index');
