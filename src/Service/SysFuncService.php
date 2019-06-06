@@ -8,6 +8,8 @@
 namespace Smart\Service;
 use Illuminate\Support\Facades\DB;
 use Smart\Models\SysFunc; 
+use Facades\Smart\Service\ServiceManager;
+use Smart\Service\SysRoleService;
 
 class SysFuncService extends BaseService {
 
@@ -126,14 +128,14 @@ class SysFuncService extends BaseService {
         }else{
           $model = $model->with('children.privilege','privilege')->get()->values();
         }
-        $data = $model->toArray();
+        $data = $model;
 
 
 
         $data = $func($data);
         
 
-        return $data ? $data : [];
+        return $data ;
 	}
 
 	/**
@@ -145,7 +147,16 @@ class SysFuncService extends BaseService {
 	 * @return array
 	 */
 	private function _getMenuByRoles($roleIds, $module) {
-		$key = self::DEFAULT_KEY;
+		//取出所有的菜单
+		$sysFuncs = $this->getModel()->status(1)->module(ucfirst($module))->where('pid',0)->get();
+		//取出对应角色下,进行过授权的菜单节点
+		$sysRoleService = ServiceManager::make(SysRoleService::class );
+		$roles = $sysRoleService->getRoles($roleIds);
+
+		return $sysFuncs;
+
+
+		/*$key = self::DEFAULT_KEY;
 
 		$data = DB::table('sys_func AS f')
 			->where('f.is_menu', 1)
@@ -177,7 +188,7 @@ class SysFuncService extends BaseService {
 			$func_ids[] = $row->id;
 		}
 
-		return $this->treeToArray($result, self::DEFAULT_KEY);
+		return $this->treeToArray($result, self::DEFAULT_KEY);*/
 	}
 
 	public function withPrivilege($data) {

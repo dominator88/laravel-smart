@@ -57,6 +57,7 @@
                             <th width="80" data-field="is_menu" data-formatter="formatIsFunc">是否菜单</th>
                             <th width="80" data-field="is_func" data-formatter="formatIsMenu">是否功能</th>
                             <th width="80" data-field="status" data-formatter="formatStatus">状态</th>
+                            <th width="60" data-formatter="optNode"></th>
                             <th width="60" data-formatter="optPrivilege"></th>
                             <th width="60" data-formatter="optEdit"></th>
                             <th width="60" data-formatter="optDelete"></th>
@@ -67,7 +68,133 @@
 
             </div>
         </div> <!-- Main Portlet Start -->
+
+
+
+
+        <!-- BEGIN ADD EDIT PORTLET -->
+        <div class="portlet box green-meadow" id="nodePortlet" style="display: none;">
+          <div class="portlet-title">
+            <div class="caption caption-md">
+              <i class="icon-settings"></i>
+              <span class="caption-subject uppercase"></span>
+
+          </div>
+
+          <div class="actions">
+            <a href="javascript:;" class="btn btn-circle blue" id="addNodeBtn">
+                <i class="fa fa-plus"></i> 新增
+            </a>
+        </div>
     </div>
+    <div class="portlet-body">
+        <!-- start add edit form  -->
+        <div class="row">
+          <div class="col-md-12">
+            <!-- start form -->
+            <form id="editCoinForm" class="form-horizontal">
+
+                {!! csrf_field() !!}
+                <div class="form-body">
+                    <!-- start item -->
+                    <div class="table-scrollable">
+                      <table id="dataGrid2" class="table table-hover">
+                        <tr>
+                          <th width="40" data-field="name"  >名称</th>
+                          <th width="80" data-field="module" >模块</th>
+
+                          <th width="80" data-field="symbol"   >标识</th>
+                          <th width="80" data-field="status"  data-formatter="formatStatus">状态</th>
+
+                          <th width="60" ><th width=60 data-formatter="optEditNode"></th></th>
+
+                          <th>&nbsp;</th>
+                      </tr>
+                  </table>
+              </div>
+          </div>
+          <div class="form-actions" style="margin-bottom: 60px;">
+            <hr>
+            <div class="row">
+              <div class="col-md-offset-3 col-md-7">
+                <button class="btn default btn-lg" id="closePortletBtn2" type="button" ><i class="fa fa-arrow-left"></i> 关闭</button>
+            </div>
+        </div>
+    </div>
+</form><!-- END ADD EDIT FORM -->
+</div>
+</div>
+</div><!-- END ADD EDIT PORTLET BODY -->
+</div><!-- END ADD EDIT PORTLET  -->
+
+
+<!-- BEGIN ADD EDIT PORTLET -->
+<div class="portlet box green-meadow" id="addNodePorlet" style="display: none;">
+  <div class="portlet-title">
+    <div class="caption caption-md">
+      <i class="icon-settings"></i>
+      <span class="caption-subject uppercase"></span>
+  </div>
+</div>
+<div class="portlet-body">
+    <!-- start add edit form  -->
+    <div class="row">
+      <div class="col-md-12">
+        <!-- start form -->
+        <form id="addNodeForm" class="form-horizontal">
+            <input type=hidden name='func_id' />
+            <input type=hidden name='type' value='func'/>
+            {!! csrf_field() !!}
+            <div class="form-body">
+                <!-- start item -->
+
+                <!-- start item -->
+                <div class="form-group">
+                    <label class="col-md-3 control-label">名称</label>
+                    <div class="col-md-7">
+                        <input type="text" name="name" placeholder="名称" class="form-control"
+                        data-valid="required" data-tips="名称" >
+                    </div>
+                </div><!-- end item -->
+                <!-- start item -->
+                <div class="form-group">
+                    <label class="col-md-3 control-label">模块</label>
+                    <div class="col-md-7">
+                        <input type="text" name="module" placeholder="模块" class="form-control"
+                        data-valid="required" data-tips="模块" readonly="true">
+                    </div>
+                </div><!-- end item -->
+                <div class="form-group">
+                    <label class="col-md-3 control-label">标识</label>
+                    <div class="col-md-7">
+                        <input type="text" name="symbol" placeholder="标识" class="form-control"
+                        data-valid="required" data-tips="标识" >
+                    </div>
+                </div><!-- end item -->
+                <div class="form-group">
+                    <label class="col-md-3 control-label">状态</label>
+                    <div class="col-md-7">
+                        <?= form_radios('status' , $param['status'] ) ?>
+                    </div>
+                </div><!-- end item -->
+            </div>
+            <div class="form-actions" style="margin-bottom: 60px;">
+                <hr>
+                <div class="row">
+                  <div class="col-md-offset-3 col-md-7">
+                    <button class="btn default btn-lg" id="closePortletBtn3" type="button" ><i class="fa fa-arrow-left"></i> 返回</button>
+                    <button class="btn red btn-lg" id="submitFormBtn3" type="button"><i class="fa fa-check"></i> 提交</button>
+                </div>
+            </div>
+        </div>
+    </form><!-- END ADD EDIT FORM -->
+</div>
+</div>
+</div><!-- END ADD EDIT PORTLET BODY -->
+</div><!-- END ADD EDIT PORTLET  -->
+
+
+</div>
 </div>
 <!-- END CONTENT BODY -->
 
@@ -100,7 +227,7 @@
                                     <label class="col-md-3 control-label">名称</label>
                                     <div class="col-md-7">
                                         <input type="text" name="name" placeholder="名称" class="form-control"
-                                               data-valid="required" data-tips="请输入正确的名称">
+                                        data-valid="required" data-tips="请输入正确的名称">
                                     </div>
                                 </div><!-- end item -->
                                 <!-- start item -->
@@ -123,7 +250,7 @@
                                     <label class="col-md-3 control-label">排序</label>
                                     <div class="col-md-7">
                                         <input type="text" name="sort" placeholder="排序" class="form-control"
-                                               data-valid="required" data-tips="请输入正确的排序">
+                                        data-valid="required" data-tips="请输入正确的排序">
                                     </div>
                                 </div><!-- end item -->
                                 <!-- start item -->
@@ -142,76 +269,80 @@
                                 </div><!-- end item -->
                                 <!-- start item -->
                                 <!--<div class="form-group">-->
-                                <!--<label class="col-md-3 control-label">是否功能</label>-->
-                                <!--<div class="col-md-7">-->
-                            <!--<?= form_radios('is_func' , $param['isFunc'] ) ?>-->
-                                <!--</div>-->
-                                <!--</div>-->
-                                <!-- end item -->
+                                    <!--<label class="col-md-3 control-label">是否功能</label>-->
+                                    <!--<div class="col-md-7">-->
+                                        <!--<?= form_radios('is_func' , $param['isFunc'] ) ?>-->
+                                        <!--</div>-->
+                                        <!--</div>-->
+                                        <!-- end item -->
 
-                                <!-- start item -->
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">图标</label>
-                                    <div class="col-md-7">
-                                        <input type="text" name="icon" placeholder="图标" class="form-control">
+                                        <!-- start item -->
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">图标</label>
+                                            <div class="col-md-7">
+                                                <input type="text" name="icon" placeholder="图标" class="form-control">
+                                            </div>
+                                        </div><!-- end item -->
                                     </div>
-                                </div><!-- end item -->
+                                </form><!-- end form -->
                             </div>
-                        </form><!-- end form -->
+                        </div>
+                        <!-- end add edit form-->
                     </div>
-                </div>
-                <!-- end add edit form-->
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn default" data-dismiss="modal"><i class="fa fa-times"></i> 关闭</button>
-                <button type="button" class="btn red" id="submitFormBtn"><i class="fa fa-save"></i> 保存</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.END ADD EDIT MODAL -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn default" data-dismiss="modal"><i class="fa fa-times"></i> 关闭</button>
+                        <button type="button" class="btn red" id="submitFormBtn"><i class="fa fa-save"></i> 保存</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.END ADD EDIT MODAL -->
 
 
-<!-- START PRIVILEGE MODAL -->
-<div class="modal fade" id="privilegeModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+        <!-- START PRIVILEGE MODAL -->
+        <div class="modal fade" id="privilegeModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title caption-subject">权限</h4>
-            </div>
-            <div class="modal-body">
-                <!-- start add edit form  -->
-                <div class="row">
-                    <div class="col-md-12">
-                        <!-- start form -->
-                        <form id="privilegeForm" class="form-horizontal">
-                            {!! csrf_field() !!}
-                            <div class="form-body">
-                                <!-- start item -->
-                                <div class="form-group">
-                                    <div class="col-md-10 col-md-offset-2"  id="privilegeNode">
-                                        <?php foreach( $param['privilege'] as $key => $val ) :?>
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" name="name[]" value="<?= $key ?>">
-                                                <?= $val ?> ( <?= implode( '&nbsp;&nbsp;,&nbsp;&nbsp;' , $param['alias'][$key]) ?> )
-                                            </label>
+                            <h4 class="modal-title caption-subject">权限</h4>
+                        </div>
+                        <div class="modal-body">
+                            <!-- start add edit form  -->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <!-- start form -->
+                                    <form id="privilegeForm" class="form-horizontal">
+                                        {!! csrf_field() !!}
+                                        <div class="form-body">
+                                            <!-- start item -->
+                                            <div class="form-group">
+                                                <div class="col-md-10 col-md-offset-2"  id="privilegeNode">
+                                                    <?php foreach( $param['privilege'] as $key => $val ) :?>
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input type="checkbox" name="name[]" value="<?= $key ?>">
+                                                                <?= $val ?> ( <?= implode( '&nbsp;&nbsp;,&nbsp;&nbsp;' , $param['alias'][$key]) ?> )
+                                                            </label>
+                                                        </div>
+                                                    <?php endforeach; ?>
+                                                </div>
+                                            </div><!-- end item -->
                                         </div>
-                                        <?php endforeach; ?>
-                                    </div>
-                                </div><!-- end item -->
+                                    </form><!-- end form -->
+                                </div>
                             </div>
-                        </form><!-- end form -->
-                    </div>
-                </div>
-                <!-- end add edit form-->
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn default" data-dismiss="modal"><i class="fa fa-times"></i> 关闭</button>
-                <button type="button" class="btn red" id="submitPrivilegeFormBtn"><i class="fa fa-save"></i> 保存</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.END PRIVILEGE MODAL --> 
-    @stop
+                            <!-- end add edit form-->
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn default" data-dismiss="modal"><i class="fa fa-times"></i> 关闭</button>
+                            <button type="button" class="btn red" id="submitPrivilegeFormBtn"><i class="fa fa-save"></i> 保存</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.END PRIVILEGE MODAL --> 
+
+
+
+
+            @stop

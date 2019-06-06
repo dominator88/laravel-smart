@@ -223,4 +223,10 @@ class SysRoleService extends BaseService {
   	}
   	return $roles;
   }
+
+  //获取角色组拥有的权限
+  /*public function permissions(array $roles){
+  	$this->getModel()->whereIn('id', $roles)->get();
+
+  }*/
 }

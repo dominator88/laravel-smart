@@ -70,6 +70,7 @@ class SysPermissionNode extends Backend {
  */
 	public function read(Request $request) {
 		$config = [
+			'func_id'	=> $request->input( 'func_id', ''),
 			'module'	=> $request->input( 'module', '' ),
 			'status'    => $request->input( 'status', '' ),
 			'keyword'   => $request->input( 'keyword', '' ),

@@ -42,6 +42,9 @@ EOF;
         $this->_addParam( 'uri', [
             'updatePrivilege' => full_uri('backend/menu/updatePrivilege'),
             'permissionNodeGetPrivilege' => full_uri( 'backend/SysPermissionNode/getPrivilege'),
+            'nodeRead' => full_uri('backend/syspermissionnode/read'),
+            'nodeInsert' => full_uri('backend/syspermissionnode/insert'),
+            'nodeUpdate' => full_uri('backend/syspermissionnode/update'),
         ] );
 
         $modules = explode(',',config('backend.module_ext'));
@@ -73,6 +76,7 @@ EOF;
 
         //需要引入的 css 和 js
         $this->_addJsLib( 'static/plugins/dmg-ui/TreeGrid.js' );
+        $this->_addJsLib( 'static/plugins/dmg-ui/TableGrid.js' );
 
         return $this->_displayWithLayout('backend::merfunc.index');
     }

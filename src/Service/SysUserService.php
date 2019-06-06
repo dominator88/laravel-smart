@@ -364,7 +364,18 @@ class SysUserService extends BaseService {
 	public function permissions($id){
 		$sysUser = $this->getModel()->find($id);
 		$permissions = $sysUser->permissions;
-		
+		return $permissions;
+	}
+
+	//用户拥有的角色
+	public function roles($id){
+		$sysUser = $this->getModel()->find($id);
+		$roles = $sysUser->roles;
+		$sysRoles = collect();
+		foreach($roles as $role){
+			$sysRoles->push( $role->sysRole);
+		}
+		return $sysRoles;
 	}
 
 }

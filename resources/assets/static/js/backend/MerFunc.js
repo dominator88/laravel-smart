@@ -25,6 +25,8 @@ var MerFunc = {
 		//初始化数据表
 		this.initGrid();
 
+		this.initGrid2();
+
 	},
 	//初始化查询form
 	initSearchForm: function() {
@@ -48,18 +50,28 @@ var MerFunc = {
 
 	//显示 modal 
 	setPortletShow: function(type) {
+		var $tablePortlet = $('#tablePortlet');
 		var $addEditModal = $('#addEditModal');
+		var $nodePortlet = $('#nodePortlet');
+		var $addNodePorlet = $('#addNodePorlet');
 
-		$addEditModal.modal('show');
 		if (type == 'add') {
+			$addEditModal.modal('show');
 			$addEditModal.find('.caption-subject').html('新建' + Param.pageTitle);
 		} else if (type == 'edit') {
+			$addEditModal.modal('show');
 			$addEditModal.find('.caption-subject').html('编辑' + Param.pageTitle);
+		} else if (type == 'node') {
+			$tablePortlet.slideUp('fast');
+			$nodePortlet.show();
+		} else if (type == 'addNode') {
+			$addNodePorlet.show();
 		}
 	},
 
 	//关闭 modal
 	setPortletHide: function() {
+		$('#tablePortlet').slideDown('fast');
 		$('#addEditModal').modal('hide');
 	},
 
@@ -139,8 +151,45 @@ var MerFunc = {
 			}
 		});
 
+		$('#submitFormBtn3').on('click', function(e) {
+			e.preventDefault();
+			var $form = $('#addNodeForm');
+
+			if ($form.validForm()) {
+				var data = $form.serializeObject();
+
+				data._token = self.token;
+				$.post($form.attr('action'), data)
+					.fail(function(res) {
+						tips.error(res.responseText);
+					})
+					.done(function(res) {
+						if (res.code == 1001) {
+							//需要登录
+							tips.error('请先登录');
+						} else if (res.code != 0) {
+							tips.error(res.msg);
+						} else {
+							tips.success(res.msg);
+							$('#dataGrid2').TableGrid('reload');
+							self.setPortletHide();
+						}
+					});
+			}
+		});
+
 		//关闭添加编辑窗
 		$('#closePortletBtn').on('click', function(e) {
+			e.preventDefault();
+			self.setPortletHide();
+		});
+
+		$('#closePortletBtn2').on('click', function(e) {
+			e.preventDefault();
+			self.setPortletHide();
+		});
+
+		$('#closePortletBtn3').on('click', function(e) {
 			e.preventDefault();
 			self.setPortletHide();
 		});
@@ -187,6 +236,54 @@ var MerFunc = {
 
 
 		});
+
+		$(document).on('click', '.nodeBtn', function(e) {
+			e.preventDefault();
+			self.setPortletShow('node');
+			var id = $(this).data('id')
+			var row = $('#treeGrid').TreeGrid('getRow', id);
+			data = {
+				func_id: row.id,
+				module: row.module,
+				symbol: row.id + '.'
+			}
+			console.log(row);
+			var $form = $('#addNodeForm')
+			$form.reloadForm(data)
+
+			$dataGrid2 = $('#dataGrid2');
+			$dataGrid2.TableGrid('setParam', {
+				//应用id
+				func_id: id,
+				getall: true
+			});
+			$dataGrid2.TableGrid('reload');
+
+
+		});
+
+		//打开添加框
+		$('#addNodeBtn').on('click', function(e) {
+			e.preventDefault();
+			self.setPortletShow('addNode');
+
+			var $form = $('#addNodeForm');
+			//	$form.reloadForm(Param.defaultRow);
+
+
+			$form.attr('action', Param.uri.nodeInsert);
+		});
+
+		$(document).on('click', '.editNodeBtn', function(e) {
+			e.preventDefault();
+			self.setPortletShow('addNode');
+			var id = $(this).data('id')
+			var row = $('#dataGrid2').TableGrid('getRow', id);
+			var $form = $('#addNodeForm')
+			$form.reloadForm(row)
+			$form.attr('action', Param.uri.nodeUpdate + '/' + id)
+		});
+
 
 		//更新权限
 		$('#submitPrivilegeFormBtn').on('click', function(e) {
@@ -273,6 +370,34 @@ var MerFunc = {
 				history.replaceState(settings.param, '', uri);
 			}
 		});
+	},
+	initGrid2: function() {
+		var self = this;
+		var uri = Param.uri.this + '?' + $.param(Param.query);
+		history.replaceState(Param.query, '', uri);
+
+		$('#dataGrid2').TableGrid({
+			uri: Param.uri.nodeRead,
+			selectAll: true,
+			pagination: false,
+			param: Param.query,
+			rowStyle: function(row) {
+				if (row.status == 0) {
+					return 'warning';
+				}
+			},
+			loadSuccess: function(rows, settings) {
+				var oldUri = window.location.href;
+				var uri = Param.uri.this + '?' + $.param(settings.param);
+				if (oldUri == uri) {
+					return false;
+				}
+
+				var params = $.getUrlParams(window.location.href);
+				history.pushState(params, '', oldUri);
+				history.replaceState(settings.param, '', uri);
+			}
+		});
 	}
 
 
@@ -307,3 +432,11 @@ var formatIsMenu = function(value) {
 var optPrivilege = function(value, row) {
 	return '<a href="#" data-id="' + row.id + '" class="btn btn-sm blue privilegeBtn"><i class="fa fa-key"></i> 权限</a>';
 };
+
+var optNode = function(value, row) {
+	return '<a href="#" data-id="' + row.id + '" class="btn btn-sm green nodeBtn"><i class="fa fa-key"></i> 节点</a>';
+}
+
+var optEditNode = function(value, row) {
+	return '<a href="#" data-id="' + row.id + '" class="btn btn-sm grey-cascade editNodeBtn"><i class="fa fa-key"></i> 编辑</a>';
+}

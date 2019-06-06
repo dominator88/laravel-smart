@@ -166,13 +166,16 @@ class SysFuncPrivilegeService extends BaseService{
         return $newData;
     }
 
-    public function syncPermissions($roleId,$privileges){
+    public function syncPermissions($roleId,$nodes){
         $sysRoleService = ServiceManager::make(SysRoleService::class );
         $sysRole = $sysRoleService->findById($roleId);
-        $privileges = $this->getModel()->whereIn('id',$privileges)->get();
+        //获取node 集合
+        $sysPermissionNodeService = ServiceManager::make(SysPermissionNodeService::class );
+        $nodes = $sysPermissionNodeService->getByIds($nodes);
+        
         $permissions = [];
-        foreach($privileges as $privilege){
-            array_push($permissions, $privilege->node->permission->id);
+        foreach($nodes as $node){
+            array_push($permissions, $node->permission->id);
         }
        
         $sysRole->role->syncPermissions($permissions);

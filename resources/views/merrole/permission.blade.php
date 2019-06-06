@@ -6,18 +6,17 @@
             <span class="func" data-id="{{ $row->id }}">{{ $row->name }}</span>
             <span class="func-opt-row" >
        <!--权限节点-->
-            @if($row->privilege->count() > 0)
-                @foreach($row->privilege as $privilege)
-                 @if(isset($privilege->node))
-                <span class="func-opt" data-id="{{ $privilege->id }}"><i class="fa fa-square-o"></i> 
+            @if($row->node->count() > 0)
+                @foreach($row->node as $node)
+                 
+                <span class="func-opt" data-id="{{ $node->id }}"><i class="fa fa-square-o"></i> 
                    
-                    {{ $privilege->node->name }}
-                    
+                {{ $node->name }}  
                 </span>
-                @endif
                 @endforeach
             @endif
       </span>
+
         </div>
         @if($row->children->count() > 0)
         <ul class="sub-permission">
@@ -26,11 +25,11 @@
                 <div class="func-node" data-func-id="{{ $children->id }}">
                     <span class="func" data-id="{{ $children->id }}">{{ $children->name }}</span>
                     <span class="func-opt-row">
-           @if($children->privilege->count() > 0)
-                @foreach($children->privilege as $privilege)
-                @if(isset($privilege->node))
-                <span class="func-opt" data-id="{{ $privilege->id }}"><i class="fa fa-square-o"></i> {{ $privilege->node->name }}</span>
-                @endif
+           @if($children->node->count() > 0)
+                @foreach($children->node as $node)
+               
+                <span class="func-opt" data-id="{{ $node->id }}"><i class="fa fa-square-o"></i> {{ $node->name }}</span>
+        
                 @endforeach
             @endif
           </span>
@@ -43,10 +42,10 @@
                             <span class="func" data-id="{{ $cchildren->id }}">{{ $cchildren->name }}</span>
                             <span class="func-opt-row">
                 @if($cchildren->privilege->count() > 0)
-                @foreach($cchildren->privilege as $privilege)
-                @if(isset($privilege->node))
-                <span class="func-opt" data-id="{{ $privilege->id }}"><i class="fa fa-square-o"></i> {{ $privilege->node->name }}</span>
-                @endif
+                @foreach($cchildren->node as $node)
+               
+                <span class="func-opt" data-id="{{ $node->id }}"><i class="fa fa-square-o"></i> {{ $node->name }}</span>
+   
                 @endforeach
             @endif
               </span>

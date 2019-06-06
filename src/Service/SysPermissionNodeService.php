@@ -49,6 +49,7 @@ class SysPermissionNodeService extends BaseService {
  public function getByCond( $param ) {
   $default = [
     'field'  => ['*' ],
+    'func_id' => '',
     'module' => '',
     'symbol' => '',
     'pid'    => 0,
@@ -77,7 +78,7 @@ class SysPermissionNodeService extends BaseService {
   }
 
 
-  $data = $this->getModel()->with('children')->symbol($param['symbol'])->module($param['module'])->status($param['status'])->where('pid',$param['pid'])->orderBy('level' , 'ASC')->orderBy('sort' , 'ASC')->get($param['field'])->toArray();
+  $data = $this->getModel()->with('children')->funcId($param['func_id'])->module($param['module'])->status($param['status'])->orderBy('level' , 'ASC')->orderBy('sort' , 'ASC')->get($param['field'])->toArray();
 
   $data = $func($data);
 
@@ -104,13 +105,18 @@ public function insert( $data ) {
     }
     if(!empty($data['symbol'])){
       $permission = Permission::where('name',$data['symbol'])->first();
+
       if(empty($permission)){
         $permission = Permission::create(['name'=> $data['symbol'],'guard_name' => 'admin']);
+      }else{
+        throw new \Exception('插入的权限已存在');
       }
 
       $data['permission_id'] = $permission->id;
+    }else{
+      throw new \Exception('插入标记不能为空');
     }
-    $data['level'] = $this->getLevel( $data['pid'] );
+//    $data['level'] = $this->getLevel( $data['pid'] );
     $model            = $this->getModel()->create( $data );
 
     return ajax_arr( '创建成功', 0, [ 'id' => $model->id ] );
@@ -130,9 +136,9 @@ public function insert( $data ) {
    */
 public function update( $id, $data ) {
   try {
-    if ( $data['pid'] == $id ) {
+    /*if ( $data['pid'] == $id ) {
       throw new \Exception( '不能选自己做上级' );
-    }
+    }*/
 
     if(!empty($data['symbol'])){
       $permission = Permission::where('name',$data['symbol'])->first();
@@ -143,7 +149,7 @@ public function update( $id, $data ) {
       $data['permission_id'] = $permission->id;   
     }  
 
-    $data['level'] = $this->getLevel( $data['pid'] );
+//    $data['level'] = $this->getLevel( $data['pid'] );
     $rows          = $this->getModel()->where( 'id', $id )->update( $data );
   
     if ( $rows == 0 ) {
@@ -186,5 +192,7 @@ public function update( $id, $data ) {
   public function getByIds($ids){
     return $this->getModel()->whereIn('id',$ids)->get();
   }
+
+
 
 }

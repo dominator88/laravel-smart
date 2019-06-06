@@ -38,6 +38,10 @@ class SysFunc extends Model {
         return $this->hasMany( SysFunc::class , 'pid');
     }
 
+    public function node(){
+    	return $this->hasMany( SysPermissionNode::class, 'func_id');
+    }
+
 
 
 }
