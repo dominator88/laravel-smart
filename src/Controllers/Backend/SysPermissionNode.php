@@ -93,9 +93,11 @@ class SysPermissionNode extends Backend {
 			'status'    => 1,
 			'type' => 'func',
 			'symbol'    => $symbol,
+			'func_id'   => $request->input('menu_id',''),
 			'sort'      => $request->input( 'sort', 'id' ),
 			'order'     => $request->input( 'order', 'DESC' ),
 		];
+
 
 		$data['rows']    = $this->service->getPrivilege( $config );
 

@@ -91,9 +91,11 @@ public function getPrivilege($param){
     'symbol' => '',
     'status' => '',
     'type' => '',
+    'func_id' => '',
   ];
   $param  = extend( $default , $param );
-  return $this->getModel()->symbol($param['symbol'])->module($param['module'])->status($param['status'])->type($param['type'])->orderBy('sort', 'ASC')->get();
+
+  return $this->getModel()->funcId($param['func_id'])->module($param['module'])->status($param['status'])->type($param['type'])->orderBy('sort', 'ASC')->get();
 }
   
 

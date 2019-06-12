@@ -11,7 +11,7 @@ namespace Smart\Service;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Traits\Macroable;
-use Smart\Models\SysUser;
+use App\Authentication\Models\SysUser;
 use Smart\Models\SysUserRole;
 use Smart\Models\SysUserDevice;
 use Facades\Smart\Service\ServiceManager;

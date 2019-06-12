@@ -266,7 +266,17 @@ class SysFuncService extends BaseService {
 
 	public function getPermission($params){
 		$sysFuncs = $this->getModel()->where('module',$params['module'])->where('pid',0)->get();
-		
+
+		$func = function($sysFuncs) use(&$func){
+
+			foreach($sysFuncs as $sysFunc){
+				$sysFunc->permissionNode;
+				if(isset($sysFunc->children) && $sysFunc->children->count() > 0){
+					$func($sysFunc->children);
+				}
+			}
+		};	
+		$func($sysFuncs);
 		return $sysFuncs;
 	}
 

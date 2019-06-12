@@ -215,10 +215,10 @@ class SysRoleService extends BaseService {
 
   public function getRoles($roles){
   	$sysRoles = $this->getModel()->whereIn('id',$roles)->get();
-  	$roles = [];
+  	$roles = collect();
   	foreach($sysRoles as $sysRole){
   		if(isset($sysRole->role)){
-  			array_push($roles, $sysRole->role);
+  			$roles->push($sysRole->role);
   		}	
   	}
   	return $roles;

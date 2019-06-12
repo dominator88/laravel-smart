@@ -40,7 +40,7 @@ EOF;
 
         //uri
         $this->_addParam( 'uri', [
-            'updatePrivilege' => full_uri('backend/menu/updatePrivilege'),
+            'updatePrivilege' => full_uri('backend/merfunc/updateprivilege'),
             'permissionNodeGetPrivilege' => full_uri( 'backend/SysPermissionNode/getPrivilege'),
             'nodeRead' => full_uri('backend/syspermissionnode/read'),
             'nodeInsert' => full_uri('backend/syspermissionnode/insert'),
@@ -110,7 +110,7 @@ EOF;
      *
      * @return \Json
      */
-    function update_privilege(Request $request , $funcId) {
+    function updatePrivilege(Request $request , $funcId) {
 
         $data   = $request->except( '_token' );
 

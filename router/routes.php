@@ -185,7 +185,7 @@ Route::group(['prefix' => 'backend/merfunc', 'namespace' => 'Smart\Controllers\B
 
 	Route::post('destroy', 'MerFunc@destroy');
 
-	Route::post('update_privilege/{funcId}', 'MerFunc@update_privilege');
+	Route::post('updateprivilege/{funcId}', 'MerFunc@updatePrivilege');
 
 });
 
