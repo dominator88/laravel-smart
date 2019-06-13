@@ -141,9 +141,13 @@ class SysRoleService extends BaseService {
       }
       //优化创建模块角色
       $role = Role::where('name',$data['name'])->first();
+
       if(empty($role)){
         $role = Role::create(['name'=>$data['name'],'guard_name'=>'admin']);
+      }else{
+      	throw new \Exception( '角色已存在' );
       }
+
       $data['role_id'] = $role->id;
       
       $model = $this->getModel()->create( $data );
