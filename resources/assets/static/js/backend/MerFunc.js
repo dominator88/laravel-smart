@@ -220,6 +220,7 @@ var MerFunc = {
 					rows = res.data.rows;
 
 					$.each(rows, function(index, item) {
+
 						node = '<div class="checkbox"><label><input type="checkbox" name="node_id[]" value="' + item.id + '">' + item.name + '</label> </div>';
 						$(node).appendTo('#privilegeNode');
 					});

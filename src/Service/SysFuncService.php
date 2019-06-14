@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Smart\Models\SysFunc; 
 use Facades\Smart\Service\ServiceManager;
 use Smart\Service\SysRoleService;
+use Illuminate\Support\Facades\Auth;
 
 class SysFuncService extends BaseService {
 
@@ -147,13 +148,32 @@ class SysFuncService extends BaseService {
 	 * @return array
 	 */
 	private function _getMenuByRoles($roleIds, $module) {
-		//取出所有的菜单
-		$sysFuncs = $this->getModel()->status(1)->module(ucfirst($module))->where('pid',0)->get();
-		//取出对应角色下,进行过授权的菜单节点
-		$sysRoleService = ServiceManager::make(SysRoleService::class );
-		$roles = $sysRoleService->getRoles($roleIds);
+		$config = [
+			'pid' => 0,
+			'module' => ucfirst($module),
+			'status' => 1,
+			'getAll' => true,
+		];
+		$menus = $this->getByCond($config);
 
-		return $sysFuncs;
+		$user = Auth::user();
+
+		$func = function(&$menus) use ($user,&$func){
+			foreach($menus as $k=>$menu){
+				if(isset($menu['children']) && !empty($menu['children'])){
+					$func($menu['children']);
+				}
+				if(!$user->can($menu['id'].'.read')){
+					unset($menus[$k]);
+				}
+			}
+			return $menus;
+		};
+		$new_arr = collect($menus);
+		$new_arr = $func($new_arr);
+
+		return $new_arr;
+
 
 
 		/*$key = self::DEFAULT_KEY;
