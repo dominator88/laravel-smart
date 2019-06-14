@@ -70,12 +70,14 @@ EOF;
     }
 
     private function _initService(){
-       if(class_exists('App\\'.ucfirst($this->module).'\\Service\\'.$this->controller.'Service')){
-            $this->service = ServiceManager::make( 'App\\'.$this->module.'\\Service\\'.$this->controller.'Service');
-       }elseif(class_exists('App\\Service\\'.$this->controller.'Service')){
-            $this->service = ServiceManager::make( 'App\\Service\\'.$this->controller.'Service');
-       }elseif(class_exists('Smart\\Service\\'.$this->controller.'Service')){
-            $this->service = ServiceManager::make( 'Smart\\Service\\'.$this->controller.'Service');
+        $controller = ucfirst($this->controller);
+        $module = ucfirst($this->module);
+       if(class_exists('App\\'.$module .'\\Service\\'.$controller.'Service')){
+            $this->service = ServiceManager::make( 'App\\'.$module .'\\Service\\'.$controller.'Service');
+       }elseif(class_exists('App\\Service\\'.$controller.'Service')){
+            $this->service = ServiceManager::make( 'App\\Service\\'.$controller.'Service');
+       }elseif(class_exists('Smart\\Service\\'.$controller.'Service')){
+            $this->service = ServiceManager::make( 'Smart\\Service\\'.$controller.'Service');
        }
         
     }
