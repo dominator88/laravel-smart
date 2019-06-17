@@ -6,12 +6,12 @@
             <span class="func" data-id="{{ $row->id }}">{{ $row->name }}</span>
             <span class="func-opt-row" >
        <!--权限节点-->
-            @if($row->node->count() > 0)
-                @foreach($row->node as $node)
+            @if($row->privilege->count() > 0)
+                @foreach($row->privilege as $node)
                  
-                <span class="func-opt" data-id="{{ $node->id }}"><i class="fa fa-square-o"></i> 
+                <span class="func-opt" data-id="{{ $node->node_id }}"><i class="fa fa-square-o"></i> 
                    
-                {{ $node->name }}  
+                {{ $node->node->name }}  
                 </span>
                 @endforeach
             @endif
@@ -25,10 +25,10 @@
                 <div class="func-node" data-func-id="{{ $children->id }}">
                     <span class="func" data-id="{{ $children->id }}">{{ $children->name }}</span>
                     <span class="func-opt-row">
-           @if($children->node->count() > 0)
-                @foreach($children->node as $node)
+           @if($children->privilege->count() > 0)
+                @foreach($children->privilege as $node)
                
-                <span class="func-opt" data-id="{{ $node->id }}"><i class="fa fa-square-o"></i> {{ $node->name }}</span>
+                <span class="func-opt" data-id="{{ $node->node_id }}"><i class="fa fa-square-o"></i> {{ $node->node->name }}</span>
         
                 @endforeach
             @endif
@@ -42,9 +42,9 @@
                             <span class="func" data-id="{{ $cchildren->id }}">{{ $cchildren->name }}</span>
                             <span class="func-opt-row">
                 @if($cchildren->privilege->count() > 0)
-                @foreach($cchildren->node as $node)
+                @foreach($cchildren->privilege as $node)
                
-                <span class="func-opt" data-id="{{ $node->id }}"><i class="fa fa-square-o"></i> {{ $node->name }}</span>
+                <span class="func-opt" data-id="{{ $node->node_id }}"><i class="fa fa-square-o"></i> {{ $node->node->name }}</span>
    
                 @endforeach
             @endif
