@@ -24,7 +24,7 @@ class CreateSysPermissionNodeTable extends Migration
             $table->tinyInteger('status')->default(1)->comment('状态');
             $table->integer('sort')->default(99)->comment('排序');
             $table->integer('permission_id')->default(0)->comment('权限id');
-            $table->integer('func_id')->default(0)->comment('方法id');
+            $table->integer('source_id')->default(0)->comment('来源id');
             $table->timestamps();
         });
     }

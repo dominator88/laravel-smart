@@ -73,6 +73,7 @@ var MerFunc = {
 	setPortletHide: function() {
 		$('#tablePortlet').slideDown('fast');
 		$('#addEditModal').modal('hide');
+		$('#nodePortlet').slideUp('fast');
 	},
 
 	//初始化各种按钮

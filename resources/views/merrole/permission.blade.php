@@ -8,11 +8,13 @@
        <!--权限节点-->
             @if($row->privilege->count() > 0)
                 @foreach($row->privilege as $node)
-                 
+                  @if(!empty($node->node)) 
                 <span class="func-opt" data-id="{{ $node->node_id }}"><i class="fa fa-square-o"></i> 
-                   
+                
                 {{ $node->node->name }}  
+                
                 </span>
+                @endif
                 @endforeach
             @endif
       </span>
@@ -43,9 +45,9 @@
                             <span class="func-opt-row">
                 @if($cchildren->privilege->count() > 0)
                 @foreach($cchildren->privilege as $node)
-               
+               @if(!empty($node->node))
                 <span class="func-opt" data-id="{{ $node->node_id }}"><i class="fa fa-square-o"></i> {{ $node->node->name }}</span>
-   
+                @endif
                 @endforeach
             @endif
               </span>

@@ -142,7 +142,7 @@
       <div class="col-md-12">
         <!-- start form -->
         <form id="addNodeForm" class="form-horizontal">
-            <input type=hidden name='func_id' />
+            <input type=hidden name='source_id' />
             <input type=hidden name='type' value='func'/>
             {!! csrf_field() !!}
             <div class="form-body">

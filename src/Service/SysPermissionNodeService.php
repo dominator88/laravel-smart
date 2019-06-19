@@ -49,7 +49,8 @@ class SysPermissionNodeService extends BaseService {
  public function getByCond( $param ) {
   $default = [
     'field'  => ['*' ],
-    'func_id' => '',
+    'source_id' => '',
+    'type' => '',
     'module' => '',
     'symbol' => '',
     'pid'    => 0,
@@ -78,7 +79,7 @@ class SysPermissionNodeService extends BaseService {
   }
 
 
-  $data = $this->getModel()->with('children')->funcId($param['func_id'])->module($param['module'])->status($param['status'])->orderBy('level' , 'ASC')->orderBy('sort' , 'ASC')->get($param['field'])->toArray();
+  $data = $this->getModel()->with('children')->sourceId($param['source_id'])->type($param['type'])->module($param['module'])->status($param['status'])->orderBy('level' , 'ASC')->orderBy('sort' , 'ASC')->get($param['field'])->toArray();
 
   $data = $func($data);
 
@@ -91,11 +92,11 @@ public function getPrivilege($param){
     'symbol' => '',
     'status' => '',
     'type' => '',
-    'func_id' => '',
+    'source_id' => '',
   ];
   $param  = extend( $default , $param );
 
-  return $this->getModel()->funcId($param['func_id'])->module($param['module'])->status($param['status'])->type($param['type'])->orderBy('sort', 'ASC')->get();
+  return $this->getModel()->sourceId($param['source_id'])->module($param['module'])->status($param['status'])->type($param['type'])->orderBy('sort', 'ASC')->get();
 }
   
 

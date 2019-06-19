@@ -16,7 +16,7 @@ class SysPermissionNode extends Model {
 
     public $timestamps = FALSE;
 
-    public $fillable = ['name', 'pid', 'level', 'type', 'symbol', 'status', 'sort','permission_id','module','func_id'];
+    public $fillable = ['name', 'pid', 'level', 'type', 'symbol', 'status', 'sort','permission_id','module','source_id'];
 
     use \Smart\Traits\Service\Scope;
 
@@ -48,9 +48,10 @@ class SysPermissionNode extends Model {
         }
     }
 
-    public function scopeFuncId($query, $param){
+    public function scopeSourceId($query, $param){
         if($param != ''){
-            return $query->where('func_id',$param);
+            return $query->where('source_id',$param);
         }
     }
+
 }
