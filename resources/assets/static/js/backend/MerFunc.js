@@ -245,7 +245,7 @@ var MerFunc = {
 			var id = $(this).data('id')
 			var row = $('#treeGrid').TreeGrid('getRow', id);
 			data = {
-				func_id: row.id,
+				source_id: row.id,
 				module: row.module,
 				symbol: row.id + '.'
 			}
@@ -256,7 +256,7 @@ var MerFunc = {
 			$dataGrid2 = $('#dataGrid2');
 			$dataGrid2.TableGrid('setParam', {
 				//应用id
-				func_id: id,
+				source_id: id,
 				getall: true
 			});
 			$dataGrid2.TableGrid('reload');

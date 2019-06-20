@@ -224,8 +224,8 @@ class MerUserService extends BaseService {
 
             $roles = isset($data['roles']) ? $data['roles'] : [];
             unset($data['roles']);
-            $data['password'] = str2pwd(config('defaultPwd'));
 
+            $data['password'] = Hash::make(config('backend.defaultPwd'));
 
             $id = self::instance()->getModel()->insertGetId($data);
             SysUserDevice::firstOrCreate(['user_id'=>$id]);

@@ -163,7 +163,7 @@ class SysFuncService extends BaseService {
 				if(isset($menu['children']) && !empty($menu['children'])){
 					$func($menu['children']);
 				}
-				if(!$user->can($menu['id'].'.read')){
+				if(!$user->can($menu['id'].'.func.read')){
 					unset($menus[$k]);
 				}
 			}

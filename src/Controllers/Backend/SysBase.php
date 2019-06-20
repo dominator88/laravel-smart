@@ -294,6 +294,7 @@ EOF;
 
     public function insert(Request $request){
         $data = $request->except('_token');
+        
         return  json($this->service->insert($data));
     }
 
