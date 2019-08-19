@@ -19,6 +19,8 @@ class SysUser extends Authenticatable {
 
 	use \Smart\Traits\Service\Scope;
 
+	protected $hidden = ['password','remember_token'];
+
 	public function sysMerchants() {
 		return $this->belongsToMany('Smart\Models\SysMerchant', 'mer_sys_user', 'sys_user_id', 'mer_id');
 	}

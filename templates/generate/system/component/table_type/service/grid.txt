@@ -25,7 +25,7 @@ public function getByCond( $param ) {
   if ( $param['count'] ) {
     return $model->count();
   }
-  if($param['getAll'] === FALSE){
+  if(!$param['getAll']){
     $model = $model->get()->forPage($param['page'] , $param['pageSize'])->values();
   }else{
     $model = $model->get();

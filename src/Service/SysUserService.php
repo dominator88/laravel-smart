@@ -17,7 +17,7 @@ use Smart\Models\SysUserDevice;
 use Smart\Service\ServiceManager;
 use Smart\Service\SysFuncPrivilegeService;
 
-class SysUserService extends BaseService {
+class SysUserService extends BaseService implements PermissionInterface {
 
 	//引入 GridTable trait
 	use \Smart\Traits\Service\GridTable,\Smart\Traits\Service\Instance;
@@ -376,6 +376,6 @@ class SysUserService extends BaseService {
 			$sysRoles->push( $role->sysRole);
 		}
 		return $sysRoles;
-	}
+	}	
 
 }

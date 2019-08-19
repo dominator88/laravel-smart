@@ -25,9 +25,8 @@ trait GridTable {
       if ( empty( $data ) ) {
         throw new \Exception( '数据不能为空' );
       }
-      
       $id = $this->getModel()->insertGetId( $data );
-      
+
       return ajax_arr( '创建成功' , 0 , [ 'id' => $id ] );
     } catch ( \Exception $e ) {
       return ajax_arr( $e->getMessage() , 500 );
