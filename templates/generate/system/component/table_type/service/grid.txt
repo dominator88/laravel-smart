@@ -26,12 +26,9 @@ public function getByCond( $param ) {
     return $model->count();
   }
   if(!$param['getAll']){
-    $model = $model->get()->forPage($param['page'] , $param['pageSize'])->values();
+    $data = $model->get()->forPage($param['page'] , $param['pageSize'])->values();
   }else{
-    $model = $model->get();
+    $data = $model->get();
   }
-  $data = $model->toArray();
-
-
-  return $data ? $data : [ ];
+  return $data;
 }
