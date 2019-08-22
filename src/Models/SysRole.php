@@ -4,6 +4,7 @@ namespace Smart\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Smart\Models\Role;
+use Spatie\Permission\Traits\HasRoles;
 
 class SysRole extends Model {
 	public $table = 'sys_role';
@@ -13,6 +14,7 @@ class SysRole extends Model {
 	public $timestamps = false;
 
 	public $fillable = ['name','module','status','desc','rank','role_id','sort'];
+
 
 	use \Smart\Traits\Service\Scope;
 

@@ -38,9 +38,12 @@ EOF;
     //页面入口
     public function index(Request $request) {
         $this->_init( '机构角色管理' );
-        $sysUserService = ServiceManager::make(SysUserService::class);
+    //    $sysUserService = ServiceManager::make(SysUserService::class);
     //    dd($sysUserService->hasAnyPermission(2,[ 88]));
     //   dd( $sysUserService->permissions(2));
+    //    $sysRoleService = ServiceManager::make(SysRoleService::class );
+     //   dd($sysRoleService->permissions(3));
+
         //uri
         $this->_addParam( 'uri', [
             'getPermission'    => full_uri( 'backend/merrole/getpermission' ),
