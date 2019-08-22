@@ -198,17 +198,33 @@ class SysRolePermissionService extends BaseService {
      *
      * @return array
      */
-    function updateRolePermission( $roleId, $privilegeArr ) {
-        $sysRoleService = ServiceManager::make(SysRoleService::class );
-        $sysRole = $sysRoleService->findById($roleId);
-        $sysFuncPrivilege = ServiceManager::make(SysFuncPrivilegeService::class);
-        $result = $sysFuncPrivilege->syncPermissions($roleId,$privilegeArr);
+    function updateRolePermission( $roleId, $nodeArr ) {
+
+        $result = $this->syncPermissions($roleId,$nodeArr);
         
         if($result){
             return ajax_arr( '修改权限成功了', 0 );
         }
         return ajax_arr('修改失败', 500);
      
+    }
+
+    
+    public function syncPermissions($roleId,$nodes){
+        $sysRoleService = ServiceManager::make(SysRoleService::class );
+        $sysRole = $sysRoleService->findById($roleId);
+        //获取node 集合
+        $sysPermissionNodeService = ServiceManager::make(SysPermissionNodeService::class );
+        $nodes = $sysPermissionNodeService->getByIds($nodes);
+        
+        $permissions = [];
+        foreach($nodes as $node){
+            array_push($permissions, $node->permission->id);
+        }
+       
+        $sysRole->role->syncPermissions($permissions);
+
+        return true;
     }
 
 }

@@ -257,6 +257,7 @@ var MerFunc = {
 			$dataGrid2.TableGrid('setParam', {
 				//应用id
 				source_id: id,
+				type: 'func',
 				getall: true
 			});
 			$dataGrid2.TableGrid('reload');

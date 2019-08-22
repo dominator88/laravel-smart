@@ -11,7 +11,7 @@ namespace Smart\Service;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Traits\Macroable;
-use App\Authentication\Models\SysUser;
+use Smart\Models\SysUser;
 use Smart\Models\SysUserRole;
 use Smart\Models\SysUserDevice;
 use Facades\Smart\Service\ServiceManager;
@@ -377,7 +377,7 @@ class MerUserService extends BaseService {
         $user = $this->getModel()->find($id);
         $sysRoleService = ServiceManager::make(SysRoleService::class );
         $roles = $sysRoleService->getRoles($roleIds);
-
+      
         $user->syncRoles($roles);
         return true;
     }

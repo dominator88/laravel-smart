@@ -18,7 +18,7 @@ class SysFuncPrivilegeService extends BaseService{
 
     protected $model_class = SysFuncPrivilege::class;
 
-    public $name = [
+    /* public $name = [
         'read'   => '查看' ,
         'create' => '创建' ,
         'update' => '更新' ,
@@ -39,7 +39,7 @@ class SysFuncPrivilegeService extends BaseService{
         'create' => [ 'insert' , 'create' , 'add' , 'upload' , 'post' , 'import' , 'copy' ] ,
         'update' => [ 'update' , 'set' , 'reset' , 'save' , 'send' , 'change' , 'send' ] ,
         'delete' => [ 'destroy' , 'delete' , 'remove' ] ,
-    ];
+    ]; */
 
     public function getDefaultRow(){
         
@@ -166,6 +166,7 @@ class SysFuncPrivilegeService extends BaseService{
         return $newData;
     }
 
+    /* //TODO 同步权限的方法需要移个位置 
     public function syncPermissions($roleId,$nodes){
         $sysRoleService = ServiceManager::make(SysRoleService::class );
         $sysRole = $sysRoleService->findById($roleId);
@@ -181,7 +182,7 @@ class SysFuncPrivilegeService extends BaseService{
         $sysRole->role->syncPermissions($permissions);
 
         return true;
-    }
+    } */
 
     public function getPermissions($funcIds){
         $funcs = $this->getModel()->whereIn('id',$funcIds)->get();

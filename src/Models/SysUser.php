@@ -9,6 +9,9 @@ use Spatie\Permission\Traits\HasRoles;
 class SysUser extends Authenticatable {
 	use Notifiable;
 	use HasRoles;
+
+	protected $guard_name = 'admin'; 
+
 	protected $table = 'sys_user';
 
 	public $primaryKey = 'id';

@@ -30,21 +30,23 @@ class SysFunc extends Model {
 		return $this->belongsToMany(\Smart\Models\SysRolePermission::class, 'sys_func_privilege', 'id', 'func_id');
 	}
 
-	public function privilege() {
+	//可废弃
+	/* public function privilege() {
 		return $this->hasMany(\Smart\Models\SysFuncPrivilege::class, 'func_id');
-	}
+	} */
+
 
 	public function children(){
         return $this->hasMany( SysFunc::class , 'pid');
     }
 
-    public function node(){
-    	return $this->hasMany( SysPermissionNode::class, 'func_id');
+    public function nodeFunc(){
+    	return $this->hasMany( SysPermissionNode::class, 'source_id')->where('type','func');
     }
 
-    public function permissionNode(){
+    /* public function permissionNode(){
     	return $this->belongsToMany(SysPermissionNode::class,'sys_func_privilege', 'func_id', 'node_id');
-    }
+    } */
 
 
 

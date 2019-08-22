@@ -78,7 +78,6 @@ class SysPermissionNodeService extends BaseService {
     return [];
   }
 
-
   $data = $this->getModel()->with('children')->sourceId($param['source_id'])->type($param['type'])->module($param['module'])->status($param['status'])->orderBy('level' , 'ASC')->orderBy('sort' , 'ASC')->get($param['field'])->toArray();
 
   $data = $func($data);
@@ -195,6 +194,16 @@ public function update( $id, $data ) {
   public function getByIds($ids){
     return $this->getModel()->whereIn('id',$ids)->get();
   }
+
+  public function getPermissions($nodeIds){
+    $permissionNodes = $this->getModel()->whereIn('id',$nodeIds)->get();
+    $permissions = collect();
+    foreach($permissionNodes as $permissionNode){
+            $permissions->push($permissionNode->permission); 
+    }
+
+    return $permissions;
+}
 
 
 

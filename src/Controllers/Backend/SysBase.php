@@ -148,7 +148,7 @@ EOF;
         $this->data['jsCode'][] = $code;
     }
 
-    public function _addParam( $key , $value = '' ){
+    public function _addParam( $key , $value = [] ){
         if ( is_array( $key ) ) {
             foreach ( $key as $k => $v ) {
                 $this->data['param'][ $k ] = $v;

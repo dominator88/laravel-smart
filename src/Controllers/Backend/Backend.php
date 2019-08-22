@@ -42,7 +42,7 @@ class Backend extends SysBase{
         $roles = $sysRole->pluck('id')->toArray();
 
         $menuData = [];
-
+        
         if(Auth::id() == config('backend.superAdminId')){
             $menuData = $SysFuncService->getByCond(['isMenu' => 1, 'status' => 1, 'module' => $this->module]);
         }else{

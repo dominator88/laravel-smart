@@ -38,9 +38,9 @@ class SysPermissionNode extends Model {
     	return $this->belongsTo(Permission::class ,'permission_id');
     }
 
-    public function privilege(){
+    /* public function privilege(){
         return $this->hasOne(\Smart\Models\SysFuncPrivilege::class, 'node_id');
-    }
+    } */
 
     public function scopeModule($query,$param){
         if($param != ''){

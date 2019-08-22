@@ -14,7 +14,7 @@ use Smart\Service\SysFuncService;
 use Smart\Service\SysRolePermissionService;
 use Smart\Service\SysRoleService;
 use Illuminate\Http\Request;
-
+use Smart\Service\SysUserService;
 
 class MerRole extends Backend {
 
@@ -38,7 +38,9 @@ EOF;
     //页面入口
     public function index(Request $request) {
         $this->_init( '机构角色管理' );
-
+        $sysUserService = ServiceManager::make(SysUserService::class);
+    //    dd($sysUserService->hasAnyPermission(2,[ 88]));
+    //   dd( $sysUserService->permissions(2));
         //uri
         $this->_addParam( 'uri', [
             'getPermission'    => full_uri( 'backend/merrole/getpermission' ),
@@ -144,14 +146,14 @@ EOF;
         return json( $ret );
     }
 
-    //得到permission配置页面 非 js 渲染
+    //得到permission配置页面 非 js 渲染    
     public function getPermission(Request $request){
         $params = [
             'module' => $request->module ?: 'backend',
         ];
         $sysFuncs = $this->service->getPermission($params); 
         
-        return $this->_displayWithLayout('backend::merrole.permission')->with('funcData',$sysFuncs);
+        return $this->_displayWithLayout('backend::merrole.permission1')->with('funcData',$sysFuncs);
     }
 
     //更新授权

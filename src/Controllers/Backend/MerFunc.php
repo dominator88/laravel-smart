@@ -61,15 +61,15 @@ EOF;
         ] );
 
         //其他参数
-        $SysFuncPrivilege = ServiceManager::make( SysFuncPrivilegeService::class );
+     //   $SysFuncPrivilege = ServiceManager::make( SysFuncPrivilegeService::class );
         $this->_addParam( [
             'defaultRow' => $this->service->getDefaultRow(),
             'module'     => '',
             'status'     => $this->service->status,
             'isMenu'     => $this->service->isMenu,
             'isFunc'     => $this->service->isFunc,
-            'privilege'  => $SysFuncPrivilege->name,
-            'alias'      => $SysFuncPrivilege->alias,
+        //    'privilege'  => $SysFuncPrivilege->name,
+        //    'alias'      => $SysFuncPrivilege->alias,
             'modules'     => $modules,
 
         ] );

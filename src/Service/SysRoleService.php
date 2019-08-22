@@ -207,13 +207,14 @@ class SysRoleService extends BaseService {
     }
   }
 
+  
   public function getPermission($params){
     $params = [
       'module' => $params['module'],
     ]; 
     $sysFuncService = ServiceManager::make(SysFuncService::class);
     $sysFuncs = $sysFuncService->getPermission($params); 
-    
+
     return $sysFuncs;
   }
 

@@ -16,7 +16,7 @@ class CreateSysFuncPrivilegeTable extends Migration
         Schema::create('sys_func_privilege', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('func_id');
-            $table->enum('name' , ['read' , 'create' , 'update' , 'delete']);
+            $table->string('name' , 40);
         });
     }
 

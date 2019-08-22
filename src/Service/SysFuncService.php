@@ -125,9 +125,9 @@ class SysFuncService extends BaseService {
         }
 
         if($param['getAll'] === FALSE){
-          $model = $model->with('children.privilege','privilege')->get()->forPage($param['page'] , $param['pageSize'])->values();
+          $model = $model->with('children.nodeFunc','nodeFunc')->get()->forPage($param['page'] , $param['pageSize'])->values();
         }else{
-          $model = $model->with('children.privilege','privilege')->get()->values();
+          $model = $model->with('children.nodeFunc','nodeFunc')->get()->values();
         }
         $data = $model;
 
@@ -284,13 +284,14 @@ class SysFuncService extends BaseService {
 		return $this->getModel()->find($id);
 	}
 
+
+		
 	public function getPermission($params){
 		$sysFuncs = $this->getModel()->where('module',$params['module'])->where('pid',0)->get();
 
 		$func = function($sysFuncs) use(&$func){
 
 			foreach($sysFuncs as $sysFunc){
-				$sysFunc->permissionNode;
 				if(isset($sysFunc->children) && $sysFunc->children->count() > 0){
 					$func($sysFunc->children);
 				}
