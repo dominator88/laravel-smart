@@ -40,8 +40,8 @@ class SysFunc extends Backend {
 			'status' => $this->service->status,
 			'isMenu' => $this->service->isMenu,
 			'isFunc' => $this->service->isFunc,
-			'privilege' => $SysFuncPrivilege->name,
-			'alias' => $SysFuncPrivilege->alias,
+			//'privilege' => $SysFuncPrivilege->name,
+			//'alias' => $SysFuncPrivilege->alias,
 		]);
 
 		//需要引入的 css 和 js
