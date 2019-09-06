@@ -21,6 +21,16 @@ class MerFunc extends Backend {
  
     public $autoload_service = 0;
 
+    public $notCache = [
+		0 => '否',
+		1 => '是',
+	];
+
+    public $showAlways = [
+		0 => '否',
+		1 => '是',
+	];
+
     public $controller = 'SysFunc';
 
     public function __construct(Request $request){
@@ -71,6 +81,8 @@ EOF;
         //    'privilege'  => $SysFuncPrivilege->name,
         //    'alias'      => $SysFuncPrivilege->alias,
             'modules'     => $modules,
+            'showAlways' => $this->showAlways,
+            'notCache'  => $this->notCache,
 
         ] );
 
@@ -91,6 +103,7 @@ EOF;
         
         $config = [
             'module'        => $module ,
+            'with'          => 'extend',
             'page'     => $request->input( 'page', 1 ),
             'pageSize' => $request->input( 'pageSize', 10 ),
             'sort'          => $request->input( 'sort', 'id' ),
@@ -104,6 +117,8 @@ EOF;
 
         return json( ajax_arr( '查询成功', 0, $data ) );
     }
+
+    
 
     /**
      * 更新权限

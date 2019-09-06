@@ -177,6 +177,7 @@
                         <?= form_radios('status' , $param['status'] ) ?>
                     </div>
                 </div><!-- end item -->
+                
             </div>
             <div class="form-actions" style="margin-bottom: 60px;">
                 <hr>
@@ -281,6 +282,43 @@
                                             <label class="col-md-3 control-label">图标</label>
                                             <div class="col-md-7">
                                                 <input type="text" name="icon" placeholder="图标" class="form-control">
+                                            </div>
+                                        </div><!-- end item -->
+                                        <div class="divider"></div>
+                                        <hr class="simple" color="#6f5499" />
+                                        <!-- start item -->
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">name</label>
+                                            <div class="col-md-7">
+                                                <input type="text" name="extend_name" placeholder="name" class="form-control">
+                                            </div>
+                                        </div><!-- end item -->
+                                        <!-- start item -->
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">path</label>
+                                            <div class="col-md-7">
+                                                <input type="text" name="extend_path" placeholder="path" class="form-control">
+                                            </div>
+                                        </div><!-- end item -->
+                                        <!-- start item -->
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">component</label>
+                                            <div class="col-md-7">
+                                                <input type="text" name="extend_component" placeholder="component" class="form-control">
+                                            </div>
+                                        </div><!-- end item -->
+                                        <!-- start item -->
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">notCache</label>
+                                            <div class="col-md-7">
+                                            <?= form_radios('extend_notCache' , $param['notCache'] ) ?>
+                                            </div>
+                                        </div><!-- end item -->
+                                        <!-- start item -->
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">showAlways</label>
+                                            <div class="col-md-7">
+                                            <?= form_radios('extend_showAlways' , $param['showAlways'] ) ?>
                                             </div>
                                         </div><!-- end item -->
                                     </div>

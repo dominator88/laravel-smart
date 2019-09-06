@@ -48,6 +48,9 @@ class SysFunc extends Model {
     	return $this->belongsToMany(SysPermissionNode::class,'sys_func_privilege', 'func_id', 'node_id');
     } */
 
+	public function extend(){
+		return $this->hasOne(SysFuncExtend::class,'func_id');
+	}
 
 
 }

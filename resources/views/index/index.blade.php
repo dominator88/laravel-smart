@@ -2,7 +2,6 @@
 
 @section('content')
 
-
 <!-- BEGIN CONTENT BODY -->
 <div class="page-content">
     <!-- BEGIN PAGE HEADER-->

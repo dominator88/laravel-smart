@@ -90,6 +90,7 @@ class SysFuncService extends BaseService {
 		$default = [
 			'field' => ['*'],
 		//	'module' => 'backend',
+			'with' => '',
 			'isMenu' => '',
 			'pid' => 0,
 			'status' => '',
@@ -101,6 +102,15 @@ class SysFuncService extends BaseService {
 		];
 		$func = function (&$arr) use (&$func){
           foreach($arr as &$val){
+			$val->nodeFunc;
+			if($val->extend){
+				$val->extend_name = $val->extend->extend_name;
+				$val->extend_path = $val->extend->extend_path;
+				$val->extend_component = $val->extend->extend_component;
+				$val->extend_notCache = $val->extend->extend_notCache;
+				$val->extend_showAlways = $val->extend->extend_showAlways;
+			}
+			
             if(isset($val['children'])){
 
               if( empty($val['children'])){
@@ -115,7 +125,12 @@ class SysFuncService extends BaseService {
         };
 
         $param = extend( $default , $param );
-        $model = $this->getModel()->where('pid',0);
+		$model = $this->getModel()->where('pid',0);
+		
+		if($param['with']){
+			$model = $model->with($param['with']);
+		}
+
         if($param['module']){
         	$model = $model->whereIn('module',(array)$param['module']);
         }
@@ -125,13 +140,12 @@ class SysFuncService extends BaseService {
         }
 
         if($param['getAll'] === FALSE){
-          $model = $model->with('children.nodeFunc','nodeFunc')->get()->forPage($param['page'] , $param['pageSize'])->values();
+          $model = $model->get()->forPage($param['page'] , $param['pageSize'])->values();
         }else{
-          $model = $model->with('children.nodeFunc','nodeFunc')->get()->values();
-        }
+          $model = $model->get()->values();
+		}
+		
         $data = $model;
-
-
 
         $data = $func($data);
         
@@ -299,6 +313,127 @@ class SysFuncService extends BaseService {
 		};	
 		$func($sysFuncs);
 		return $sysFuncs;
+	}
+
+
+	/**
+	 *
+	 * 添加数据
+	 *
+	 * @param $data
+	 *
+	 * @return array
+	 */
+	public function insert( $data ) {
+		try {
+			if ( empty( $data ) ) {
+				throw new \Exception( '数据不能为空' );
+			}
+
+			$data_base = [
+				'module' => $data['module'],
+				'is_menu' => $data['is_menu'],
+				'name' => $data['name'],
+				'icon' => $data['icon'],
+				'uri' => $data['uri'],
+				'status' => $data['status'],
+				'pid' => $data['pid'],
+			];
+			$data_base['level'] = $this->getLevel( $data['pid'] );
+			$id            = $this->getModel()->insertGetId( $data_base );
+
+			//更新到扩展表中
+			$data_extend = [
+			//	'func_id' => $id,
+				'extend_name' => $data['extend_name'],
+				'extend_path' => $data['extend_path'],
+				'extend_component' => $data['extend_component'],
+				'extend_notCache' => $data['extend_notCache'],
+				'extend_showAlways' => $data['extend_showAlways'],
+			];
+			$sysFuncExtendService = ServiceManager::make(SysFuncExtendService::class);
+			$sysFuncExtendService->updateOrCreate($data, $id);
+
+			return ajax_arr( '创建成功', 0, [ 'id' => $id ] );
+		} catch ( \Exception $e ) {
+			return ajax_arr( $e->getMessage(), 500 );
+		}
+	}
+	
+	/**
+	 * 根据ID 更新数据
+	 *
+	 * @param $id
+	 * @param $data
+	 *
+	 * @return array
+	 */
+	public function update( $id, $data ) {
+		try {
+			if ( $data['pid'] == $id ) {
+				throw new \Exception( '不能选自己做上级' );
+			}
+
+			$data_base = [
+				'module' => $data['module'],
+				'is_menu' => $data['is_menu'],
+				'name' => $data['name'],
+				'icon' => $data['icon'],
+				'uri' => $data['uri'],
+				'status' => $data['status'],
+				'pid' => $data['pid'],
+			];
+			$data_base['level'] = $this->getLevel( $data['pid'] );
+			$rows          = $this->getModel()->where( 'id', $id )->update( $data_base );
+			//
+			//更新到扩展表中
+			$data_extend = [
+			//	'func_id' => $id,
+				'extend_name' => $data['extend_name'],
+				'extend_path' => $data['extend_path'],
+				'extend_component' => $data['extend_component'],
+				'extend_notCache' => $data['extend_notCache'],
+				'extend_showAlways' => $data['extend_showAlways'],
+			];
+			$sysFuncExtendService = ServiceManager::make(SysFuncExtendService::class);
+			$sysFuncExtendService->updateOrCreate( $data_extend,$id);
+
+			if ( $rows == 0 ) {
+				return ajax_arr( "未更新任何数据", 0 );
+			}
+			
+			return ajax_arr( "更新成功", 0 );
+		} catch ( \Exception $e ) {
+		//	return ajax_arr( $e->getMessage(), 500 );
+			throw $e;
+		}
+	}
+	
+	/**
+	 * 根据ID 删除数据
+	 *
+	 * @param $ids //string | array
+	 *
+	 * @return array
+	 */
+	public function destroy( $ids ) {
+		try {
+			//查看是否有下级数据
+			$childrenData = $this->getByPid( $ids );
+			if ( ! empty( $childrenData ) ) {
+				throw new \Exception( '还有下级数据,不能删除' );
+			}
+			
+			//删除数据
+			$rows = $this->getModel()->destroy( $ids );
+			if ( $rows == 0 ) {
+				return ajax_arr( '未删除任何数据', 0 );
+			}
+			
+			return ajax_arr( "成功删除{$rows}行数据", 0 );
+		} catch ( \Exception $e ) {
+			return ajax_arr( $e->getMessage(), 500 );
+		}
 	}
 
 }
