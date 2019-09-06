@@ -149,7 +149,7 @@ EOF;
         return json( $ret );
     }
 
-    //得到permission配置页面 非 js 渲染    
+    //得到permission配置页面 非 js 渲染    v2 
     public function getPermission(Request $request){
         $params = [
             'module' => $request->module ?: 'backend',

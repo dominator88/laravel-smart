@@ -380,6 +380,16 @@
     //取多行数据
     getRows : function () {
       return $( this ).data( 'rows' );
+    },
+    clear : function(){
+      var ret = {
+        message : 'success',
+        code : 0,
+        data : {
+          rows : []
+        }
+      }
+      render( this , ret );
     }
 
   };

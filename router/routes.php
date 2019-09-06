@@ -60,7 +60,7 @@ Route::group(['prefix' => 'backend/sysrole', 'namespace' => 'Smart\Controllers\B
 
 	Route::get('read', 'SysRole@read');
 
-	Route::post('get_permission', 'SysRole@get_permission');
+	Route::post('getpermission', 'SysRole@getPermission');
 
 	Route::post('get_privilegedata', 'SysRole@get_privilegeData');
 

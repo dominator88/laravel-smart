@@ -26,7 +26,7 @@ class SysRole extends Backend {
 
 		//uri
 		$this->_addParam('uri', [
-			'getPermission' => full_uri('backend/sysrole/get_permission'),
+			'getPermission' => full_uri('backend/sysrole/getpermission'),
 			'getPrivilegeData' => full_uri('backend/sysrole/get_privilegeData'),
 			'updatePermission' => full_uri('backend/sysrole/update_permission'),
 		]);
@@ -119,7 +119,7 @@ class SysRole extends Backend {
 		];
 		$cmsFuncs = $this->service->getPermission($params); 
 		
-		return $this->_displayWithLayout('Cms::sysrole.permission')->with('funcData',$cmsFuncs);
+		return $this->_displayWithLayout('backend::sysrole.permission')->with('funcData',$cmsFuncs);
 	}
 
 }

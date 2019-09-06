@@ -8,7 +8,6 @@
 namespace Smart\Service;
 use Facades\Smart\Service\ServiceManager;
 use Smart\Models\SysFuncPrivilege;
-use Illuminate\Support\Facades\DB;
 use Smart\Service\SysFuncService;
 use Smart\Service\SysPermissionNodeService;
 

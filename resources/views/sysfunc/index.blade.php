@@ -37,7 +37,7 @@
                             <th width="80" data-field="is_menu" data-formatter="formatIsFunc">是否菜单</th>
                             <th width="80" data-field="is_func" data-formatter="formatIsMenu">是否功能</th>
                             <th width="80" data-field="status" data-formatter="formatStatus">状态</th>
-                            <th width="60" data-formatter="optPrivilege"></th>
+                            <!-- <th width="60" data-formatter="optPrivilege"></th> -->
                             <th width="60" data-formatter="optEdit"></th>
                             <th width="60" data-formatter="optDelete"></th>
                             <th>&nbsp;</th>
@@ -145,48 +145,5 @@
 </div><!-- /.END ADD EDIT MODAL -->
 
 
-<!-- START PRIVILEGE MODAL -->
-<div class="modal fade" id="privilegeModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title caption-subject">权限</h4>
-            </div>
-            <div class="modal-body">
-                <!-- start add edit form  -->
-                <div class="row">
-                    <div class="col-md-12">
-                        <!-- start form -->
-                        <form id="privilegeForm" class="form-horizontal">
-                            {!! csrf_field() !!}
-                            <div class="form-body">
-                                <!-- start item -->
-                                <div class="form-group">
-                                    <div class="col-md-10 col-md-offset-2">
 
-                                        <?php foreach( $param['privilege'] as $key => $val ) :?>
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" name="name[]" value="<?= $key ?>">
-                                                <?= $val ?> ( <?= implode( '&nbsp;&nbsp;,&nbsp;&nbsp;' , $param['alias'][$key]) ?> )
-                                            </label>
-                                        </div>
-                                        <?php endforeach; ?>
-                                    </div>
-                                </div><!-- end item -->
-                            </div>
-                        </form><!-- end form -->
-                    </div>
-                </div>
-                <!-- end add edit form-->
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn default" data-dismiss="modal"><i class="fa fa-times"></i> 关闭</button>
-                <button type="button" class="btn red" id="submitPrivilegeFormBtn"><i class="fa fa-save"></i> 保存</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.END PRIVILEGE MODAL -->
 @stop
