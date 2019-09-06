@@ -11,6 +11,7 @@ use Smart\Models\SysFuncPrivilege;
 use Smart\Service\SysFuncService;
 use Smart\Service\SysPermissionNodeService;
 
+//该服务已废弃
 class SysFuncPrivilegeService extends BaseService{
 
     use \Smart\Traits\Service\TreeTable,\Smart\Traits\Service\Instance;
@@ -103,10 +104,10 @@ class SysFuncPrivilegeService extends BaseService{
      *
      * @param $funcId
      * @param $data
-     *
+     *  已废弃
      * @return array
      */
-    public function updateByFunc( $funcId  , $data = [] ) {
+    /* public function updateByFunc( $funcId  , $data = [] ) {
         $sysFunc = ServiceManager::make(SysFuncService::class);
         $sysFunc = $sysFunc->findById($funcId);
         $new_nodes = $data['node_id'];
@@ -140,7 +141,7 @@ class SysFuncPrivilegeService extends BaseService{
         $sysFunc->privilege()->createMany($add_privilege);
 
         return ajax_arr('成功',0);
-    }
+    } */
 
     /**
      * 根据功能取权限

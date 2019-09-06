@@ -111,26 +111,7 @@ EOF;
         return json( $this->service->insert( $data ) );
     }
 
-    function get_permission(Request $request) {
-        $roleId = $request->input( 'roleId' );
-        $role = $this->service->getById($roleId);
-
-        $SysFuncPrivilege      = SysFuncPrivilegeService::instance();
-        $data['privilegeName'] = $SysFuncPrivilege->name;
-        //取角色操作权限
-        $SysRolePermission    = SysRolePermissionService::instance();
-        $ret['privilegeData'] = $SysRolePermission->getByRole( $roleId );
-
-        //取所有功能与操作
-        $SysFunc          = SysFuncService::instance();
-        $data['funcData'] = $SysFunc->getByCond( [
-            'module'        => $role->module,
-            'status'        => 1,
-            'withPrivilege' => TRUE,
-        ] );
-
-        return view('backend::merrole.permission')->with($data);
-    }
+    
 
     function get_privilegeData(Request $request){
         $roleId = $request->input( 'roleId' );

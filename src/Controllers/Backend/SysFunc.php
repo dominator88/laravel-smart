@@ -34,7 +34,7 @@ class SysFunc extends Backend {
 		]);
 
 		//其他参数
-		$SysFuncPrivilege = SysFuncPrivilegeService::instance();
+	//	$SysFuncPrivilege = SysFuncPrivilegeService::instance();
 		$this->_addParam([
 			'defaultRow' => $this->service->getDefaultRow(),
 			'status' => $this->service->status,
@@ -79,7 +79,7 @@ class SysFunc extends Backend {
 	 * 更新权限
 	 *
 	 */
-	function update_privilege(Request $request) {
+	/* function update_privilege(Request $request) {
 		$funcId = $request->funcId;
 		$data = $request->all();
 
@@ -87,6 +87,6 @@ class SysFunc extends Backend {
 		$ret = $SysFuncPrivilege->updateByFunc($funcId, $data);
 
 		return response()->json($ret);
-	}
+	} */
 
 }

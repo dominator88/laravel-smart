@@ -225,7 +225,7 @@ class SysFuncService extends BaseService {
 		return $this->treeToArray($result, self::DEFAULT_KEY);*/
 	}
 
-	public function withPrivilege($data) {
+	/* public function withPrivilege($data) {
 		$allId = [];
 		foreach ($data as $item) {
 			$allId[] = $item['id'];
@@ -243,7 +243,7 @@ class SysFuncService extends BaseService {
 		}
 
 		return $data;
-	}
+	} */
 
 	public function getPrivilege($uri) {
 		$func = SysFunc::where('uri', $uri)->first();
@@ -342,18 +342,19 @@ class SysFuncService extends BaseService {
 			$data_base['level'] = $this->getLevel( $data['pid'] );
 			$id            = $this->getModel()->insertGetId( $data_base );
 
+			if($data_base['module'] !== 'backend'){
 			//更新到扩展表中
-			$data_extend = [
-			//	'func_id' => $id,
-				'extend_name' => $data['extend_name'],
-				'extend_path' => $data['extend_path'],
-				'extend_component' => $data['extend_component'],
-				'extend_notCache' => $data['extend_notCache'],
-				'extend_showAlways' => $data['extend_showAlways'],
-			];
-			$sysFuncExtendService = ServiceManager::make(SysFuncExtendService::class);
-			$sysFuncExtendService->updateOrCreate($data, $id);
-
+				$data_extend = [
+				//	'func_id' => $id,
+					'extend_name' => $data['extend_name'],
+					'extend_path' => $data['extend_path'],
+					'extend_component' => $data['extend_component'],
+					'extend_notCache' => $data['extend_notCache'],
+					'extend_showAlways' => $data['extend_showAlways'],
+				];
+				$sysFuncExtendService = ServiceManager::make(SysFuncExtendService::class);
+				$sysFuncExtendService->updateOrCreate($data_extend, $id);
+			}
 			return ajax_arr( '创建成功', 0, [ 'id' => $id ] );
 		} catch ( \Exception $e ) {
 			return ajax_arr( $e->getMessage(), 500 );
@@ -375,7 +376,7 @@ class SysFuncService extends BaseService {
 			}
 
 			$data_base = [
-				'module' => $data['module'],
+				'module' => $data['module'] ?? 'backend',
 				'is_menu' => $data['is_menu'],
 				'name' => $data['name'],
 				'icon' => $data['icon'],
@@ -387,17 +388,18 @@ class SysFuncService extends BaseService {
 			$rows          = $this->getModel()->where( 'id', $id )->update( $data_base );
 			//
 			//更新到扩展表中
-			$data_extend = [
-			//	'func_id' => $id,
-				'extend_name' => $data['extend_name'],
-				'extend_path' => $data['extend_path'],
-				'extend_component' => $data['extend_component'],
-				'extend_notCache' => $data['extend_notCache'],
-				'extend_showAlways' => $data['extend_showAlways'],
-			];
-			$sysFuncExtendService = ServiceManager::make(SysFuncExtendService::class);
-			$sysFuncExtendService->updateOrCreate( $data_extend,$id);
-
+			if($data_base['module'] !== 'backend'){
+				$data_extend = [
+				//	'func_id' => $id,
+					'extend_name' => $data['extend_name'],
+					'extend_path' => $data['extend_path'],
+					'extend_component' => $data['extend_component'],
+					'extend_notCache' => $data['extend_notCache'],
+					'extend_showAlways' => $data['extend_showAlways'],
+				];
+				$sysFuncExtendService = ServiceManager::make(SysFuncExtendService::class);
+				$sysFuncExtendService->updateOrCreate( $data_extend,$id);
+			}
 			if ( $rows == 0 ) {
 				return ajax_arr( "未更新任何数据", 0 );
 			}

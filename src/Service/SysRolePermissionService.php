@@ -13,7 +13,6 @@ use Facades\Smart\Service\ServiceManager;
 use Smart\Models\SysRolePermission;
 use Illuminate\Support\Facades\DB;
 use Smart\Service\SysRoleService;
-use Smart\Service\SysFuncPrivilegeService;
 use Smart\Service\PermissionService;
 
 class SysRolePermissionService extends BaseService {

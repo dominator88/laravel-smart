@@ -72,7 +72,7 @@ class SysRole extends Backend {
 		return response()->json(ajax_arr('查询成功', 0, $data));
 	}
 
-	function get_permission(Request $request) {
+	/* function get_permission(Request $request) {
 		$roleId = $request->input('roleId');
 		$SysFuncPrivilege = SysFuncPrivilegeService::instance();
 		$data['privilegeName'] = $SysFuncPrivilege->name;
@@ -93,7 +93,7 @@ class SysRole extends Backend {
 		return view('backend::sysrole/permission')->with($data);
 
 		//  return $ret;
-	}
+	} */
 
 	function get_privilegeData(Request $request) {
 		$roleId = $request->input('roleId');
