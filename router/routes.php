@@ -4,11 +4,14 @@ use Illuminate\Routing\Router;
 Route::group([
 	'prefix'=>strtolower('Backend' ),
 	'namespace' => 'Smart\\Controllers\\Backend' ,
-	'middleware'=> ['web']
+	'middleware'=> ['web','auth']
 ],function(Router $router ){
 	$router->group(['prefix' => 'auth','middleware' => ['auth.resetPassword']],function($router){
 		$router->post('changepassword' , 'AuthController@changePassword');
 	});
+
+	//首页
+	$router->get('index/index', 'Index@index');
 
 	
 //权限节点
@@ -27,108 +30,288 @@ Route::group([
 		$router->post('getprivilege','SysPermissionNode@getPrivilege');
 
 	});
+
+	//系统功能
+	$router->group(['prefix' => 'sysfunc'] , function($router){
+
+		$router->get('index', 'SysFunc@index');
+
+		$router->get('read', 'SysFunc@read');
+
+		$router->post('update_privilege/{funcId}', 'SysFunc@update_privilege');
+
+		$router->post('update/{id}', 'SysFunc@update');
+
+		$router->post('insert', 'SysFunc@insert');
+
+		$router->post('destroy', 'SysFunc@destroy');
+	});
+
+	//系统角色
+	$router->group(['prefix' => 'sysrole'] , function($router){
+
+		$router->get('index', 'SysRole@index');
+
+		$router->get('read', 'SysRole@read');
+
+		$router->post('getpermission', 'SysRole@getPermission');
+
+		$router->post('get_privilegedata', 'SysRole@get_privilegeData');
+
+		$router->post('update_permission', 'SysRole@update_permission');
+
+		$router->post('update/{id}', 'SysRole@update');
+
+		$router->post('insert', 'SysRole@insert');
+
+		$router->post('destroy', 'SysRole@destroy');
+	});
+
+	//系统用户
+	$router->group(['prefix' => 'sysuser'] , function($router){
+
+		$router->get('index', 'SysUser@index');
+
+		$router->get('read', 'SysUser@read');
+
+		$router->post('get_permission', 'SysUser@get_permission');
+
+		$router->post('get_privilegedata', 'SysUser@get_privilegeData');
+
+		$router->post('update_permission', 'SysUser@update_permission');
+
+		$router->post('update/{id}', 'SysUser@update');
+
+		$router->post('insert', 'SysUser@insert');
+
+		$router->post('destroy', 'SysUser@destroy');
+
+		$router->get('reset_pwd/{id}', 'SysUser@reset_pwd');
+
+		$router->get('read_album_catalog', 'SysUser@read_album_catalog');
+
+		$router->get('read_album', 'SysUser@read_album');
+
+		$router->post('upload', 'SysUser@upload');
+
+		$router->post('test', 'SysUser@test');
+	});
+
+	//区域管理
+	$router->group(['prefix' => 'sysarea'] , function($router){
+		
+		$router->get('index', 'SysArea@index');
+
+		$router->get('read', 'SysArea@read');
+
+		$router->post('get_permission', 'SysArea@get_permission');
+
+		$router->post('get_privilegedata', 'SysArea@get_privilegeData');
+
+		$router->post('update_permission', 'SysArea@update_permission');
+
+		$router->post('update/{id}', 'SysArea@update');
+
+		$router->post('insert', 'SysArea@insert');
+
+		$router->post('destroy', 'SysArea@destroy');
+	});
+
+	$router->group(['prefix' => 'sysmerchant'] , function($router){
+		
+		$router->get('index', 'SysMerchant@index');
+
+		$router->get('read', 'SysMerchant@read');
+
+		$router->get('read_detail/{id}', 'SysMerchant@read_detail');
+
+		$router->get('read_area/{pid}', 'SysMerchant@read_area');
+
+		$router->post('update/{id}', 'SysMerchant@update');
+
+		$router->post('insert', 'SysMerchant@insert');
+
+		$router->post('destroy', 'SysMerchant@destroy');
+
+		$router->post('upload', 'SysMerchant@upload');
+
+		$router->get('read_album_catalog','SysMerchant@read_album_catalog');
+	});
+
+	$router->group(['prefix' => 'merfunc'] , function($router){
+		
+		$router->get('index', 'MerFunc@index');
+
+		$router->get('read', 'MerFunc@read');
+
+		$router->post('update/{id}', 'MerFunc@update');
+
+		$router->post('insert', 'MerFunc@insert');
+
+		$router->post('destroy', 'MerFunc@destroy');
+
+		$router->post('updateprivilege/{funcId}', 'MerFunc@updatePrivilege');
+	});
 	
+	$router->group(['prefix' => 'merrole'] , function($router){
+
+		$router->get('index', 'MerRole@index');
+
+		$router->get('read', 'MerRole@read');
+
+		$router->post('update/{id}', 'MerRole@update');
+
+		$router->post('insert', 'MerRole@insert');
+
+		$router->post('destroy', 'MerRole@destroy');
+
+		$router->post('get_permission', 'MerRole@get_permission');
+
+		$router->post('get_privilegedata', 'MerRole@get_privilegeData');
+
+		$router->post('update_permission', 'MerRole@update_permission');
+
+		$router->post('getpermission', 'MerRole@getPermission');
+
+		$router->post('getprivilegedata', 'MerRole@getPrivilegeData');
+
+		$router->post('updatepermission', 'MerRole@updatePermission');
+	});
+
+	$router->group(['prefix' => 'meruser'] , function($router){
+		
+		$router->get('index', 'MerUser@index');
+
+		$router->get('read', 'MerUser@read');
+
+		$router->post('get_permission', 'MerUser@get_permission');
+
+		$router->post('get_privilegedata', 'MerUser@get_privilegeData');
+
+		$router->post('update_permission', 'MerUser@update_permission');
+
+		$router->post('update/{id}', 'MerUser@update');
+
+		$router->post('insert', 'MerUser@insert');
+
+		$router->post('destroy', 'MerUser@destroy');
+
+		$router->get('reset_pwd/{id}', 'MerUser@reset_pwd');
+
+		$router->get('read_album_catalog', 'MerUser@read_album_catalog');
+
+		$router->post('upload', 'MerUser@upload');
+
+		$router->get('read_album', 'MerUser@read_album');
+	});
+
+	$router->group(['prefix' => 'sysappversion'] , function($router){
+
+		$router->get('index', 'SysAppVersion@index');
+
+		$router->get('read', 'SysAppVersion@read');
+
+		$router->post('update/{id}', 'SysAppVersion@update');
+
+		$router->post('insert', 'SysAppVersion@insert');
+
+		$router->post('destroy', 'SysAppVersion@destroy');
+	});
+
+	$router->group(['prefix' => 'syspush'] , function($router){
+
+		$router->get('index', 'SysPush@index');
+
+		$router->get('read', 'SysPush@read');
+
+		$router->post('update/{id}', 'SysPush@update');
+
+		$router->post('insert', 'SysPush@insert');
+
+		$router->post('destroy', 'SysPush@destroy');
+	});
+
+	$router->group(['prefix' => 'syssms'] , function($router){
+
+		$router->get('index', 'SysSms@index');
+
+		$router->get('read', 'SysSms@read');
+
+		$router->post('update/{id}', 'SysSms@update');
+
+		$router->post('insert', 'SysSms@insert');
+
+		$router->post('destroy', 'SysSms@destroy');
+	});
+
+	$router->group(['prefix' => 'sysmail'] , function($router){
+
+		$router->get('index', 'SysMail@index');
+
+		$router->get('read', 'SysMail@read');
+
+		$router->post('update/{id}', 'SysMail@update');
+
+		$router->post('insert', 'SysMail@insert');
+
+		$router->post('destroy', 'SysMail@destroy');
+
+		$router->post('send', 'SysMail@send');
+	});
+
+	$router->group(['prefix' => 'generate'] , function($router){
+
+		$router->get('index', 'Generate@index');
+
+		$router->get('get_system_info', 'Generate@get_system_info');
+
+		$router->post('create_system', 'Generate@create_system');
+
+		$router->post('create_api', 'Generate@create_api');
+
+		$router->get('destroy_system_file', 'Generate@destroy_system_file');
+	});
+
+	$router->group(['prefix' => 'meralbum'] , function($router){
+
+		$router->get('index/{id?}', 'MerAlbum@index');
+
+		$router->get('read', 'MerAlbum@read');
+	});
+
+	$router->group(['prefix' => 'meralbumcatalog'] , function($router){
+
+		$router->get('index', 'MerAlbumCatalog@index');
+
+		$router->get('read', 'MerAlbumCatalog@read');
+
+		$router->get('read_album/{id}', 'MerAlbumCatalog@read_album');
+	});
+
+	$router->group(['prefix' => 'simulator'] , function($router){
+
+		$router->get('index', 'Simulator@index');
+
+		$router->get('read_api', 'Simulator@read_api');
+
+		$router->get('read_params', 'Simulator@read_params');
+	});
 });
 
-Route::group(['prefix' => 'backend/index', 'namespace' => 'Smart\Controllers\Backend', 'middleware' => ['web']], function () {
-	Route::get('index', 'Index@index');
-});
 
 
 
-//系统功能
-Route::group(['prefix' => 'backend/sysfunc', 'namespace' => 'Smart\Controllers\Backend', 'middleware' => ['web']], function () {
+//接口路由
+Route::group(['prefix' => 'api/{version}', 'namespace' => 'App\Http\Controllers\Api', 'middleware' => ['api','auth.cors']], function () {
 
-	Route::get('index', 'SysFunc@index');
-
-	Route::get('read', 'SysFunc@read');
-
-	Route::post('update_privilege/{funcId}', 'SysFunc@update_privilege');
-
-	Route::post('update/{id}', 'SysFunc@update');
-
-	Route::post('insert', 'SysFunc@insert');
-
-	Route::post('destroy', 'SysFunc@destroy');
+	Route::any('{direction}/{action}', 'Index@index');
 
 });
 
-//系统角色
-Route::group(['prefix' => 'backend/sysrole', 'namespace' => 'Smart\Controllers\Backend', 'middleware' => ['web']], function () {
-
-	Route::get('index', 'SysRole@index');
-
-	Route::get('read', 'SysRole@read');
-
-	Route::post('getpermission', 'SysRole@getPermission');
-
-	Route::post('get_privilegedata', 'SysRole@get_privilegeData');
-
-	Route::post('update_permission', 'SysRole@update_permission');
-
-	Route::post('update/{id}', 'SysRole@update');
-
-	Route::post('insert', 'SysRole@insert');
-
-	Route::post('destroy', 'SysRole@destroy');
 
 
 
-});
-
-//系统用户
-Route::group(['prefix' => 'backend/sysuser', 'namespace' => 'Smart\Controllers\Backend', 'middleware' => ['web']], function () {
-
-	Route::get('index', 'SysUser@index');
-
-	Route::get('read', 'SysUser@read');
-
-	Route::post('get_permission', 'SysUser@get_permission');
-
-	Route::post('get_privilegedata', 'SysUser@get_privilegeData');
-
-	Route::post('update_permission', 'SysUser@update_permission');
-
-	Route::post('update/{id}', 'SysUser@update');
-
-	Route::post('insert', 'SysUser@insert');
-
-	Route::post('destroy', 'SysUser@destroy');
-
-	Route::get('reset_pwd/{id}', 'SysUser@reset_pwd');
-
-	Route::get('read_album_catalog', 'SysUser@read_album_catalog');
-
-	Route::get('read_album', 'SysUser@read_album');
-
-	Route::post('upload', 'SysUser@upload');
-
-	Route::post('test', 'SysUser@test');
-
-});
-
-//区域管理
-Route::group(['prefix' => 'backend/sysarea', 'namespace' => 'Smart\Controllers\Backend', 'middleware' => ['web']], function () {
-
-	Route::get('index', 'SysArea@index');
-
-	Route::get('read', 'SysArea@read');
-
-	Route::post('get_permission', 'SysArea@get_permission');
-
-	Route::post('get_privilegedata', 'SysArea@get_privilegeData');
-
-	Route::post('update_permission', 'SysArea@update_permission');
-
-	Route::post('update/{id}', 'SysArea@update');
-
-	Route::post('insert', 'SysArea@insert');
-
-	Route::post('destroy', 'SysArea@destroy');
-
-});
-
-//商品分类
+/* //商品分类
 Route::group(['prefix' => 'backend/mergoodscatalog', 'namespace' => 'Smart\Controllers\Backend', 'middleware' => ['web']], function () {
 
 	Route::get('index', 'MerGoodsCatalog@index');
@@ -147,10 +330,10 @@ Route::group(['prefix' => 'backend/mergoodscatalog', 'namespace' => 'Smart\Contr
 
 	Route::post('destroy', 'MerGoodsCatalog@destroy');
 
-});
+}); */
 
 //机构管理
-Route::group(['prefix' => 'backend/sysmerchant', 'namespace' => 'Smart\Controllers\Backend', 'middleware' => ['web']], function () {
+/* Route::group(['prefix' => 'backend/sysmerchant', 'namespace' => 'Smart\Controllers\Backend', 'middleware' => ['web']], function () {
 
 	Route::get('index', 'SysMerchant@index');
 
@@ -171,9 +354,9 @@ Route::group(['prefix' => 'backend/sysmerchant', 'namespace' => 'Smart\Controlle
 	Route::get('read_album_catalog','SysMerchant@read_album_catalog');
 
 });
-
+ */
 //机构功能
-Route::group(['prefix' => 'backend/merfunc', 'namespace' => 'Smart\Controllers\Backend', 'middleware' => ['web']], function () {
+/* Route::group(['prefix' => 'backend/merfunc', 'namespace' => 'Smart\Controllers\Backend', 'middleware' => ['web']], function () {
 
 	Route::get('index', 'MerFunc@index');
 
@@ -187,10 +370,10 @@ Route::group(['prefix' => 'backend/merfunc', 'namespace' => 'Smart\Controllers\B
 
 	Route::post('updateprivilege/{funcId}', 'MerFunc@updatePrivilege');
 
-});
+}); */
 
 //机构角色
-Route::group(['prefix' => 'backend/merrole', 'namespace' => 'Smart\Controllers\Backend', 'middleware' => ['web']], function () {
+/* Route::group(['prefix' => 'backend/merrole', 'namespace' => 'Smart\Controllers\Backend', 'middleware' => ['web']], function () {
 
 	Route::get('index', 'MerRole@index');
 
@@ -214,10 +397,10 @@ Route::group(['prefix' => 'backend/merrole', 'namespace' => 'Smart\Controllers\B
 
 	Route::post('updatepermission', 'MerRole@updatePermission');
 
-});
+}); */
 
 //系统用户
-Route::group(['prefix' => 'backend/mersysuser', 'namespace' => 'Smart\Controllers\Backend', 'middleware' => ['web']], function () {
+/* Route::group(['prefix' => 'backend/mersysuser', 'namespace' => 'Smart\Controllers\Backend', 'middleware' => ['web']], function () {
 
 	Route::get('index/{merId?}', 'MerSysUser@index');
 
@@ -231,9 +414,9 @@ Route::group(['prefix' => 'backend/mersysuser', 'namespace' => 'Smart\Controller
 
 	Route::get('reset_pwd/{id}', 'MerSysUser@reset_pwd');
 
-});
+}); */
 
-Route::group(['prefix' => 'backend/meruser', 'namespace' => 'Smart\Controllers\Backend', 'middleware' => ['web']], function () {
+/* Route::group(['prefix' => 'backend/meruser', 'namespace' => 'Smart\Controllers\Backend', 'middleware' => ['web']], function () {
 
 	Route::get('index', 'MerUser@index');
 
@@ -259,10 +442,10 @@ Route::group(['prefix' => 'backend/meruser', 'namespace' => 'Smart\Controllers\B
 
 	Route::get('read_album', 'MerUser@read_album');
 
-});
+}); */
 
 //APP版本管理
-Route::group(['prefix' => 'backend/sysappversion', 'namespace' => 'Smart\Controllers\Backend', 'middleware' => ['web']], function () {
+/* Route::group(['prefix' => 'backend/sysappversion', 'namespace' => 'Smart\Controllers\Backend', 'middleware' => ['web']], function () {
 
 	Route::get('index', 'SysAppVersion@index');
 
@@ -274,10 +457,10 @@ Route::group(['prefix' => 'backend/sysappversion', 'namespace' => 'Smart\Control
 
 	Route::post('destroy', 'SysAppVersion@destroy');
 
-});
+}); */
 
 //消息推送
-Route::group(['prefix' => 'backend/syspush', 'namespace' => 'Smart\Controllers\Backend', 'middleware' => ['web']], function () {
+/* Route::group(['prefix' => 'backend/syspush', 'namespace' => 'Smart\Controllers\Backend', 'middleware' => ['web']], function () {
 
 	Route::get('index', 'SysPush@index');
 
@@ -289,10 +472,10 @@ Route::group(['prefix' => 'backend/syspush', 'namespace' => 'Smart\Controllers\B
 
 	Route::post('destroy', 'SysPush@destroy');
 
-});
+}); */
 
 //短信
-Route::group(['prefix' => 'backend/syssms', 'namespace' => 'Smart\Controllers\Backend', 'middleware' => ['web']], function () {
+/* Route::group(['prefix' => 'backend/syssms', 'namespace' => 'Smart\Controllers\Backend', 'middleware' => ['web']], function () {
 
 	Route::get('index', 'SysSms@index');
 
@@ -304,10 +487,10 @@ Route::group(['prefix' => 'backend/syssms', 'namespace' => 'Smart\Controllers\Ba
 
 	Route::post('destroy', 'SysSms@destroy');
 
-});
+}); */
 
 //邮件
-Route::group(['prefix' => 'backend/sysmail', 'namespace' => 'Smart\Controllers\Backend', 'middleware' => ['web']], function () {
+/* Route::group(['prefix' => 'backend/sysmail', 'namespace' => 'Smart\Controllers\Backend', 'middleware' => ['web']], function () {
 
 	Route::get('index', 'SysMail@index');
 
@@ -321,10 +504,10 @@ Route::group(['prefix' => 'backend/sysmail', 'namespace' => 'Smart\Controllers\B
 
 	Route::post('send', 'SysMail@send');
 
-});
+}); */
 
 //代码生成
-Route::group(['prefix' => 'backend/generate', 'namespace' => 'Smart\Controllers\Backend', 'middleware' => ['web']], function () {
+/* Route::group(['prefix' => 'backend/generate', 'namespace' => 'Smart\Controllers\Backend', 'middleware' => ['web']], function () {
 
 	Route::get('index', 'Generate@index');
 
@@ -336,17 +519,17 @@ Route::group(['prefix' => 'backend/generate', 'namespace' => 'Smart\Controllers\
 
 	Route::get('destroy_system_file', 'Generate@destroy_system_file');
 
-});
+}); */
 
-Route::group(['prefix' => 'backend/meralbum', 'namespace' => 'Smart\Controllers\Backend', 'middleware' => ['web']], function () {
+/* Route::group(['prefix' => 'backend/meralbum', 'namespace' => 'Smart\Controllers\Backend', 'middleware' => ['web']], function () {
 
 	Route::get('index/{id?}', 'MerAlbum@index');
 
 	Route::get('read', 'MerAlbum@read');
 
-});
+}); */
 
-Route::group(['prefix' => 'backend/meralbumcatalog', 'namespace' => 'Smart\Controllers\Backend', 'middleware' => ['web']], function () {
+/* Route::group(['prefix' => 'backend/meralbumcatalog', 'namespace' => 'Smart\Controllers\Backend', 'middleware' => ['web']], function () {
 
 	Route::get('index', 'MerAlbumCatalog@index');
 
@@ -354,9 +537,9 @@ Route::group(['prefix' => 'backend/meralbumcatalog', 'namespace' => 'Smart\Contr
 
 	Route::get('read_album/{id}', 'MerAlbumCatalog@read_album');
 
-});
+}); */
 
-Route::group([
+/* Route::group([
 	'prefix' => strtolower('Backend'),
 	'namespace' => 'Smart\\Controllers\\Backend',
 	'middleware' => ['web', 'auth.permission'],
@@ -364,6 +547,7 @@ Route::group([
 
 
 	Route::group(['prefix' => 'modulefunc'], function () {
+
 		Route::get('index', 'ModuleFunc@index')->name('backend.modulefunc.index');
 
 		Route::get('read', 'ModuleFunc@read')->name('backend.modulefunc.read');
@@ -386,10 +570,10 @@ Route::group([
 
 		Route::post('destroy', 'ModuleRole@destroy')->name('backend.modulerole.destroy');
 	});
-});
+}); */
 
 //接口模拟器
-Route::group(['prefix' => 'backend/simulator', 'namespace' => 'Smart\Controllers\Backend', 'middleware' => ['web']], function () {
+/* Route::group(['prefix' => 'backend/simulator', 'namespace' => 'Smart\Controllers\Backend', 'middleware' => ['web']], function () {
 
 	Route::get('index', 'Simulator@index');
 
@@ -397,10 +581,10 @@ Route::group(['prefix' => 'backend/simulator', 'namespace' => 'Smart\Controllers
 
 	Route::get('read_params', 'Simulator@read_params');
 
-});
+}); */
 
 //设置配置
-Route::group(['prefix' => 'backend/syssettings', 'namespace' => 'Smart\Controllers\Backend', 'middleware' => ['web']], function () {
+/* Route::group(['prefix' => 'backend/syssettings', 'namespace' => 'Smart\Controllers\Backend', 'middleware' => ['web']], function () {
 
 	Route::get('index', 'SysSettings@index');
 
@@ -414,13 +598,75 @@ Route::group(['prefix' => 'backend/syssettings', 'namespace' => 'Smart\Controlle
 
 	Route::get('group/{group}', 'SysSettings@indexGroup');
 
+}); */
+
+
+
+
+
+/*******************************下面是api******************************************************************* */
+
+Route::group([
+	'prefix'=>strtolower('Backend/api' ),
+	'namespace' => 'Smart\\Controllers\\Backend' ,
+	'middleware'=> ['api' ,'authentication.access_token:api']
+],function(Router $router ){
+	$router->group(['prefix' => 'auth','middleware' => ['auth.resetPassword']],function($router){
+		$router->post('changepassword' , 'AuthController@changePassword');
+	});
+
+	
+//权限节点
+	$router->group(['prefix' => 'syspermissionnode'] , function($router){
+
+		$router->get('index' , 'SysPermissionNode@index');
+
+		$router->get('read', 'SysPermissionNode@read');
+
+		$router->post('insert' , 'SysPermissionNode@insert');
+
+		$router->post('update/{id}' ,'SysPermissionNode@update');
+
+		$router->post('destroy','SysPermissionNode@destroy');
+
+		$router->post('getprivilege','SysPermissionNode@getPrivilege');
+
+	});
+
+	$router->group(['prefix' => 'sysfunc'] , function($router){
+
+		$router->get('index', 'SysFunc@index');
+
+		$router->get('read', 'SysFunc@read');
+
+		$router->post('update_privilege/{funcId}', 'SysFunc@update_privilege');
+
+		$router->post('update/{id}', 'SysFunc@update');
+
+		$router->post('insert', 'SysFunc@insert');
+
+		$router->post('destroy', 'SysFunc@destroy');
+
+	});
+	$router->group(['prefix' => 'sysfunc'] , function($router){
+
+		$router->get('index', 'SysRole@index');
+
+		$router->get('read', 'SysRole@read');
+
+		$router->post('getpermission', 'SysRole@getPermission');
+
+		$router->post('get_privilegedata', 'SysRole@get_privilegeData');
+
+		$router->post('update_permission', 'SysRole@update_permission');
+
+		$router->post('update/{id}', 'SysRole@update');
+
+		$router->post('insert', 'SysRole@insert');
+
+		$router->post('destroy', 'SysRole@destroy');
+
+	});
+	
 });
 
-
-
-//接口路由
-Route::group(['prefix' => 'api/{version}', 'namespace' => 'App\Http\Controllers\Api', 'middleware' => ['api','auth.cors']], function () {
-
-	Route::any('{direction}/{action}', 'Index@index');
-
-});
