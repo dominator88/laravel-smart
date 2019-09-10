@@ -27,7 +27,7 @@ EOF;
 
 	}
 
-	public function index(Request $request,ContentRepository $ContentRepository) {
+	public function index(Request $request) {
 		$this->_init('首页');
 		/* $ContentRepository->getAll(108,['sort'=>'created_at','order'=>'desc'],20,0,1,true); */
 		$this->_addJsLib('node_modules/waypoints/lib/jquery.waypoints.min.js');

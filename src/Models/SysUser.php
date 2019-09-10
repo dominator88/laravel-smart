@@ -4,9 +4,11 @@ namespace Smart\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
 class SysUser extends Authenticatable {
+	use HasApiTokens;
 	use Notifiable;
 	use HasRoles;
 
