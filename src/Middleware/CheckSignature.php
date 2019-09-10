@@ -3,9 +3,9 @@
 namespace Smart\Middleware;
 
 use Closure;
-use App\Api\Service\v1\ApiService;
+use Smart\Service\ApiService;
 
-class CheckToken
+class CheckSignature
 {
     /**
      * Handle an incoming request.

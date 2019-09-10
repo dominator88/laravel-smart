@@ -16,4 +16,6 @@ class SysApiLog extends Model {
     public $timestamps = FALSE;
 
     use \Smart\Traits\Service\Scope;
+
+    public $fillable = ['device', 'device_os_version', 'app_version', 'api_version', 'uri', 'ip'];
 }

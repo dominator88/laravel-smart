@@ -5,22 +5,21 @@
  * Date: 2017/9/18
  * Time: 21:13
  */
-namespace App\Api\Service\v1;
+namespace Smart\Service;
 
-use App\Service\SysTokenService;
-use Illuminate\Auth\AuthManager;
 use Illuminate\Support\Facades\Auth;
-use Smart\Interfaces\TokenService;
-use Smart\Service\AuthUcService;
-
-use Smart\Service\MerUserDeviceService;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Smart\Models\SysApiLog;
 
 define( 'PARAM_REQUIRED' , 'required' );
 define( 'PARAM_DIGIT' , 'digit' );
 define( 'PARAM_POSITIVE' , 'positive' );
 
 class ApiService {
+
+    const PARAM_REQUIRED = 'required';
+    const PARAM_DIGIT    = 'digit';
+    const PARAM_POSITIVE = 'positive';
 
     use \Smart\Traits\Service\Instance;
 
@@ -140,7 +139,7 @@ class ApiService {
      *
      * @return mixed
      */
-    public function validToken( ) {
+/*     public function validToken( ) {
 
     //    $this->token = resolve( TokenService::class );
         $this->userId = '';
@@ -155,9 +154,6 @@ class ApiService {
 
          //   $MemberData = $this->token->getByToken($this->params['token']);
             $MemberData = Auth::guard('api')->user();
-           // AuthManager::
-
-
 
             if ( empty( $MemberData ) ) {
                 //数据未找到
@@ -171,7 +167,7 @@ class ApiService {
 
             return TRUE;
         }
-    }
+    } */
 
     /**
      * 验证单个参数
@@ -245,7 +241,7 @@ class ApiService {
                 }
             } else {
                 switch ( $rule ) {
-                    case PARAM_REQUIRED :
+                    case self::PARAM_REQUIRED :
                         //判断必填
                         if ( $value === '' && empty( $value ) ) {
                             $this->error = "请填写 $key ";
@@ -256,7 +252,7 @@ class ApiService {
                             $this->merId = $value;
                         }
                         break;
-                    case PARAM_DIGIT:
+                    case self::PARAM_DIGIT:
                         //判断是数字
                         if ( ! is_numeric( $value ) ) {
                             $this->error = " $key 不是是数字";
@@ -264,7 +260,7 @@ class ApiService {
                             return FALSE;
                         }
                         break;
-                    case PARAM_POSITIVE :
+                    case self::PARAM_POSITIVE :
                         //判断是否是正数
                         if ( ! is_numeric( $value ) || $value <= 0 ) {
                             $this->error = " $key 必须大于0";
@@ -362,28 +358,24 @@ class ApiService {
      * @param $key
      * @param $value
      */
-    public function log( $key , $value = '' ) {$this->debug = true;
+    public function log( $key , $value = '' ) {
         if ( ! $this->debug ) {
             return;
         }
 
-        $filename = './logs/api_log_' . date( 'Y_m_d' ) . '.txt';
+        $filename = 'logs/api_log_' . date( 'Y_m_d' ) . '.txt';
         
-        if(! is_dir('./logs')){
-            mkdir('./logs');
+        if(Storage::disk('local')->exists($filename)){
+            Storage::disk('local')->put($filename,'');
         }
-        if ( ! file_exists( $filename ) ) {
-            file_put_contents( $filename , '' );
-            chmod( $filename , 0777 );
-        }
+        
 
         $value = is_array( $value ) ? print_r( $value , TRUE ) : $value;
 
         $text = "----------" . date( 'Y-m-d H:i:s' ) . " 开始----------\r\n";
         $text .= " $key = $value  \r\n";
-        // $text .= "----------结束----------\r\n" ;
-
-        file_put_contents( $filename , $text , FILE_APPEND );
+        Storage::disk('local')->append($filename, $text);
+        
     }
 
     public function logStat( $param ) {
@@ -395,16 +387,8 @@ class ApiService {
             'uri'               => request()->url( TRUE ) ,
             'ip'                => request()->ip( 0 , TRUE )
         ];
-
-        DB::table( 'sys_api_log' )->insert( $data );
+        SysApiLog::create($data);
     }
 
-    protected  function statistics($data){
-        $data_r['num'] = array_sum(array_column($data,'num'));
-        $data_r['num1'] = array_sum(array_column($data,'num1'));
-        $data_r['amount'] = array_sum(array_column($data,'pay_amount'));
-        $data_r['payment'] = array_sum(array_column($data,'goods_amount'));
-        return $data_r;
-    }
 
 }

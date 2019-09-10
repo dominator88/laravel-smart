@@ -22,10 +22,11 @@ class SmartServiceProvider extends ServiceProvider {
 	];
 
 	protected $routeMiddleware = [
-		'auth.token' => \Smart\Middleware\CheckToken::class,
+		'auth.checkSignature' => \Smart\Middleware\CheckSignature::class,
 		'auth.permission' => \Smart\Middleware\Permission::class,
-		'auth.cors' =>\Smart\Middleware\Cors::class,
+		'auth.cors' => \Barryvdh\Cors\HandleCors::class,
 		'auth.resetPassword' => \Smart\Middleware\ResetPassword::class,
+		'auth.authencation' => \Smart\Middleware\OAuthToken::class,
 	];
 
 	public function boot() {

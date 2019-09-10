@@ -639,8 +639,6 @@ Route::group([
 
 		$router->get('read', 'SysFunc@read');
 
-		$router->post('update_privilege/{funcId}', 'SysFunc@update_privilege');
-
 		$router->post('update/{id}', 'SysFunc@update');
 
 		$router->post('insert', 'SysFunc@insert');
@@ -655,10 +653,6 @@ Route::group([
 		$router->get('read', 'SysRole@read');
 
 		$router->post('getpermission', 'SysRole@getPermission');
-
-		$router->post('get_privilegedata', 'SysRole@get_privilegeData');
-
-		$router->post('update_permission', 'SysRole@update_permission');
 
 		$router->post('update/{id}', 'SysRole@update');
 

@@ -56,6 +56,7 @@
                             <th width="40" data-field="sort">排序</th>
                             <th width="180" data-field="name">名称</th>
                             <th width="80" data-field="status" data-formatter="formatStatus">状态</th>
+                            <th width="80" data-field="module">模块</th>
                             <th width="80" data-field="rank">等级</th>
                             <th width="60" data-formatter="optPermission"></th>
                             <th width="60" data-formatter="optEdit"></th>

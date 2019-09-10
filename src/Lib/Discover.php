@@ -23,15 +23,14 @@ class Discover{
 		$dirs = $this->filesystem->directories($dir);
 		$data = [];
 		foreach($dirs as $dir_children){
-			$version = substr($dir_children, strrpos($dir_children,'/')+1);
-			$data[$version ] = [
-				[
-					'version' => $version,
-					'text'	  => $version,	
-				]
-			];
+			$group = substr($dir_children, strrpos($dir_children,'/')+1);
+			$readme = $dir.'/'.$group.'/readme.md';
+			if($this->filesystem->exists($readme)){
+				$tmp = json_decode($this->filesystem->get($readme),true);
+				$data[$tmp['group'] ][] = $tmp;
+			}
+			
 		}
-
 		return $data;
 		
 	}
@@ -59,7 +58,9 @@ class Discover{
 		};
 		$data = [];
 		foreach($files as $file){
+
 			$filename = $file->getRelativePathname();
+			if(!Str::contains($filename, 'Service.php')) continue;
             $class = substr( $filename, 0, strripos($filename , 'Service.php'));
 
 			$class = $class_func($file);

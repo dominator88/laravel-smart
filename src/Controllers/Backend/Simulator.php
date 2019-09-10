@@ -62,7 +62,7 @@ class Simulator extends Backend {
 		];*/
 
 		$discover = new Discover;
-        $versions = $discover->version();
+		$versions = $discover->version();
 		//其他参数
 		$this->_addParam([
 			'deviceOsVersion' => $this->deviceOsVersion,
