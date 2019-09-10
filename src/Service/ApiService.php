@@ -11,10 +11,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Smart\Models\SysApiLog;
 
-define( 'PARAM_REQUIRED' , 'required' );
-define( 'PARAM_DIGIT' , 'digit' );
-define( 'PARAM_POSITIVE' , 'positive' );
-
 class ApiService {
 
     const PARAM_REQUIRED = 'required';

@@ -41,8 +41,8 @@ if (!function_exists('form_radios')) {
 		$html = [];
 		$i = 0;
 		foreach ($data as $key => $val) {
-
-			if($val == (string)$checked_value || ($checked_value==0 && $i++ == 0)){
+			
+			if($key == (string)$checked_value || ($checked_value==0 && $i++ == 0)){
 				$html[] = '<label class="radio-inline"><input name="' . $name . '" type="radio" value="' . $key . '"  checked>' . $val . '</label>';
 			}else{
 				$html[] = '<label class="radio-inline"><input name="' . $name . '" type="radio" value="' . $key . '" >' . $val . '</label>';

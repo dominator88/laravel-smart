@@ -20,7 +20,7 @@ var Simulator = {
   } ,
   initVersion: function(){
       
-      var ret = {"v1":[{"version":"v1","text":"v1"}],"v2":[{"version":"v2","text":"v2"}]}
+      var ret = Param.versions
 
       var options = [];
       for(var version in ret){
