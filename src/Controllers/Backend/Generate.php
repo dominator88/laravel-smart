@@ -11,6 +11,7 @@ namespace Smart\Controllers\Backend;
 use Facades\Smart\Service\ServiceManager;
 use Illuminate\Http\Request;
 use Smart\Service\GenerateService;
+use Smart\Lib\Discover;
 
 class Generate extends Backend {
 	/**
@@ -33,14 +34,17 @@ class Generate extends Backend {
 			'destroySystemFile' => full_uri('Backend/Generate/destroy_system_file'),
 		]);
 		$modules = explode(',',config('backend.module_ext'));
-        $modules = array_combine($modules, $modules);
-
+		$modules = array_combine($modules, $modules);
+		
+		$discover = new Discover;
+		$versions = current($discover->version());
+		$versions = array_combine(array_column($versions, 'text'),array_column($versions, 'version'));
 		$this->_addParam([
 			'type' => $this->service->type,
 			'module' => $this->service->module,
 			'viewType' => $this->service->viewType,
 			'tableType' => $this->service->tableType,
-			'apiVer' => $this->service->apiVer,
+			'apiVer' => $versions,
 			'apiParams' => $this->service->apiParams,
 			'apiAuthUser' => $this->service->apiAuthUser,
 		//	'modules' => $modules,
@@ -65,6 +69,7 @@ class Generate extends Backend {
 
 		return $this->_displayWithLayout('backend::generate.index');
 	}
+
 
 	function get_system_info(Request $request) {
 		$type = $request->input('type');

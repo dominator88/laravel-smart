@@ -46,21 +46,6 @@ class Simulator extends Backend {
 		$SysUser = SysUserService::instance();
 		$SysMerchant = SysMerchantService::instance();
 
-/*		$versions = [
-			'v1' => [
-				[
-					'version' => 'v1',
-					'text' => 'v1',
-				]
-			],
-			'v2' => [
-				[
-					'version' => 'v2',
-					'text' => 'v2',
-				]
-			],
-		];*/
-
 		$discover = new Discover;
 		$versions = $discover->version();
 		//其他参数
@@ -76,6 +61,7 @@ class Simulator extends Backend {
 				'merId' => 1,
 			],
 		]); 
+
 
 		//需要引入的 css 和 js
 		$this->_addJsLib('static/plugins/jquery-md5/jQuery.md5.js');

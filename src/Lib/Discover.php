@@ -23,11 +23,14 @@ class Discover{
 		$dirs = $this->filesystem->directories($dir);
 		$data = [];
 		foreach($dirs as $dir_children){
-			$group = substr($dir_children, strrpos($dir_children,'/')+1);
-			$readme = $dir.'/'.$group.'/readme.md';
+			$version = substr($dir_children, strrpos($dir_children,'/')+1);
+			$readme = $dir.'/'.$version.'/readme.md';
 			if($this->filesystem->exists($readme)){
 				$tmp = json_decode($this->filesystem->get($readme),true);
-				$data[$tmp['group'] ][] = $tmp;
+				$data[$tmp['group'] ][] = [
+					'version' => $tmp['version'],
+					'text'    => $version,
+				];
 			}
 			
 		}
