@@ -40,9 +40,11 @@ if (!function_exists('form_radios')) {
 	function form_radios($name, $data, $checked_value = 0) {
 		$html = [];
 		$i = 0;
+		
 		foreach ($data as $key => $val) {
 			
-			if($key == (string)$checked_value || ($checked_value==0 && $i++ == 0)){
+			if($val == (string)$checked_value ){
+				
 				$html[] = '<label class="radio-inline"><input name="' . $name . '" type="radio" value="' . $key . '"  checked>' . $val . '</label>';
 			}else{
 				$html[] = '<label class="radio-inline"><input name="' . $name . '" type="radio" value="' . $key . '" >' . $val . '</label>';
@@ -55,6 +57,39 @@ if (!function_exists('form_radios')) {
 		return join('',$html);
 	}
 }
+
+if (!function_exists('form_method_radios')) {
+	/**
+	 * 水平radio   改良
+	 *
+	 * @param $name
+	 * @param $data
+	 * @param int $checked_value
+	 *
+	 * @return mixed|string
+	 */
+	function form_method_radios($name, $data, $checked_value = 0) {
+		$html = [];
+		$i = 0;
+		
+		foreach ($data as $key => $val) {
+			
+			if($key == (string)$checked_value ){
+				
+				$html[] = '<label class="radio-inline"><input name="' . $name . '" type="radio" value="' . $key . '"  checked>' . $val . '</label>';
+			}else{
+				$html[] = '<label class="radio-inline"><input name="' . $name . '" type="radio" value="' . $key . '" >' . $val . '</label>';
+			}
+			
+		}
+
+		
+
+		return join('',$html);
+	}
+}
+
+
 
 if (!function_exists('form_radio_rows')) {
 	/**

@@ -4,7 +4,7 @@
         <div class="form-group">
             <label class="col-md-2 control-label">请求类型</label>
             <div class="col-md-6">
-                <?= form_radios('requestMethod' , $allowRequestMethod , $method ) ?>
+                <?= form_method_radios('requestMethod' , $allowRequestMethod , $method ) ?>
             </div>
         </div><!-- end item -->
     </div>

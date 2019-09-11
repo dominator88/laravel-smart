@@ -22,7 +22,7 @@ class OAuthToken
      * @return void
      */
     public function __construct(Auth $auth)
-    {
+    {   
         $this->auth = $auth;
     }
 
@@ -63,7 +63,7 @@ class OAuthToken
      * @throws \Illuminate\Auth\AuthenticationException
      */
     protected function authenticate(array $guards)
-    {
+    {   
         if (empty($guards)) {
             return $this->auth->authenticate();
         }

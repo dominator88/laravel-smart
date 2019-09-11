@@ -55,7 +55,7 @@ class SysFunc extends Backend {
 	/**
 	 * 读取
 	 */
-	function read(Request $request) {
+	function read(Request $request) {exit;
 		$config = [
 			'module' => $request->input('module',''),
 			'status' => $request->input('status', ''),
