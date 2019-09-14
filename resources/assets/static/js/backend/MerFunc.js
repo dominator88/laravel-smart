@@ -437,7 +437,7 @@ var optPrivilege = function(value, row) {
 };
 
 var optNode = function(value, row) {
-	return '<a href="#" data-id="' + row.id + '" class="btn btn-sm green nodeBtn"><i class="fa fa-key"></i> 节点</a>';
+	return '<a href="javascript:void" data-id="' + row.id + '" class="btn btn-sm green nodeBtn"><i class="fa fa-key"></i> 节点</a>';
 }
 
 var optEditNode = function(value, row) {

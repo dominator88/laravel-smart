@@ -52,6 +52,15 @@ class SysFunc extends Backend {
 
 	}
 
+	function find(Request $request,$id){
+		try{
+			$model = $this->service->getById($id);
+			return api_result('success', 0, $model);
+		}catch(\Exception $e){
+			return api_result($e->getMessage(), 500 );
+		}
+	}
+
 	/**
 	 * 读取
 	 */

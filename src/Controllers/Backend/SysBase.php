@@ -299,9 +299,9 @@ EOF;
     }
 
     public function update(Request $request ,$id){
-
+  
         $data = $request->except('_token' );
-
+        
         return json( $this->service->update( $id , $data ) );
     }
 

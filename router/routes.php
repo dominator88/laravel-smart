@@ -609,7 +609,7 @@ Route::group(['prefix' => 'backend/mergoodscatalog', 'namespace' => 'Smart\Contr
 Route::group([
 	'prefix'=>strtolower('Backend/api' ),
 	'namespace' => 'Smart\\Controllers\\Backend' ,
-	'middleware'=> ['api' ,'authentication.access_token:api']
+	'middleware'=> ['api' ,'auth.authencation:api']
 ],function(Router $router ){
 	$router->group(['prefix' => 'auth','middleware' => ['auth.resetPassword']],function($router){
 		$router->post('changepassword' , 'AuthController@changePassword');
@@ -637,6 +637,8 @@ Route::group([
 
 		$router->get('index', 'SysFunc@index');
 
+		$router->get('find/{id}', 'SysFunc@find');
+
 		$router->get('read', 'SysFunc@read');
 
 		$router->post('update/{id}', 'SysFunc@update');
@@ -646,7 +648,7 @@ Route::group([
 		$router->post('destroy', 'SysFunc@destroy');
 
 	});
-	$router->group(['prefix' => 'sysfunc'] , function($router){
+	$router->group(['prefix' => 'sysrole'] , function($router){
 
 		$router->get('index', 'SysRole@index');
 
