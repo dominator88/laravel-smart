@@ -63,6 +63,7 @@ var MerFunc = {
 			$addEditModal.find('.caption-subject').html('编辑' + Param.pageTitle);
 		} else if (type == 'node') {
 			$tablePortlet.slideUp('fast');
+
 			$nodePortlet.show();
 		} else if (type == 'addNode') {
 			$addNodePorlet.show();
@@ -241,19 +242,20 @@ var MerFunc = {
 
 		$(document).on('click', '.nodeBtn', function(e) {
 			e.preventDefault();
-			self.setPortletShow('node');
+			
 			var id = $(this).data('id')
 			var row = $('#treeGrid').TreeGrid('getRow', id);
 			data = {
 				source_id: row.id,
 				module: row.module,
-				symbol: row.id + '.'
+				symbol: row.id + '.func.'
 			}
 			console.log(row);
 			var $form = $('#addNodeForm')
 			$form.reloadForm(data)
 
 			$dataGrid2 = $('#dataGrid2');
+			$dataGrid2.TableGrid('clear');
 			$dataGrid2.TableGrid('setParam', {
 				//应用id
 				source_id: id,
@@ -261,7 +263,8 @@ var MerFunc = {
 				getall: true
 			});
 			$dataGrid2.TableGrid('reload');
-
+			
+			self.setPortletShow('node');
 
 		});
 
