@@ -8,7 +8,7 @@ namespace App\Api\Service\v1\test;
  * @version 2.0 , 2017-11-14
  */
 
-use App\Api\Service\v1\ApiService;
+use Smart\Service\ApiService;
 
 class LoginService extends ApiService {
 

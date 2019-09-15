@@ -7,7 +7,7 @@
  */
 
 
-use App\Api\Service\v1\ApiService;
+use Smart\Service\ApiService;
 
 use Smart\Service\SysAreaService;
 
@@ -26,7 +26,7 @@ class AreaService extends ApiService {
      */
     public $defaultParams = [
         'get' => [
-            'pid' => [ '上级ID' , '0' , PARAM_REQUIRED ] ,
+            'pid' => [ '上级ID' , '0' , self::PARAM_REQUIRED ] ,
         ] ,
     ];
 

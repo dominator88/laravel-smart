@@ -49,7 +49,7 @@ class Generate extends Backend {
 			'apiAuthUser' => $this->service->apiAuthUser,
 		//	'modules' => $modules,
 			'systemDefault' => [
-				'module' => 'Backend',
+				'module' => current($modules),
 				'tableName' => $this->data['tables'][0]->tableName,
 			],
 			'systemComponentsDefault' => [

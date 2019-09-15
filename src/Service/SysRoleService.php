@@ -74,7 +74,7 @@ class SysRoleService extends BaseService {
 			'page' => 1,
 			'pageSize' => 10,
 			'sort' => 'id',
-			'order' => 'DESC',
+			'order' => 'desc',
 			'count' => FALSE,
 			'getAll' => FALSE,
 		];
@@ -88,8 +88,9 @@ class SysRoleService extends BaseService {
 			return $model->count();
 		} else {
 			//     $this->getModel() = $this->getModel()->select( $param['field'] );
-			$data = $model->getAll($param)
-				->orderBy($param['order'], $param['sort'])->get()->toArray();
+			
+			$data = $model
+				->orderBy($param['sort'],$param['order'])->get();
 
 			return $data;
 

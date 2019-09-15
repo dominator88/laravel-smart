@@ -10,20 +10,14 @@
     }],
     "type": "library",
     "require": {
-        "php": ">=7.0.0",
-        "laravel/framework": "5.5.*",
-        "cebe/markdown": "^1.1",
-        "jpush/jpush": "^3.5",
-        "laravel/tinker": "~1.0",
-        "guzzlehttp/guzzle": "^6.2@dev",
-        "toplan/laravel-sms": "~2.6",
-        "intervention/image": "^2.3@dev",
-        "laravel/dusk": "^2.0@dev",
-        "overtrue/easy-sms": "1.1.*",
+        "php": "^7.1.3",
+        "laravel/framework": "5.8.*",
+        "intervention/image": "^2.5",
+        "overtrue/easy-sms": "^1.1",
         "prettus/l5-repository": "^2.6",
-        "barryvdh/laravel-cors": "v0.11.3",
-        "spatie/laravel-permission": "^2.36"
-        
+        "barryvdh/laravel-cors": "^0.11.4",
+        "laravel/passport": "^7.4",
+        "spatie/laravel-permission": "^2.38"
     },
     "require-dev": {
         "phpunit/phpunit": "~6.0"

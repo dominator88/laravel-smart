@@ -21,6 +21,7 @@ class Discover{
 		$dir = $this->root_dir.'/Service';
 
 		$dirs = $this->filesystem->directories($dir);
+		
 		$data = [];
 		foreach($dirs as $dir_children){
 			$version = substr($dir_children, strrpos($dir_children,'/')+1);
