@@ -54,6 +54,8 @@
     
     `php artisan smart:install`
 
+    `php artisan passport:install`
+
 为权限认证添加 模块,并设置为当前认证模型,  更改 confit/auth.php 文件
 
     <?php
