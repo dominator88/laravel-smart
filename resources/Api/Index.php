@@ -8,7 +8,7 @@
 namespace App\Api;
 
 
-use App\Api\Service\v1\ApiService;
+use Smart\Service\ApiService;
 use Illuminate\Http\Request;
 
 

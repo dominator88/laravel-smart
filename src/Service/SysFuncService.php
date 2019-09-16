@@ -113,10 +113,10 @@ class SysFuncService extends BaseService {
 			
             if(isset($val['children'])){
 
-              if( empty($val['children'])){
-                unset($val['children']);
+              if( $val->has('children') && $val->children->isNotEmpty()){
+				$func($val['children']);
               }else{
-                $func($val['children']);
+                unset($val->children);
               }
             }
           }
@@ -174,8 +174,10 @@ class SysFuncService extends BaseService {
 
 		$func = function(&$menus) use ($user,&$func){
 			foreach($menus as $k=>$menu){
-				if(isset($menu['children']) && !empty($menu['children'])){
+				if($menu->has('children') && $menu->children->isNotEmpty() ){
 					$func($menu['children']);
+				}else{
+					unset($menu->children);
 				}
 				if(!$user->can($menu['id'].'.func.read')){
 					unset($menus[$k]);
@@ -188,41 +190,6 @@ class SysFuncService extends BaseService {
 
 		return $new_arr;
 
-
-
-		/*$key = self::DEFAULT_KEY;
-
-		$data = DB::table('sys_func AS f')
-			->where('f.is_menu', 1)
-			->where('f.status', 1)
-			->where('f.module', "$module")
-			->whereIn('rp.role_id', $roleIds)
-			->where('fp.name', "read")
-			->leftJoin('sys_func_privilege AS fp', 'fp.func_id', '=', 'f.id')
-			->leftJoin('sys_role_permission AS rp', 'rp.privilege_id', '=', 'fp.id')
-			->orderBy('f.level', 'ASC')->orderBy('f.sort', 'ASC')->get(['f.id', 'f.sort', 'f.pid', 'f.name', 'f.icon', 'f.uri', 'f.level'])->toArray();
-
-		$result = [];
-		$index = [];
-		$func_ids = [];
-
-		foreach ($data as $row) {
-			if (in_array($row->id, $func_ids)) {
-				continue;
-			}
-
-			if ($row->pid == 0) {
-				$result[$row->id] = get_object_vars($row);
-				$index[$row->id] = &$result[$row->id];
-			} else {
-				$index[$row->pid][$key][$row->id] = get_object_vars($row);
-
-				$index[$row->id] = &$index[$row->pid][$key][$row->id];
-			}
-			$func_ids[] = $row->id;
-		}
-
-		return $this->treeToArray($result, self::DEFAULT_KEY);*/
 	}
 
 	/* public function withPrivilege($data) {
