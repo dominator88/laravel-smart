@@ -234,5 +234,37 @@ class SysRoleService extends BaseService {
 	return $model->role->getAllPermissions();
   }
 
+  /**
+     * 根据角色获取 授权
+     *
+     * @param $roleId
+     *
+     * @return mixed
+     */
+    public function getPermissionByRole( $id ) {
 
+        //通过原roleid 获取 库roleId
+        $sysRole = $this->getById($id);
+
+        $data = [];
+        if(isset($sysRole->role->permissions)){
+
+            $permissions = $sysRole->role->permissions->pluck('id');
+            $permissionService = ServiceManager::make(PermissionService::class);
+            $permissions = $permissionService->getByIds($permissions);
+            
+			$data = $permissions->pluck('node');
+            /* foreach($permissions as $permission){
+                if(!empty($permission->node)){
+                    $data_tmp = [
+                        'permission_id' => $permission->node->id
+                    ];
+                    array_push($data, $data_tmp);
+                }
+                
+            } */
+        }
+        return $data;
+
+    }
 }
