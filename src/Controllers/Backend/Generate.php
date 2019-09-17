@@ -37,8 +37,15 @@ class Generate extends Backend {
 		$modules = array_combine($modules, $modules);
 		
 		$discover = new Discover;
-		$versions = current($discover->version());
+		$versions =  array_values($discover->version());
+
+		$versions = array_map(function($val){
+		//	dump();
+			return current($val);
+		},$versions);
+
 		$versions = array_combine(array_column($versions, 'text'),array_column($versions, 'version'));
+
 		$this->_addParam([
 			'type' => $this->service->type,
 			'module' => $this->service->module,

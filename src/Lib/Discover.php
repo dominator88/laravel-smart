@@ -28,7 +28,7 @@ class Discover{
 			$readme = $dir.'/'.$version.'/readme.md';
 			if($this->filesystem->exists($readme)){
 				$tmp = json_decode($this->filesystem->get($readme),true);
-				$data[$tmp['group'] ][] = [
+				$data[$tmp['group']][] = [
 					'version' => $tmp['version'],
 					'text'    => $version,
 				];

@@ -8,7 +8,7 @@ namespace App\Api\Service\{apiVersion}\{directory};
  * @version 2.0 , {date}
  */
 
-use App\Api\Service\v1\ApiService;
+use Smart\Service\ApiService;
 
 class {name}Service extends ApiService {
 

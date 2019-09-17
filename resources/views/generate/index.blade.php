@@ -236,6 +236,7 @@
                                                     <?= form_radios('apiVersion' , $param['apiVer']) ?>
                                                 </div>
                                             </div><!-- end item -->
+                                            
                                             <!-- start item -->
                                             <div class="form-group">
                                                 <label class="col-md-3 control-label">是否验证用户</label>
