@@ -14,7 +14,8 @@ var Simulator = {
   init : function ( config ) {
     var self = this;
     $.extend( this.config , config );
-    self.initApiUri();
+    
+    self.initApiUri('v1');
     self.initBtn();
     self.initVersion();
   } ,
@@ -29,7 +30,7 @@ var Simulator = {
           continue;
         }
         var item = ret[ version ];
-        console.log(item)
+      //  console.log(item)
         options.push( '<optgroup label="' + version + '">' );
           if ( ret[ version ].length > 0 ) {
             for ( var i in item ) {
@@ -48,8 +49,10 @@ var Simulator = {
     },
   //初始化action
   initApiUri : function (version='') {
+
     self=this;
     $.get( Param.uri.readApi+"?version="+version , function ( ret ) {
+      $('#version').val(version);
       //console.log( ret ) ;
       var options = [];
       for ( var name in ret ) {
@@ -100,9 +103,9 @@ var Simulator = {
     } );
     $version.on('change' , function(){
       var $version = $('#version');
-
       //version
      $ver = $version.find('option:selected').data( 'directory' )
+    
       self.initApiUri($ver)
 
     });
@@ -255,7 +258,7 @@ var Simulator = {
     var $token = $form.find( 'input[name="api_token"]' );
     var $merId = $form.find( 'input[name="merId"]' );
     var html = '';
-    console.log($token);
+    //console.log($token);
     if ( $token.length > 0 ) {
       html = '<select name="api_token" class="form-control">';
 
