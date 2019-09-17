@@ -109,7 +109,7 @@ public function insert( $data ) {
     //  $rows = $this->getModel()->where( 'id' , $id )->update( $data );
       $role = Role::find($id);
 
-      isset($data['permission']) &&  $role->syncPermissions($permissions);
+      isset($data['permission']) &&  $role->syncPermissions($data['permissions']);
       
       return ajax_arr( "更新成功" , 0 );
     } catch ( \Exception $e ) {

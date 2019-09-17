@@ -299,13 +299,14 @@ class SysFuncService extends BaseService {
 	}
 
 
-		
+	//获取当前模块下的菜单列表	
 	public function getPermission($params){
 		$sysFuncs = $this->getModel()->where('module',$params['module'])->where('pid',0)->get();
 
 		$func = function($sysFuncs) use(&$func){
 
 			foreach($sysFuncs as $sysFunc){
+				$sysFunc->nodeFunc;
 				if(isset($sysFunc->children) && $sysFunc->children->count() > 0){
 					$func($sysFunc->children);
 				}
