@@ -145,16 +145,16 @@ EOF;
         $roleId = $request->input('roleId');
         $privilegeArr = $request->input('privilegeArr');
 
-        $SysRolePermission = ServiceManager::make(SysRolePermissionService::class);
-        $ret = $SysRolePermission->updateRolePermission($roleId, $privilegeArr);
+        $sysRoleService = ServiceManager::make(SysRoleService::class);
+        $ret = $sysRoleService->updateRolePermission($roleId, $privilegeArr);
 
-        return response()->json($ret);
+        return api_result('success',0);
     }
 
     function getPrivilegeData(Request $request) {
         $roleId = $request->input('roleId');
-        $sysRolePermission = ServiceManager::make(SysRolePermissionService::class);
-        return response()->json($sysRolePermission->getByRole($roleId));
+        $sysRoleService = ServiceManager::make(SysRoleService::class);
+        return $sysRoleService->getByRole($roleId);
     }
 
 

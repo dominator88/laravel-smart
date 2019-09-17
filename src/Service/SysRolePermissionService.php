@@ -94,6 +94,7 @@ class SysRolePermissionService extends BaseService {
      * @param $roleId
      *
      * @return mixed
+     * //待废弃
      */
     function getByRole( $roleId ) {
 
