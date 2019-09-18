@@ -97,8 +97,8 @@ class Simulator extends Backend {
 		$version = $request->input('version',$this->apiVersion);
 
 		$service = "App\\Api\\Service\\{$version}\\{$directory}\\{$action}Service";
-
-		$instance = $service::instance();
+		ServiceManager::bind($service);
+		$instance = ServiceManager::make($service);
 
 		if (empty($method)) {
 			$key = array_keys($instance->allowRequestMethod);

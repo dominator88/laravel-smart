@@ -35,7 +35,7 @@ class MerFunc extends Backend {
 
     public function __construct(Request $request){
         parent::__construct($request);
-        $this->service = ServiceManager::make( \Smart\Service\SysFuncService::class );
+        $this->service = SysFuncService::instance();
 
         $jsCode = <<<EOF
             {$this->controller}.init();

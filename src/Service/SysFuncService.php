@@ -38,7 +38,7 @@ class SysFuncService extends BaseService {
 
 	public $privilege = null;
 
-	
+
 
 	//默认行
 	public function getDefaultRow() {
@@ -126,7 +126,7 @@ class SysFuncService extends BaseService {
 
         $param = extend( $default , $param );
 		$model = $this->getModel()->where('pid',0);
-		
+		 
 		if($param['with']){
 			$model = $model->with($param['with']);
 		}

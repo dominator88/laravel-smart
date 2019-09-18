@@ -1,5 +1,7 @@
 <?php
 namespace Smart\Traits\Service;
+
+use Facades\Smart\Service\ServiceManager;
 use Illuminate\Database\Eloquent\Model;
 
 trait Instance{
@@ -9,28 +11,27 @@ trait Instance{
 
 	private  $model;
 
-    //得到当前服务
-	public static function instance() {
+	
+	
+	public static function instance(){
+		$class_name = get_class();
+		ServiceManager::bind($class_name);
+		$instance = ServiceManager::make($class_name);
 
-		$class_name = get_class(); 
-		app()->singleton($class_name, function ($app) use($class_name) {
-		    $service =  new $class_name;
-		    if(isset($service->model_class) && class_exists($service->model_class)){
-		    	$service->model = new $service->model_class;
-		    }
-		   
-		   return $service;
-		});
-		return  resolve($class_name);
+		if(isset($instance->model_class) && $instance->model_class ){
+			$instance->setModel(new $instance->model_class);
+		}
 
-	}
+		return $instance;
+	}	
     
-    protected  function getModel(){
-        return self::instance()->model;
+    public  function getModel(){
+        return $this->model;
     }
 
-    protected function setModel(Model $model){
-    	self::instance()->model = $model;
+    public function setModel(Model $model){
+
+    	$model && $this->model = $model;
     }
 
     

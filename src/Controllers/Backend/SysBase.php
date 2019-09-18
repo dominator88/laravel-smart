@@ -73,12 +73,16 @@ EOF;
         $controller = ucfirst($this->controller);
         $module = ucfirst($this->module);
        if(class_exists('App\\'.$module .'\\Service\\'.$controller.'Service')){
-            $this->service = ServiceManager::make( 'App\\'.$module .'\\Service\\'.$controller.'Service');
+           $className = 'App\\'.$module .'\\Service\\'.$controller.'Service';
+           
        }elseif(class_exists('App\\Service\\'.$controller.'Service')){
-            $this->service = ServiceManager::make( 'App\\Service\\'.$controller.'Service');
+           $className = 'App\\Service\\'.$controller.'Service';
+            
        }elseif(class_exists('Smart\\Service\\'.$controller.'Service')){
-            $this->service = ServiceManager::make( 'Smart\\Service\\'.$controller.'Service');
+           $className = 'Smart\\Service\\'.$controller.'Service';
+            
        }
+       $this->service = $className::instance();
         
     }
 

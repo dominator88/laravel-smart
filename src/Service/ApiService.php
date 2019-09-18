@@ -17,6 +17,8 @@ class ApiService {
     const PARAM_DIGIT    = 'digit';
     const PARAM_POSITIVE = 'positive';
 
+//    public static $instance;
+
     use \Smart\Traits\Service\Instance;
 
     public $debug           = TRUE;
@@ -60,6 +62,15 @@ class ApiService {
     public function getError( $code ) {
         return api_result( $this->code[ $code ] , $code );
     }
+
+    // public static function instance( $params = [] ) {
+    //     if ( self::$instance == NULL ) {
+    //         self::$instance         = new ApiService();
+    //         self::$instance->params($params);
+    //     }
+
+    //     return self::$instance;
+    // }
 
     /**
      * 数据签名

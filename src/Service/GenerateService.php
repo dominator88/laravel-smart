@@ -17,7 +17,7 @@ define('API_TEMP_BASE_PATH', __DIR__ . '/../../templates/generate/api');
 define('APP_PATH', app_path());
 define('BASE_PATH', base_path());
 
-class GenerateService {
+class GenerateService implements SmartService{
 
 	public $type = [
 		'system' => '管理模块',
@@ -222,6 +222,10 @@ class GenerateService {
 		'tmp' => API_TEMP_BASE_PATH . '/api.txt',
 		'authUser' => API_TEMP_BASE_PATH . '/auth_user.txt',
 	];
+
+	public function params($params = []){
+		$this->params = $params;
+	}
 
 	private static $instance;
 

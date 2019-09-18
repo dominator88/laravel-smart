@@ -13,6 +13,7 @@ use Smart\Extentions\EloquentUserProvider;
 use Illuminate\Support\Facades\Auth;
 use File;
 use App;
+use Facades\Smart\Service\ServiceManager;
 
 class SmartServiceProvider extends ServiceProvider {
 
@@ -99,6 +100,8 @@ class SmartServiceProvider extends ServiceProvider {
 
 		$this->registerModuleProvider();
 
+		$this->registerModuleService();
+
 		$this->commands($this->commands);
 	}
 
@@ -150,6 +153,15 @@ class SmartServiceProvider extends ServiceProvider {
 			$dir = app_path() . '/' . ucfirst($module) . '/Providers';
 			$this->loadProviders($dir);
 			
+		}
+	}
+
+	//注册模块服务
+	protected function registerModuleService(){
+		$modules = explode(',', config('backend.module_ext'));
+		
+		foreach($modules as $module){
+			ServiceManager::registerModule(ucfirst($module));
 		}
 	}
 
