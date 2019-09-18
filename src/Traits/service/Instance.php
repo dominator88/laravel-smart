@@ -18,7 +18,7 @@ trait Instance{
 		ServiceManager::bind($class_name);
 		$instance = ServiceManager::make($class_name);
 
-		if(isset($instance->model_class) && $instance->model_class ){
+		if(isset($instance->model_class) && $instance->model_class  && empty($instance->model)){
 			$instance->setModel(new $instance->model_class);
 		}
 
