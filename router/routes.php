@@ -609,7 +609,7 @@ Route::group(['prefix' => 'backend/mergoodscatalog', 'namespace' => 'Smart\Contr
 Route::group([
 	'prefix'=>strtolower('Backend/api' ),
 	'namespace' => 'Smart\\Controllers\\Backend' ,
-	'middleware'=> ['api' ,'auth.authencation:api']
+	'middleware'=> ['api' ,'auth.authencation:api','auth.cors']
 ],function(Router $router ){
 	$router->group(['prefix' => 'auth','middleware' => ['auth.resetPassword']],function($router){
 		$router->post('changepassword' , 'AuthController@changePassword');

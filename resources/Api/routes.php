@@ -6,10 +6,8 @@
  * Time: 16:12
  */
 //接口路由
-Route::group(['prefix'=>'api/{version}','namespace'=>'App\Api' , 'middleware'=> ['api','auth.checkSignature','auth.cors', 'auth.authencation']],function(){
+Route::group(['prefix'=>'api/{version}','namespace'=>'App\Api' , 'middleware'=> ['api','auth.checkSignature','auth.cors', 'auth.authencation:api']],function(){
 
     Route::any('{direction}/{action}' , 'Index@index');
-
-
 
 });

@@ -15,32 +15,16 @@ class ServiceManager {
 	}
 
 	/**
-	 * 注册Service
-	 * @param $classPath 为目录id
-	 *
-	 */
-	public function registerModule($module) {
-		$path = app_path().'/'.ucfirst($module).'/Service';
-		$filesystem = resolve('files');
-		$files = $filesystem->allFiles($path);
-		$class_prefix = 'App\\'.ucfirst($module).'\\Service\\';
-		$file_collect = collect();
-		foreach($files as $file){
-			$file_collect->push($class_prefix.$filesystem->name($file));
-		}
-		$file_collect->each(function($item){
-			$this->bind($item);
-		});
-		
-	}
-
-	/**
 	 * 实例化service
 	 *
 	 */
 	public function make($serviceName,$params = []) {
 		$service = app()->make($serviceName);
-		$service->params($params);
+
+		if($service instanceof SmartService){
+			$service->params($params);
+		}
+		
 		return $service;
 	}
 

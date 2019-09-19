@@ -161,8 +161,22 @@ class SmartServiceProvider extends ServiceProvider {
 		$modules = explode(',', config('backend.module_ext'));
 		
 		foreach($modules as $module){
-			ServiceManager::registerModule(ucfirst($module));
+			$this->registerModule(ucfirst($module));
 		}
+	}
+
+	private function registerModule($module) {
+		$path = app_path().'/'.ucfirst($module).'/Service';
+		$filesystem = resolve('files');
+		$files = $filesystem->allFiles($path);
+		$class_prefix = 'App\\'.ucfirst($module).'\\Service\\';
+		$file_collect = collect();
+		foreach($files as $file){
+			$file_collect->push($class_prefix.$filesystem->name($file));
+		}
+		$file_collect->each(function($item){
+			ServiceManager::bind($item);
+		});	
 	}
 
 
