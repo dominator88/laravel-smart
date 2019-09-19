@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Smart\Models\SysApiLog;
 
-class ApiService {
+class ApiService implements SmartService {
 
     const PARAM_REQUIRED = 'required';
     const PARAM_DIGIT    = 'digit';
