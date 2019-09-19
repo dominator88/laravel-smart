@@ -9,7 +9,7 @@ namespace Smart\Service;
 
 use Illuminate\Support\Facades\Auth;
 
-class BaseService implements SmartService{
+class BaseService implements ParamService{
 
 	 use \Smart\Traits\Service\ActionName;
 	 

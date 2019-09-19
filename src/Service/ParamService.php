@@ -1,7 +1,7 @@
 <?php
 namespace Smart\Service;
 
-interface SmartService{
+interface ParamService{
 
     public function params($params);
 }

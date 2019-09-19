@@ -21,7 +21,7 @@ class ServiceManager {
 	public function make($serviceName,$params = []) {
 		$service = app()->make($serviceName);
 
-		if($service instanceof SmartService){
+		if($service instanceof ParamService){
 			$service->params($params);
 		}
 		
