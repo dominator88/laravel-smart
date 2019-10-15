@@ -239,6 +239,7 @@ class GenerateService {
 	/*	foreach ($modules as $m) {
 			$this->module = array_merge($this->module, [ucfirst($m['symbol']) => $m['symbol']]);
 		}*/
+		
 		$modules = explode(',',config('backend.module_ext'));
         $modules = array_combine($modules, $modules);
         $this->module = $modules;

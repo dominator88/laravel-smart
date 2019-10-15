@@ -7,28 +7,32 @@
  */
 namespace Smart\Service;
 
+
 class ServiceManager {
 
 	public function __construct() {
-
-	}
-
-	/**
-	 * 注册Service
-	 * @param $classPath
-	 *
-	 */
-	public function register($classPath) {
-
+		
 	}
 
 	/**
 	 * 实例化service
 	 *
 	 */
-	public function make($serviceName) {
+	public function make($serviceName,$params = []) {
+		$service = app()->make($serviceName);
 
-		return $serviceName::instance();
+		if($service instanceof ParamService){
+			$service->params($params);
+		}
+		
+		return $service;
+	}
+
+	//绑定class至容器
+	public function bind($className){
+		app()->singleton($className,function($app) use ($className){
+			return new $className;
+		});
 
 	}
 

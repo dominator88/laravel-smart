@@ -48,6 +48,7 @@
                                             <div class="form-group">
                                                 <label class="col-md-3 control-label">模块</label>
                                                 <div class="col-md-7">
+                                                    
                                                     {!! form_radios('module',$param['module']) !!}
 
                                                 </div>

@@ -33,7 +33,7 @@ class Backend extends SysBase{
         parent::_init($pageTitle);
 
         
-        $SysFuncService = ServiceManager::make(SysFuncService::class );
+        $SysFuncService = SysFuncService::instance();
 
 
       $this->user = Auth::user();

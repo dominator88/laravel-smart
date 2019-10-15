@@ -8,11 +8,15 @@ namespace App\Api\Service\{apiVersion}\{directory};
  * @version 2.0 , {date}
  */
 
-use App\Api\Service\v1\ApiService;
+use Smart\Service\ApiService;
 
 class {name}Service extends ApiService {
 
   use \Smart\Traits\Service\Instance;
+
+  public function __construct(){
+    
+  }
   //允许的请求方式
 	public $allowRequestMethod = [
 	  'get'  => 'GET - 取{desc}',

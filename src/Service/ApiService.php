@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Smart\Models\SysApiLog;
 
-class ApiService {
+class ApiService  implements ParamService{
 
     const PARAM_REQUIRED = 'required';
     const PARAM_DIGIT    = 'digit';
@@ -28,6 +28,8 @@ class ApiService {
     public $merId           = '';
     public $error           = '';
     public $errCode         = 500;
+
+    public $service;
 
     public $token = '';
 

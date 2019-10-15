@@ -1,6 +1,8 @@
 <?php
 namespace Smart\Traits\Service;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 trait GridTable {
   /**
    * 根据id 查询
@@ -9,8 +11,24 @@ trait GridTable {
    *
    * @return mixed
    */
-  public function getById( $id ) {
-    return $this->getModel()->find( $id );
+  public function getById( $id,$with = [] ) {
+    try{
+      if($with){
+        $model = $this->getModel()->with($with);
+      }else{
+        $model = $this->getModel();
+      }
+      
+      $result = $model->findOrFail( $id );
+      return $result;
+    }catch(\Exception $e){
+      if($e instanceof ModelNotFoundException){
+        throw new \Exception('当前id的模型不存在');
+      }else{
+        throw $e;
+      }
+    }
+    
   }
   
   /**
@@ -72,6 +90,33 @@ trait GridTable {
     } catch ( \Exception $e ) {
       return ajax_arr( $e->getMessage() , 500 );
     }
+  }
+
+  public function save($param){
+    try{
+      $this->validator($param);
+      if(isset($param['id']) && $param['id']){
+        $model = $this->getModel()->findOrFail($param['id']);
+        $model->update($param);
+        return $model;
+
+      }else{
+        $result = $this->getModel()->create($param);
+      }
+      return $result;
+    }catch(\Exception $e){
+      if($e instanceof ModelNotFoundException ){
+        throw new \Exception('当前id对应的模型不存在');
+      }else{
+        throw $e;
+      }
+      
+    }
+  
+  }
+
+  protected function validator($param){
+
   }
   
 }
