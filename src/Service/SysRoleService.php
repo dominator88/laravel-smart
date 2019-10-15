@@ -247,15 +247,18 @@ class SysRoleService extends BaseService {
 
         //通过原roleid 获取 库roleId
         $sysRole = $this->getById($id);
+        if(empty($sysRole)){
+          throw new \Exception('当前角色不存在');
+        }
 
         $data = [];
         if(isset($sysRole->role->permissions)){
 
             $permissions = $sysRole->role->permissions->pluck('id');
-            $permissionService = ServiceManager::make(PermissionService::class);
+            $permissionService =  PermissionService::instance();
             $permissions = $permissionService->getByIds($permissions);
             
-			$data = $permissions->pluck('node');
+			      $data = $permissions->pluck('node');
             /* foreach($permissions as $permission){
                 if(!empty($permission->node)){
                     $data_tmp = [
@@ -292,7 +295,7 @@ class SysRoleService extends BaseService {
 	public function syncPermissions($roleId,$nodes){
         $sysRole = $this->getById($roleId);
         //获取node 集合
-        $sysPermissionNodeService = ServiceManager::make(SysPermissionNodeService::class );
+        $sysPermissionNodeService = SysPermissionNodeService::instance();
         $nodes = $sysPermissionNodeService->getByIds($nodes);
         
         $permissions = [];

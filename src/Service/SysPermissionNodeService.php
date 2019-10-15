@@ -55,6 +55,7 @@ class SysPermissionNodeService extends BaseService {
     'symbol' => '',
     'pid'    => 0,
     'status' => '',
+    'count' => 0,
     'key'    => 'children'
   ];
 
@@ -78,8 +79,10 @@ class SysPermissionNodeService extends BaseService {
     return [];
   }
 
-  $data = $this->getModel()->with('children')->sourceId($param['source_id'])->type($param['type'])->module($param['module'])->status($param['status'])->orderBy('level' , 'ASC')->orderBy('sort' , 'ASC')->get($param['field'])->toArray();
-
+  $data = $this->getModel()->with('children')->sourceId($param['source_id'])->type($param['type'])->module($param['module'])->status($param['status'])->orderBy('level' , 'ASC')->orderBy('sort' , 'ASC')->get($param['field']);
+  if ( $param['count'] ) {
+    return $data->count();
+}
   $data = $func($data);
 
   return $this->treeToArray( $data, $param['key'] );
@@ -98,7 +101,7 @@ public function getPrivilege($param){
   return $this->getModel()->sourceId($param['source_id'])->module($param['module'])->status($param['status'])->type($param['type'])->orderBy('sort', 'ASC')->get();
 }
   
-
+ 
 //新增节点即新增权限
 public function insert( $data ) {
   try {

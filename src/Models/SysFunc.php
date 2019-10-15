@@ -13,6 +13,8 @@ class SysFunc extends Model {
 
 	use \Smart\Traits\Service\Scope;
 
+	protected $fillable = ['module','pid','level','sort','is_menu','is_func','color','name','icon','uri','desc','status'];
+
 	public function scopeIsMenu($query, $param) {
 		if ($param) {
 			return $query->where('is_menu', $param);
