@@ -402,9 +402,6 @@ class SysFuncService extends BaseService {
 				
 				$sysFuncExtendService->updateOrCreate( $data_extend,$id);
 			}
-			if ( $rows == 0 ) {
-				return ajax_arr( "未更新任何数据", 0 );
-			}
 			
 			return ajax_arr( "更新成功", 0 );
 		} catch ( \Exception $e ) {
