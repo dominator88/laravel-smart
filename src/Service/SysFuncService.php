@@ -398,7 +398,8 @@ class SysFuncService extends BaseService {
 					'extend_notCache' => $data['extend_notCache'],
 					'extend_showAlways' => $data['extend_showAlways'],
 				];
-				$sysFuncExtendService = ServiceManager::make(SysFuncExtendService::class);
+				$sysFuncExtendService = SysFuncExtendService::instance();
+				
 				$sysFuncExtendService->updateOrCreate( $data_extend,$id);
 			}
 			if ( $rows == 0 ) {
