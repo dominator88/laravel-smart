@@ -20,6 +20,7 @@ trait GridTable {
       }
       
       $result = $model->findOrFail( $id );
+      
       return $result;
     }catch(\Exception $e){
       if($e instanceof ModelNotFoundException){

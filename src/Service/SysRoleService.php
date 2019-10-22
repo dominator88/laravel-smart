@@ -252,6 +252,7 @@ class SysRoleService extends BaseService {
         }
 
         $data = [];
+        
         if(isset($sysRole->role->permissions)){
 
             $permissions = $sysRole->role->permissions->pluck('id');
@@ -288,18 +289,20 @@ class SysRoleService extends BaseService {
         if(!$result){
             throw new \Exception('更新权限失败');
         }
-		return $result;
-     
-	}
+      return $result;
+      
+    }
 	
 	public function syncPermissions($roleId,$nodes){
         $sysRole = $this->getById($roleId);
         //获取node 集合
         $sysPermissionNodeService = SysPermissionNodeService::instance();
-        $nodes = $sysPermissionNodeService->getByIds($nodes);
-        
+        $permission_nodes = $sysPermissionNodeService->getByIds($nodes);
+        if(count($nodes) > 0 && $permission_nodes->count() == 0){
+          throw new \Exception('选中了权限结点,但并没有这样权限');
+        }
         $permissions = [];
-        foreach($nodes as $node){
+        foreach($permission_nodes as $node){
             array_push($permissions, $node->permission->id);
         }
        
