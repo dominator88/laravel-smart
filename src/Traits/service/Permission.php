@@ -46,12 +46,18 @@ trait Permission{
 	}	
 
 	//更新用户角色
-	private function updateRoles($id,$roleIds){
-        $model = $this->getModel()->find($id);
-        $sysRoleService = SysRoleService::instance();
-        $roles = $sysRoleService->getRoles($roleIds);
+	public function updateRoles($id,$roleIds){
+        try{
+            $user = $this->getModel()->find($id);
+            $sysRoleService = SysRoleService::instance();
+            $roles = $sysRoleService->getRoles($roleIds);
       
-        $model->syncRoles($roles);
-        return true;
+            $user->syncRoles($roles);
+            return true;
+          }catch(\Exception $e){
+            throw $e;
+          }  
     }
+
+    
 }
