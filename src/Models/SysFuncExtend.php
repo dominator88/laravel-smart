@@ -18,4 +18,9 @@ class SysFuncExtend extends Model {
     use \Smart\Traits\Service\Scope;
 
     public $fillable = ['func_id', 'extend_name','extend_path','extend_component', 'extend_notCache', 'extend_showAlways'];
+
+    protected $casts = [
+        'extend_notCache' => 'string',
+        'extend_showAlways' => 'string',
+    ];
 }
