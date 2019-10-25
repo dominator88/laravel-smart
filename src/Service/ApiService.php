@@ -31,6 +31,8 @@ class ApiService implements ParamService {
     public $error           = '';
     public $errCode         = 500;
 
+    public $service;
+
     public $token = '';
 
     //出错代码表
