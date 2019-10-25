@@ -19,9 +19,7 @@ trait TreeTable {
 		if ( empty( $pid ) ) {
 			return 1;
 		}
-		if($pid == 0){
-			return 1;
-		}
+
 		$data = $this->getById( $pid );
 		if ( empty( $data ) ) {
 			return 1;
