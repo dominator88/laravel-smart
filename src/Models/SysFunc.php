@@ -52,5 +52,10 @@ class SysFunc extends Model {
 		return $this->hasOne(SysFuncExtend::class,'func_id');
 	}
 
+	protected $casts = [
+		'is_menu' => 'string',
+		'is_func' => 'string',
+	];
+
 
 }

@@ -147,8 +147,12 @@ class SmartServiceProvider extends ServiceProvider {
 	}
 
 	protected function registerModuleProvider(){
+		
 		$modules = explode(',', config('backend.module_ext'));
-
+		
+		if(empty(array_filter($modules))){
+			return;
+		}
 		foreach($modules as $module){
 			$dir = app_path() . '/' . ucfirst($module) . '/Providers';
 			$this->loadProviders($dir);
@@ -167,6 +171,10 @@ class SmartServiceProvider extends ServiceProvider {
 
 	private function registerModule($module) {
 		$path = app_path().'/'.ucfirst($module).'/Service';
+		if(!File::isDirectory($path)){
+			return ;
+		}
+
 		$filesystem = resolve('files');
 		$files = $filesystem->allFiles($path);
 		$class_prefix = 'App\\'.ucfirst($module).'\\Service\\';

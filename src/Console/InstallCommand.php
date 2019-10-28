@@ -51,6 +51,7 @@ class InstallCommand extends Command
             $this->initExampleController($module);
             $this->initMigration($module);
             $this->initMiddleware($module);
+            $this->initService($module);
             $this->initProviders($module);
         }else{
 
@@ -113,6 +114,11 @@ class InstallCommand extends Command
     public function initMigration($module){
         $this->makeDir('migrations');
         $this->line('init migration success!');
+    }
+
+    public function initService($module){
+        $this->makeDir('Service');
+        $this->line('init service success!');
     }
 
     public function initMiddleware($module){
