@@ -174,23 +174,18 @@ public function update( $id, $data ) {
    *
    * @return array
    */
-  public function destroy( $ids ) {
-    try {
-      //查看是否有下级数据
-      $childrenData = $this->getByPid( $ids );
-      if ( ! empty( $childrenData ) ) {
-        throw new \Exception( '还有下级数据,不能删除' );
-      }
-      
-      //删除数据
-      $rows = $this->getModel()->destroy( $ids );
-      if ( $rows == 0 ) {
-        return ajax_arr( '未删除任何数据', 0 );
-      }
-      
-      return ajax_arr( "成功删除{$rows}行数据", 0 );
-    } catch ( \Exception $e ) {
-      return ajax_arr( $e->getMessage(), 500 );
+  public function destroy($ids ){
+    try{
+      $sysPermissionNodes = $this->getModel()->whereIn('id',$ids)->get();
+      $sysPermissionNodes->each(function($item){
+        if($item->permission){
+          $item->permission->delete();
+        }
+        $item->delete();
+      });  
+      return true;
+    }catch(\Exception $e){
+      throw $e;
     }
   }
 
@@ -206,6 +201,37 @@ public function update( $id, $data ) {
     }
 
     return $permissions;
+}
+
+public function save($param){
+  try{
+      $param['level'] = $this->getLevel( $param['pid'] );
+      if(isset($param['id']) && $param['id']){
+        $model = $this->getModel()->findOrFail($param['id']);
+   //     unset($param['symbol']);
+        $model->update($param);
+        return $model;
+      }else{
+          if(!empty($param['symbol'])){
+
+              $permission = Permission::create(['name'=> $param['symbol'].Str::random(8),'guard_name' => 'admin']);
+        
+              $param['permission_id'] = $permission->id;
+          }else{
+              throw new \Exception('权限节点标记不能为空');
+          }
+
+        $result = $this->getModel()->create($param);
+      }
+      return $result;
+  }catch(\Exception $e){
+      if($e instanceof ModelNotFoundException ){
+        throw new \Exception('当前id对应的模型不存在');
+      }else{
+        throw $e;
+      }
+      
+  }
 }
 
 
