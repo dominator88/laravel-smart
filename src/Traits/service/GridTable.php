@@ -9,8 +9,13 @@ trait GridTable {
    *
    * @return mixed
    */
-  public function getById( $id ) {
-    return $this->getModel()->find( $id );
+  public function getById( $id,$with = [] ) {
+    if(empty($with)){
+      return $this->getModel()->findOrFail( $id );
+    }else{
+      return $this->getModel()->with($with)->findOrFail($id);
+    }
+    
   }
   
   /**
@@ -77,6 +82,7 @@ trait GridTable {
 
   public function save($param){
     try{
+      $this->validator($param);
       if(isset($param['id']) && $param['id']){
         $model = $this->getModel()->findOrFail($param['id']);
         $model->update($param);
@@ -95,6 +101,10 @@ trait GridTable {
       
     }
   
+  }
+
+  protected function validator($param){
+
   }
   
 }

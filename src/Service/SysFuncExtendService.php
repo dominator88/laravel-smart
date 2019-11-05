@@ -81,6 +81,7 @@ public function getByCond( $param ) {
 
 
   public function updateOrCreate($data ,$id = 0){
+
       return $this->getModel()->updateOrCreate(['func_id' => $id], $data);
     
   }

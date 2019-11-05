@@ -192,5 +192,27 @@ trait TreeTable {
 		
 		return $arr;
 	}
+
+	public function save($param){
+		try{
+
+		  $param['level'] = $this->getLevel( $param['pid'] );
+		  if(isset($param['id']) && $param['id']){
+			$model = $this->getModel()->findOrFail($param['id']);
+			$model->update($param);
+			return $model;
+		  }else{
+			$result = $this->getModel()->create($param);
+		  }
+		  return $result;
+		}catch(\Exception $e){
+		  if($e instanceof ModelNotFoundException ){
+			throw new \Exception('当前id对应的模型不存在');
+		  }else{
+			throw $e;
+		  }
+		  
+		}
+	}
 	
 }

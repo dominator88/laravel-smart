@@ -40,13 +40,13 @@ class OAuthToken
     {	
         
         try{
-
+            
         	$authorization = $request->header('Authorization');
 
         	if($authorization){
             	$this->authenticate($guards);
             }else{
-         //       throw new AuthenticationException('Unauthenticated.', $guards);
+                throw new AuthenticationException('Unauthenticated.', $guards);
             }
             return $next($request);
         }catch(AuthenticationException $e){

@@ -90,7 +90,7 @@ class SysFuncService extends BaseService {
 		$default = [
 			'field' => ['*'],
 		//	'module' => 'backend',
-			'with' => '',
+			'with' => [],
 			'isMenu' => '',
 			'pid' => 0,
 			'status' => '',
@@ -319,7 +319,7 @@ class SysFuncService extends BaseService {
 					'extend_notCache' => $data['extend_notCache'],
 					'extend_showAlways' => $data['extend_showAlways'],
 				];
-				$sysFuncExtendService = ServiceManager::make(SysFuncExtendService::class);
+				$sysFuncExtendService = SysFuncExtendService::instance();
 				$sysFuncExtendService->updateOrCreate($data_extend, $id);
 			}
 			return ajax_arr( '创建成功', 0, [ 'id' => $id ] );
@@ -364,7 +364,7 @@ class SysFuncService extends BaseService {
 					'extend_notCache' => $data['extend_notCache'],
 					'extend_showAlways' => $data['extend_showAlways'],
 				];
-				$sysFuncExtendService = ServiceManager::make(SysFuncExtendService::class);
+				$sysFuncExtendService = SysFuncExtendService::instance();
 				$sysFuncExtendService->updateOrCreate( $data_extend,$id);
 			}
 			if ( $rows == 0 ) {

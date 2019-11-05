@@ -22,6 +22,7 @@ class CreateSysRoleTable extends Migration
             $table->tinyInteger('status');
             $table->string('desc')->nullable();
             $table->tinyInteger('rank')->default(0);
+            $table->integer('role_id')->default(0);
 
         });
     }

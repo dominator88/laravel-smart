@@ -10,6 +10,7 @@ public function getByCond( $param ) {
     'field'    => [ '*'],
     'keyword'  => '',
     'status'   => '',
+    'with'     => [],
     'page'     => 1,
     'pageSize' => 10,
     'sort'     => 'id',
@@ -21,6 +22,9 @@ public function getByCond( $param ) {
   $param = extend( $default, $param );
 
   $model = $this->getModel()->keyword($param['keyword'])->status($param['status']);
+  if(!empty($param['with'])){
+    $model = $model->with($param['with']);
+  }
 
   if ( $param['count'] ) {
     return $model->count();

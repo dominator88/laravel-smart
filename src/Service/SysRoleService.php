@@ -220,6 +220,7 @@ class SysRoleService extends BaseService {
   }
 
   public function getRoles($roles){
+	
   	$sysRoles = $this->getModel()->whereIn('id',$roles)->get();
   	$roles = collect();
   	foreach($sysRoles as $sysRole){
@@ -234,6 +235,116 @@ class SysRoleService extends BaseService {
 	$model = $this->getModel()->find($id);
 	return $model->role->getAllPermissions();
   }
+
+  /**
+     * 根据角色获取 授权
+     *
+     * @param $roleId
+     *
+     * @return mixed
+     */
+    public function getPermissionByRole( $id ) {
+
+        //通过原roleid 获取 库roleId
+        $sysRole = $this->getById($id);
+        if(empty($sysRole)){
+          throw new \Exception('当前角色不存在');
+        }
+
+        $data = [];
+        
+        if(isset($sysRole->role->permissions)){
+
+            $permissions = $sysRole->role->permissions->pluck('id');
+            $permissionService =  PermissionService::instance();
+            $permissions = $permissionService->getByIds($permissions);
+            
+			      $data = $permissions->pluck('node');
+            /* foreach($permissions as $permission){
+                if(!empty($permission->node)){
+                    $data_tmp = [
+                        'permission_id' => $permission->node->id
+                    ];
+                    array_push($data, $data_tmp);
+                }
+                
+            } */
+        }
+        return $data;
+
+	}
+
+	/**
+     * 更新角色授权
+     *
+     * @param $roleId
+     * @param $privilegeArr
+     *
+     * @return array
+     */
+    public function updateRolePermission( $roleId, $nodeArr ) {
+
+        $result = $this->syncPermissions($roleId,$nodeArr);
+        
+        if(!$result){
+            throw new \Exception('更新权限失败');
+        }
+      return $result;
+      
+    }
+	
+	public function syncPermissions($roleId,$nodes){
+        $sysRole = $this->getById($roleId);
+        //获取node 集合
+        $sysPermissionNodeService = SysPermissionNodeService::instance();
+        $permission_nodes = $sysPermissionNodeService->getByIds($nodes);
+        if(count($nodes) > 0 && $permission_nodes->count() == 0){
+          throw new \Exception('选中了权限结点,但并没有这样权限');
+        }
+        $permissions = [];
+        foreach($permission_nodes as $node){
+            array_push($permissions, $node->permission->id);
+        }
+       
+        $sysRole->role->syncPermissions($permissions);
+
+        return true;
+	}
+	
+	/**
+     * 根据角色获取 授权
+     *
+     * @param $roleId
+     *
+     * @return mixed
+     * //待废弃
+     */
+    function getByRole( $roleId ) {
+
+        //通过原roleid 获取 库roleId
+        $sysRole = $this->getById($roleId);
+
+        $data = [];
+        if(isset($sysRole->role->permissions)){
+
+            $permissions = $sysRole->role->permissions->pluck('id');
+            $permissionService = ServiceManager::make(PermissionService::class);
+            $permissions = $permissionService->getByIds($permissions);
+            
+
+            foreach($permissions as $permission){
+                if(!empty($permission->node)){
+                    $data_tmp = [
+                        'privilege_id' => $permission->node->id
+                    ];
+                    array_push($data, $data_tmp);
+                }
+                
+            }
+        }
+        return $data;
+     //   return $this->getModel()->where( 'role_id', $roleId )->get()->toArray();
+    }
 
 
 }
