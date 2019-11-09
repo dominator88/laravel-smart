@@ -3,6 +3,7 @@ namespace Smart\Traits\Service;
 
 use Smart\Service\SysPermissionNodeService;
 use Smart\Service\SysRoleService;
+use Smart\Service\SysUserService;
 
 trait Permission{
 
@@ -48,16 +49,42 @@ trait Permission{
 	//更新用户角色
 	public function updateRoles($id,$roleIds){
         try{
-            $user = $this->getModel()->find($id);
+            $sysUserService = SysUserService::instance();
+            $user = $sysUserService->getById($id);
             $sysRoleService = SysRoleService::instance();
             $roles = $sysRoleService->getRoles($roleIds);
-      
             $user->syncRoles($roles);
             return true;
           }catch(\Exception $e){
             throw $e;
           }  
+	}
+	
+	//当前登陆用户是否拥有某个权限
+    public function validatePermission($user_id, $permission){
+        $sysPermissionNodeService = SysPermissionNodeService::instance();
+        $permissionNode = $sysPermissionNodeService->getPermission($permission);
+        if(!$permissionNode){
+            throw new \Exception('权限节点不存在');
+        }
+        $sysUserService = SysUserService::instance();
+        $user = $sysUserService->getById($user_id);
+        $result = $sysUserService->hasPermission($user, $permissionNode);
+        if( $result){
+            return $result;
+        }else{
+            throw new \Exception('当前用户并没有该功能的操作权限');
+        }
     }
+
+    //通过权限id 或权限标识
+    public function getPermission($permission){
+        if(is_numeric($permission)){
+          return $this->getModel()->find($permission);
+        }else{
+          return $this->getModel()->where('symbol',$permission)->first();
+        }
+      }
 
     
 }

@@ -17,6 +17,13 @@ class ApiService implements ParamService {
     const PARAM_DIGIT    = 'digit';
     const PARAM_POSITIVE = 'positive';
 
+
+    public $method_permission = [
+        'get' => '',
+        'post' => '',
+        'put' => '',
+        'delete' => '',
+    ];
 //    public static $instance;
 
     use \Smart\Traits\Service\Instance;

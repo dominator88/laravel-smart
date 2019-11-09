@@ -15,6 +15,7 @@ use Smart\Models\SysUser;
 use Smart\Models\SysUserRole;
 use Smart\Models\SysUserDevice;
 use Facades\Smart\Service\ServiceManager;
+use Smart\Models\SysPermissionNode;
 use Smart\Service\SysFuncPrivilegeService;
 
 class SysUserService extends BaseService implements PermissionInterface {
@@ -395,7 +396,11 @@ class SysUserService extends BaseService implements PermissionInterface {
       
         $user->syncRoles($roles);
         return true;
-    }
+	}
+	
+	public function hasPermission(SysUser $user, SysPermissionNode $permission){
+		return $user->hasPermissionTo($permission->permission);
+	  }
 	/*****************************权限相关end****************************** */
 
 }
