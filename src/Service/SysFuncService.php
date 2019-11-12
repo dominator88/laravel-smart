@@ -92,7 +92,7 @@ class SysFuncService extends BaseService {
 		//	'module' => 'backend',
 			'with' => [],
 			'isMenu' => '',
-			'pid' => 0,
+			'pids' => [],
 			'status' => '',
 			'page'     => 1 ,
             'pageSize' => 10 ,
@@ -125,7 +125,7 @@ class SysFuncService extends BaseService {
         };
 
         $param = extend( $default , $param );
-		$model = $this->getModel()->where('pid',$param['pid']);
+		$model = $this->getModel()->whereIn('id',$param['pids']);
 
 		if($param['with']){
 			$model = $model->with($param['with']);
