@@ -132,7 +132,7 @@ public function insert( $data ) {
 }
 
 /**
-    ***************  废弃更新的操作   ***********
+  *
    * 根据ID 更新数据
    *
    * @param $id

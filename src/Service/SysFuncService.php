@@ -125,8 +125,8 @@ class SysFuncService extends BaseService {
         };
 
         $param = extend( $default , $param );
-		$model = $this->getModel()->where('pid',0);
-		
+		$model = $this->getModel()->where('pid',$param['pid']);
+
 		if($param['with']){
 			$model = $model->with($param['with']);
 		}
@@ -144,7 +144,7 @@ class SysFuncService extends BaseService {
         }else{
           $model = $model->get()->values();
 		}
-		
+	
         $data = $model;
 
         $data = $func($data);
