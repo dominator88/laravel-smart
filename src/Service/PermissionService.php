@@ -7,6 +7,7 @@
  */
 
 use Smart\Models\Permission;
+use Smart\Models\SysUser;
 use Smart\Service\BaseService; 
 
 class PermissionService extends BaseService {
@@ -137,5 +138,31 @@ public function insert( $data ) {
   public function getByIds($ids){
     return $this->getModel()->whereIn('id',$ids)->get();
   }
+
+
+  public function validate($service,$method,SysUser $user){
+    if(isset($service->method_permission)){
+        $node_name = $service->method_permission[$method];
+        if(is_bool($node_name)){
+            return $node_name;
+        }elseif($node_name == ''){
+            return false;
+        }
+        $sysPermissionNodeService = SysPermissionNodeService::instance();
+        $sysUserService = SysUserService::instance();
+        $permissionNode = $sysPermissionNodeService->getPermissionBySymbol($node_name);
+        $result = $sysUserService->hasPermission($user, $permissionNode);
+        if($result){
+            return true;
+        }else{
+            return false;
+        }
+    }
+}
   
 }
+
+
+
+
+
