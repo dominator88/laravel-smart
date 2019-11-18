@@ -5,6 +5,7 @@ use Smart\Models\SysPermissionNode;
 use Smart\Models\SysUser;
 use Smart\Service\SysPermissionNodeService;
 use Smart\Service\SysRoleService;
+use Smart\Service\SysUserService;
 
 trait Permission{
 
@@ -50,7 +51,10 @@ trait Permission{
 	//更新用户角色
 	public function updateRoles($id,$roleIds){
         try{
-            $user = $this->getModel()->find($id);
+
+			$sysUserService = SysUserService::instance();
+			
+			$user = $sysUserService->getById($id);
             $sysRoleService = SysRoleService::instance();
             $roles = $sysRoleService->getRoles($roleIds);
       
