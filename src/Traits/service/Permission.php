@@ -1,6 +1,8 @@
 <?php
 namespace Smart\Traits\Service;
 
+use Smart\Models\SysPermissionNode;
+use Smart\Models\SysUser;
 use Smart\Service\SysPermissionNodeService;
 use Smart\Service\SysRoleService;
 
