@@ -204,6 +204,10 @@ public function update( $id, $data ) {
     return $permissions;
 }
 
+public function getPermissionBySymbol($symbol){
+  return $this->getModel()->where('symbol', $symbol)->first();
+}
+
 public function save($param){
   try{
       $param['level'] = $this->getLevel( $param['pid'] );
