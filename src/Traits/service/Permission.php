@@ -57,7 +57,11 @@ trait Permission{
           }catch(\Exception $e){
             throw $e;
           }  
-    }
+	}
+	
+	public function hasPermission(SysUser $user, SysPermissionNode $permission){
+		return $user->hasPermissionTo($permission->permission);
+	  }
 
     
 }
