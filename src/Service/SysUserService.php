@@ -356,4 +356,8 @@ class SysUserService extends BaseService implements PermissionInterface {
 	use \Smart\Traits\Service\Permission;
 	/*****************************权限相关end****************************** */
 
+	public function getUserByPermissions($permissions){
+		return $this->getModel()->permission($permissions)->get();
+	}
+
 }

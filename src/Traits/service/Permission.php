@@ -69,5 +69,7 @@ trait Permission{
 		return $user->hasPermissionTo($permission->permission);
 	  }
 
+
+
     
 }
