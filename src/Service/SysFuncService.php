@@ -89,7 +89,7 @@ class SysFuncService extends BaseService {
 	public function getByCond($param) {
 		$default = [
 			'field' => ['*'],
-		//	'module' => 'backend',
+			'module' => 'backend',
 			'with' => [],
 			'isMenu' => '',
 			'pids' => [],
@@ -124,8 +124,13 @@ class SysFuncService extends BaseService {
           
         };
 
-        $param = extend( $default , $param );
-		$model = $this->getModel()->whereIn('id',$param['pids']);
+		$param = extend( $default , $param );
+		if($param['pids']){
+			$model = $this->getModel()->whereIn('id',$param['pids']);
+		}else{
+			$model = $this->getModel();
+		}
+		
 
 		if($param['with']){
 			$model = $model->with($param['with']);
@@ -133,7 +138,8 @@ class SysFuncService extends BaseService {
 
         if($param['module']){
         	$model = $model->whereIn('module',(array)$param['module']);
-        }
+		}
+		
     //    echo $model->find(1)->level;
         if ( isset($param['count']) && $param['count'] ) {
             return $model->count();
