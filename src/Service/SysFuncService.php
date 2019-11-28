@@ -139,6 +139,10 @@ class SysFuncService extends BaseService {
         if($param['module']){
         	$model = $model->whereIn('module',(array)$param['module']);
 		}
+
+		if($param['sort']){
+			$model = $model->orderBy($param['sort'],$param['order']);
+		}
 		
     //    echo $model->find(1)->level;
         if ( isset($param['count']) && $param['count'] ) {
@@ -390,6 +394,7 @@ class SysFuncService extends BaseService {
 				'uri' => $data['uri'],
 				'status' => $data['status'],
 				'pid' => $data['pid'],
+				'sort' => $data['sort'],
 			];
 			$data_base['level'] = $this->getLevel( $data['pid'] );
 			$rows          = $this->getModel()->where( 'id', $id )->update( $data_base );

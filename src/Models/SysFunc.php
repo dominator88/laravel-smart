@@ -39,7 +39,7 @@ class SysFunc extends Model {
 
 
 	public function children(){
-        return $this->hasMany( SysFunc::class , 'pid');
+        return $this->hasMany( SysFunc::class , 'pid')->orderBy('sort','asc');
     }
 
     public function nodeFunc(){
