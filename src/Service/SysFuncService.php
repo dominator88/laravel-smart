@@ -94,6 +94,8 @@ class SysFuncService extends BaseService {
 			'isMenu' => '',
 			'pids' => [],
 			'status' => '',
+			'sort' => '',
+			'order' => '',
 			'page'     => 1 ,
             'pageSize' => 10 ,
 			'withPrivilege' => FALSE,
