@@ -270,7 +270,14 @@ class SysRoleService extends BaseService {
                 
             } */
         }
-        return $data;
+        $data = $data->filter(function($item){
+          if($item){
+            return true;
+          }else{
+            return false;
+          }
+        });
+        return $data->values();
 
 	}
 	
