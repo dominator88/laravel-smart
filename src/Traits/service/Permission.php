@@ -32,15 +32,17 @@ trait Permission{
 	}
 
 	//用户拥有的角色 列出
-	public function roles($id,$module = []){
+	public function roles($id,$module = [], $type = true){
+		//type 为true 查询传递模块,为false 查询传递模板反选
 		$model = $this->getModel()->find($id);
 		$roles = $model->roles;
 	//	dd($roles);
 		$sysRoles = collect();
 		foreach($roles as $role){
             if($role->sysRole){
-                $sysRole = $role->sysRole;
-                if((count($module) > 0 && in_array($sysRole->module,$module)) || count($module) == 0 ){
+				$sysRole = $role->sysRole;
+				$in_module = in_array($sysRole->module,$module);
+                if((count($module) > 0 &&  ($type === true ? $in_module : !$in_module ) ) || count($module) == 0 ){
                     $sysRoles->push( $role->sysRole);
                 }
             }
