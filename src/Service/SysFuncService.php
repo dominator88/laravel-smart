@@ -102,6 +102,9 @@ class SysFuncService extends BaseService {
 					unset($menus[$k]);
 				}
 			}
+			$tmp_children = $menus->children;
+			unset($menus->children);
+			$menus->children = $tmp_children;
 			return $menus;
 		};
 		$new_arr = collect($menus);
@@ -126,8 +129,8 @@ class SysFuncService extends BaseService {
 		$func = function(&$menus) use ($user_id,&$func,$sysUserService){
 			foreach($menus as $k => &$menu){
 				if(isset($menu['children']) && !empty($menu['children'])){
-					$children_menus = $func($menu['children']);
-					$menu['children'] = $children_menus->values();
+					$func($menu['children']);
+					
 				}
 				//查看是否有菜单展现权限
 				$permission_node = $menu->nodeView;
