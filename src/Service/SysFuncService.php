@@ -96,7 +96,8 @@ class SysFuncService extends BaseService {
 				if(isset($menu['children']) && !empty($menu['children'])){
 					$tmp_children = $func($menu['children']);
 					unset($menu['children']);
-					$menu->children = $tmp_children;
+					
+					$menus[$k]['children'] = $tmp_children->values();
 				}
 				//查看是否有菜单展现权限
 				$permission_node = $menu->nodeView;
