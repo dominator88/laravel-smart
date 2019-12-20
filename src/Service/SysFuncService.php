@@ -137,8 +137,9 @@ class SysFuncService extends BaseService {
 					unset($menus[$k]);
 				}
 			}
-			dump($menus->toArray());
+			
 			$menus = $menus->values();
+			dump($menus->toArray());
 			return $menus;
 		};
 		$new_arr = collect($menus);
