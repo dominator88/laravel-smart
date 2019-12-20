@@ -124,7 +124,7 @@ class SysFuncService extends BaseService {
 		$sysUserService = SysUserService::instance();
 
 		$func = function(&$menus) use ($user_id,&$func,$sysUserService){
-			foreach($menus as $k => $menu){
+			foreach($menus as $k => &$menu){
 				if(isset($menu['children']) && !empty($menu['children'])){
 					$func($menu['children']);
 				}
@@ -137,7 +137,7 @@ class SysFuncService extends BaseService {
 					unset($menus[$k]);
 				}
 			}
-			$menus = collect($menus)->values();
+			$menus = $menus->values();
 			return $menus;
 		};
 		$new_arr = collect($menus);
