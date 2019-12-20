@@ -43,7 +43,7 @@ class SysFunc extends Model {
 	}
 	
 	public function node(){
-		return $this->hasMany(SysPermissionNode::class, 'source_id');
+		return $this->hasMany(SysPermissionNode::class, 'source_id')->whereIn('type',['func','view']);
 	}
 
     public function nodeFunc(){
