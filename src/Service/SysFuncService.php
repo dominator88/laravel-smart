@@ -92,9 +92,11 @@ class SysFuncService extends BaseService {
 		$sysRoleService = SysRoleService::instance();
 
 		$func = function(&$menus) use ($role_id,&$func,$sysRoleService){
-			foreach($menus as $k => $menu){
+			foreach($menus as $k => &$menu){
 				if(isset($menu['children']) && !empty($menu['children'])){
-					$func($menu['children']);
+					$tmp_children = $func($menu['children']);
+					unset($menu['children']);
+					$menu->children = $tmp_children;
 				}
 				//查看是否有菜单展现权限
 				$permission_node = $menu->nodeView;
@@ -102,10 +104,8 @@ class SysFuncService extends BaseService {
 					unset($menus[$k]);
 				}
 			}
-			$tmp_children = $menus->children;
-			unset($menus->children);
-			$menus->children = $tmp_children->values();
-			return $menus;
+			
+			return $menus->values();
 		};
 		$new_arr = collect($menus);
 		$new_arr = $func($new_arr);
