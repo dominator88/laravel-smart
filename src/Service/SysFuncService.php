@@ -104,7 +104,7 @@ class SysFuncService extends BaseService {
 			}
 			$tmp_children = $menus->children;
 			unset($menus->children);
-			$menus->children = $tmp_children;
+			$menus->children = $tmp_children->values();
 			return $menus;
 		};
 		$new_arr = collect($menus);
