@@ -91,13 +91,13 @@ class SysFuncService extends BaseService {
 
 		$sysRoleService = SysRoleService::instance();
 
-		$func = function(&$menus) use ($role_id,&$func,$sysRoleService){
+		$func = function($menus) use ($role_id,&$func,$sysRoleService){
 			foreach($menus as $k => &$menu){
 				if(isset($menu['children']) && !empty($menu['children'])){
 					$tmp_children = $func($menu['children']);
-					unset($menu['children']);
-					
-					$menus[$k]['children'] = $tmp_children->values();
+					// unset($menu['children']);
+					// dump($tmp_children);
+					// $menus[$k]['children'] = $tmp_children->values();
 				}
 				//查看是否有菜单展现权限
 				$permission_node = $menu->nodeView;
@@ -130,12 +130,15 @@ class SysFuncService extends BaseService {
 		$func = function(&$menus) use ($user_id,&$func,$sysUserService){
 			foreach($menus as $k => &$menu){
 				if(isset($menu['children']) && !empty($menu['children'])){
-					$func($menu['children']);
-					
+					$tmp_children = $func($menu['children']);
+					unset($menu['children']);
+				//	dump($tmp_children);
+					$menus[$k]['children'] = $tmp_children->values();
 				}
 				//查看是否有菜单展现权限
 				$permission_node = $menu->nodeView;
 				if($user_id == config('backend.superAdminId')){
+
 					continue;
 				}
 				if(empty($permission_node) || !$sysUserService->hasAnyPermission($user_id, (array)$permission_node->id)){
