@@ -44,7 +44,11 @@ class SysFunc extends Model {
 
     public function nodeFunc(){
     	return $this->hasMany( SysPermissionNode::class, 'source_id')->where('type','func');
-    }
+	}
+	
+	public function nodeView(){
+		return $this->hasOne(SysPermissionNode::class, 'source_id')->where('type', 'view');
+	}
 
     /* public function permissionNode(){
     	return $this->belongsToMany(SysPermissionNode::class,'sys_func_privilege', 'func_id', 'node_id');

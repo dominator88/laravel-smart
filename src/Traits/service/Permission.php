@@ -9,13 +9,19 @@ use Smart\Service\SysUserService;
 
 trait Permission{
 
+	private function getUser($user_id){
+		$sysUserService = SysUserService::instance();
+		$user = $sysUserService->getById($user_id);
+		return $user;
+	}
+
     //用户是否拥有某个功能的权限
 	/**
 	 * @param $id 用户id
 	 * @param $funcIds 权限节点集合
 	 */
-	public function hasAnyPermission($id ,$nodeIds, $guard_name = 'admin'){
-		$user = $this->getModel()->find($id);
+	public function hasAnyPermission($user_id ,$nodeIds, $guard_name = 'admin'){
+		$user = $this->getUser($user_id);
 		//获取所有功能id
 		$sysPermissionNodeService = SysPermissionNodeService::instance();
 		$permissions = $sysPermissionNodeService->getPermissions($nodeIds);
@@ -24,18 +30,20 @@ trait Permission{
 		
 	}
 
+	
+
 	//获取用户拥有的权限
-	public function permissions($id){
-		$sysUser = $this->getModel()->find($id);
-		$permissions = $sysUser->getAllPermissions();
+	public function permissions($user_id){
+		$user = $this->getUser($user_id);
+		$permissions = $user->getAllPermissions();
 		return $permissions;
 	}
 
 	//用户拥有的角色 列出
-	public function roles($id,$module = [], $type = true){
+	public function roles($user_id,$module = [], $type = true){
 		//type 为true 查询传递模块,为false 查询传递模板反选
-		$model = $this->getModel()->find($id);
-		$roles = $model->roles;
+		$user = $this->getUser($user_id);
+		$roles = $user->roles;
 	//	dd($roles);
 		$sysRoles = collect();
 		foreach($roles as $role){
@@ -51,12 +59,10 @@ trait Permission{
 	}	
 
 	//更新用户角色
-	public function updateRoles($id,$roleIds){
+	public function updateRoles($user_id,$roleIds){
         try{
 
-			$sysUserService = SysUserService::instance();
-			
-			$user = $sysUserService->getById($id);
+			$user = $this->getUser($user_id);
             $sysRoleService = SysRoleService::instance();
             $roles = $sysRoleService->getRoles($roleIds);
       

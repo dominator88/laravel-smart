@@ -352,4 +352,17 @@ class SysRoleService extends BaseService {
         return $data;
      //   return $this->getModel()->where( 'role_id', $roleId )->get()->toArray();
     }
+
+    public function hasPermissionTo($role_id,$node_id){
+      $sysRoleService = SysRoleService::instance();
+      $sys_role = $sysRoleService->getById($role_id);
+      $sysPermissionNodeService = SysPermissionNodeService::instance();
+      $permission = $sysPermissionNodeService->getById($node_id);
+      if($permission){
+        return $sys_role->role->hasPermissionTo($permission->permission);
+      }else{
+        return false;
+      }
+      
+    }
 }

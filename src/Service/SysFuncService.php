@@ -65,21 +65,84 @@ class SysFuncService extends BaseService {
 	 *
 	 * @return array
 	 */
-	public function getMenuByRoles($roleIds, $module) {
-		$roleIds = explode(',', $roleIds);
-		if ($roleIds == config('backend.superAdminId') || in_array(config('backend.superAdminId'), $roleIds)) {
-			$result = $this->getByCond(['isMenu' => 1, 'status' => 1, 'module' => $module]);
+	// public function getMenuByRoles($roleIds, $module) {
+	// 	$roleIds = explode(',', $roleIds);
+	// 	if ($roleIds == config('backend.superAdminId') || in_array(config('backend.superAdminId'), $roleIds)) {
+	// 		$result = $this->getByCond(['isMenu' => 1, 'status' => 1, 'module' => $module]);
 			
-			//如果是系统管理员
-			return $result;
-		} else {
-			//如果是普通用户
-			return $this->_getMenuByRoles($roleIds, $module);
-		}
+	// 		//如果是系统管理员
+	// 		return $result;
+	// 	} else {
+	// 		//如果是普通用户
+	// 		return $this->_getMenuByRoles($roleIds, $module);
+	// 	}
+	// }
+
+	public function getMenuByRole($role_id){
+		$roots = $this->getRoots();
+		$config = [
+			'pids' => $roots->pluck('id')->toArray(),
+			'module' => $this->getModule(),
+			'status' => 1,
+			'getAll' => true,
+		];
+		$menus = $this->getByCond($config);
+
+
+		$sysRoleService = SysRoleService::instance();
+
+		$func = function(&$menus) use ($role_id,&$func,$sysRoleService){
+			foreach($menus as $k => $menu){
+				if(isset($menu['children']) && !empty($menu['children'])){
+					$func($menu['children']);
+				}
+				//查看是否有菜单展现权限
+				$permission_node = $menu->nodeView;
+				if(empty($permission_node) || !$sysRoleService->hasPermissionTo($role_id, $permission_node->id)){
+					unset($menus[$k]);
+				}
+			}
+			return $menus;
+		};
+		$new_arr = collect($menus);
+		$new_arr = $func($new_arr);
+
+		return $new_arr;
 	}
 
-	public function getMenuByRole($roleIds, $module){
-		return $this->_getMenuByRoles($roleIds, $module);
+	public function getMenuByUser($user_id){
+		$roots = $this->getRoots();
+		$config = [
+			'pids' => $roots->pluck('id')->toArray(),
+			'module' => $this->getModule(),
+			'status' => 1,
+			'getAll' => true,
+		];
+		$menus = $this->getByCond($config);
+
+
+		$sysUserService = SysUserService::instance();
+
+		$func = function(&$menus) use ($user_id,&$func,$sysUserService){
+			foreach($menus as $k => $menu){
+				if(isset($menu['children']) && !empty($menu['children'])){
+					$func($menu['children']);
+				}
+				//查看是否有菜单展现权限
+				$permission_node = $menu->nodeView;
+				if($user_id == config('backend.superAdminId')){
+					continue;
+				}
+				if(empty($permission_node) || !$sysUserService->hasAnyPermission($user_id, (array)$permission_node->id)){
+					unset($menus[$k]);
+				}
+			}
+			return $menus;
+		};
+		$new_arr = collect($menus);
+		$new_arr = $func($new_arr);
+
+		return $new_arr;
 	}
 
 	public function getByUri($uri) {
@@ -165,6 +228,8 @@ class SysFuncService extends BaseService {
         return $data ;
 	}
 
+
+
 	/**
 	 * 查找除非超级管理员的菜单
 	 *
@@ -173,32 +238,37 @@ class SysFuncService extends BaseService {
 	 *
 	 * @return array
 	 */
-	private function _getMenuByRoles($roleIds, $module) {
-		$config = [
-			'pid' => 0,
-			'module' => ucfirst($module),
-			'status' => 1,
-			'getAll' => true,
-		];
-		$menus = $this->getByCond($config);
+	// private function _getMenuByRoles($roleIds) {
+	// 	$roots = $this->service->getRoots();
+	// 	$config = [
+	// 		'pids' => $roots->pluck('id')->toArray(),
+	// 		'module' => $this->getModule(),
+	// 		'status' => 1,
+	// 		'getAll' => true,
+	// 	];
+	// 	$menus = $this->getByCond($config);
 
-		$user = Auth::user();
+	// 	$user = Auth::user();
+	// 	$sysRoleService = SysRoleService::instance();
 
-		$func = function(&$menus) use ($user,&$func){
-			foreach($menus as $k=>$menu){
-				if(isset($menu['children']) && !empty($menu['children'])){
-					$func($menu['children']);
-				}
-				if(!$user->can($menu['id'].'.func.read')){
-					unset($menus[$k]);
-				}
-			}
-			return $menus;
-		};
-		$new_arr = collect($menus);
-		$new_arr = $func($new_arr);
+	// 	$func = function(&$menus) use ($user,&$func,$sysRoleService){
+	// 		foreach($menus as $k => $menu){
+	// 			if(isset($menu['children']) && !empty($menu['children'])){
+	// 				$func($menu['children']);
+	// 			}
+	// 			//查看是否有菜单展现权限
+	// 			$permission_node = $menu->nodeView;
+	// 			$sysRoleService->hasPermissionTo($roleId, $permission_node);
+	// 			if(!$user->can($menu['id'].'.func.read')){
+	// 				unset($menus[$k]);
+	// 			}
+	// 		}
+	// 		return $menus;
+	// 	};
+	// 	$new_arr = collect($menus);
+	// 	$new_arr = $func($new_arr);
 
-		return $new_arr;
+	// 	return $new_arr;
 
 
 
@@ -235,7 +305,7 @@ class SysFuncService extends BaseService {
 		}
 
 		return $this->treeToArray($result, self::DEFAULT_KEY);*/
-	}
+	//}
 
 	/* public function withPrivilege($data) {
 		$allId = [];
@@ -448,6 +518,11 @@ class SysFuncService extends BaseService {
 		} catch ( \Exception $e ) {
 			return ajax_arr( $e->getMessage(), 500 );
 		}
+	}
+
+	//获取根节点组
+	public function getRoots(){
+		return $this->getModel()->where('module',$this->getModule())->where('pid', 0)->get();
 	}
 
 }

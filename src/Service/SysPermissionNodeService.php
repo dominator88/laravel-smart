@@ -6,6 +6,7 @@
  * @version 2.0 2019-05-28
  */
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
 use Smart\Models\SysPermissionNode;
 use Smart\Service\BaseService; 
