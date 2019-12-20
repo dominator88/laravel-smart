@@ -40,7 +40,11 @@ class SysFunc extends Model {
 
 	public function children(){
         return $this->hasMany( SysFunc::class , 'pid')->orderBy('sort','asc');
-    }
+	}
+	
+	public function node(){
+		return $this->hasMany(SysPermissionNode::class, 'source_id');
+	}
 
     public function nodeFunc(){
     	return $this->hasMany( SysPermissionNode::class, 'source_id')->where('type','func');

@@ -167,7 +167,8 @@ class SysFuncService extends BaseService {
 		];
 		$func = function (&$arr) use (&$func){
           foreach($arr as &$val){
-			$val->nodeFunc;
+		//	$val->nodeFunc; 
+			$val->node;
 			if($val->extend){
 				$val->extend_name = $val->extend->extend_name;
 				$val->extend_path = $val->extend->extend_path;
@@ -389,6 +390,7 @@ class SysFuncService extends BaseService {
 
 			foreach($sysFuncs as $sysFunc){
 				$sysFunc->nodeFunc;
+				$sysFunc->node;
 				if(isset($sysFunc->children) && $sysFunc->children->count() > 0){
 					$func($sysFunc->children);
 				}
