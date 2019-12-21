@@ -13,7 +13,7 @@ class {func} extends Model {
 
     public $primaryKey = 'id';
 
-    public $timestamps = FALSE;
+    public $timestamps = TRUE;
 
     use \Smart\Traits\Service\Scope;
 }

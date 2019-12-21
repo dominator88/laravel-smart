@@ -25,6 +25,10 @@ public function getByCond( $param ) {
   if ( $param['count'] ) {
     return $model->count();
   }
+
+  if($param['sort']){
+    $model = $model->orderBy($param['sort'],$param['order]);
+  }
   if(!$param['getAll']){
     $data = $model->get()->forPage($param['page'] , $param['pageSize'])->values();
   }else{

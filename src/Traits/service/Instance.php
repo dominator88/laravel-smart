@@ -1,7 +1,7 @@
 <?php
 namespace Smart\Traits\Service;
 
-use Facades\Smart\Service\ServiceManager;
+
 use Illuminate\Database\Eloquent\Model;
 
 trait Instance{
@@ -15,11 +15,13 @@ trait Instance{
 	
 	public static function instance(){
 		$class_name = get_class();
-		ServiceManager::bind($class_name);
-		$instance = ServiceManager::make($class_name);
+	//	ServiceManager::bind($class_name);
+	//	$instance = ServiceManager::make($class_name);
+		$instance = resolve($class_name);
 
 		if(isset($instance->model_class) && $instance->model_class  && empty($instance->model)){
-			$instance->setModel(new $instance->model_class);
+			$model_class = $instance->model_class;
+			$instance->setModel(new $model_class);
 		}
 
 		return $instance;
