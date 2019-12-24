@@ -270,8 +270,9 @@ class SysRoleService extends BaseService {
                 
             } */
         }
-        $data = $data->filter(function($item){
-          if($item){
+        $module = $this->getModule();
+        $data = $data->filter(function($item) use ($module){
+          if($item && $item->module == $module ){
             return true;
           }else{
             return false;
