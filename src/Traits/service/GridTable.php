@@ -9,8 +9,14 @@ trait GridTable {
    *
    * @return mixed
    */
-  public function getById( $id ) {
-    return $this->getModel()->find( $id );
+  public function getById( $id, $with =[] ) {
+    
+    if(empty($with)){
+      return $this->getModel()->findOrFail( $id );
+    }else{
+      return $this->getModel()->with($with)->findOrFail($id);
+    }
+    
   }
   
   /**
