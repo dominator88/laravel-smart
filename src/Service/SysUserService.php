@@ -357,7 +357,10 @@ class SysUserService extends BaseService implements PermissionInterface {
 	/*****************************权限相关end****************************** */
 
 	public function getUserByPermissions($permissions){
-		return $this->getModel()->permission($permissions)->get();
+		$users = $this->getModel()->permission($permissions)->get(); 
+		return $users->filter(function($value, $key){
+			return !$value->deleted_at;
+		});
 	}
 
 }

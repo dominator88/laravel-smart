@@ -76,13 +76,18 @@ class SysRoleService extends BaseService {
 			'sort' => 'id',
 			'order' => 'DESC',
 			'count' => FALSE,
-			'getAll' => FALSE,
+      'getAll' => FALSE,
+      'with' => [],
 		];
 
 		$param = extend($default, $param);
 
 		$model = $this->getModel()->keyword($param['keyword'])->module($param['module'])->status($param['status'])
 			->where('rank', '<', 10);
+
+    if($param['with']){
+      $model = $model->with($param['with']);
+    }
 
 		if ($param['count']) {
 			return $model->count();
