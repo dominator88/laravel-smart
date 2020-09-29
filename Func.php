@@ -119,42 +119,37 @@ if (!function_exists('form_radio_rows')) {
 	}
 }
 
-if (!function_exists('form_radio')) {
-	function form_radio($name, $data, $checked_value = 0, $title) {
-		$data = [
-			'type' => 'radio',
-			'title' => $title,
-			'name' => $name,
-			'data' => $data,
-			'value' => $checked_value,
-		];
+// if (!function_exists('form_radio')) {
+// 	function form_radio($name, $data, $checked_value = 0, $title) {
+// 		$data = [
+// 			'type' => 'radio',
+// 			'title' => $title,
+// 			'name' => $name,
+// 			'data' => $data,
+// 			'value' => $checked_value,
+// 		];
 
-		return form_field($data);
-	}
-}
+// 		return form_field($data);
+// 	}
+// }
 
-if (!function_exists('form_text2')) {
-	function form_text2($name, $value = 0, $title, $help = '', $placeholder = '') {
-		$data = [
-			'type' => 'text',
-			'title' => $title,
-			'name' => $name,
-			'data' => $data,
-			'value' => $value,
-			'help' => $help,
-			'placeholder' => $placeholder,
-		];
+// if (!function_exists('form_text2')) {
+// 	function form_text2($name, $value = 0, $title, $help = '', $placeholder = '') {
+// 		$data = [
+// 			'type' => 'text',
+// 			'title' => $title,
+// 			'name' => $name,
+// 			'data' => $data,
+// 			'value' => $value,
+// 			'help' => $help,
+// 			'placeholder' => $placeholder,
+// 		];
 
-		return form_field($data);
-	}
-}
+// 		return form_field($data);
+// 	}
+// }
 
 //use Facades\Smart\Service\WidgetService;
-function form_field($param) {
-
-	$widgetService = Facades\Smart\Service\WidgetService::make($param);
-	return $widgetService;
-}
 
 if (!function_exists("ajax_arr")) {
 	/**

@@ -19,7 +19,7 @@ trait GridTable {
         $model = $this->getModel();
       }
       
-      $result = $model->findOrFail( $id );
+      $result = $model->find( $id );
       
       return $result;
     }catch(\Exception $e){
