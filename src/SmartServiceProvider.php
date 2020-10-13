@@ -7,13 +7,13 @@
  */
 namespace Smart;
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Smart\Extentions\EloquentUserProvider;
 use Illuminate\Support\Facades\Auth;
-use File;
-use App;
-use Facades\Smart\Service\ServiceManager;
+use Illuminate\Support\Facades\App as FacadesApp;
+use Illuminate\Support\Facades\File as FacadesFile;
+use Illuminate\Support\Facades\URL;
+use Smart\Service\ServiceManager as ServiceServiceManager;
 
 class SmartServiceProvider extends ServiceProvider {
 
@@ -35,7 +35,7 @@ class SmartServiceProvider extends ServiceProvider {
 		$this->loadViewsFrom(__DIR__ . '/../resources/views', 'backend');
 
 		if (config('backend.https')) {
-            \URL::forceScheme('https');
+            URL::forceScheme('https');
             $this->app['request']->server->set('HTTPS', true);
         }
 
@@ -171,7 +171,7 @@ class SmartServiceProvider extends ServiceProvider {
 
 	private function registerModule($module) {
 		$path = app_path().'/'.ucfirst($module).'/Service';
-		if(!File::isDirectory($path)){
+		if(!FacadesFile::isDirectory($path)){
 			return ;
 		}
 
@@ -183,7 +183,7 @@ class SmartServiceProvider extends ServiceProvider {
 			$file_collect->push($class_prefix.$filesystem->name($file));
 		}
 		$file_collect->each(function($item){
-			ServiceManager::bind($item);
+			ServiceServiceManager::bind($item);
 		});	
 	}
 
@@ -193,17 +193,17 @@ class SmartServiceProvider extends ServiceProvider {
     {
         //$mainServiceProviderNameStartWith = 'Main';
 
-        if (File::isDirectory($directory)) {
+        if (FacadesFile::isDirectory($directory)) {
 
-            $files = File::allFiles($directory);
+            $files = FacadesFile::allFiles($directory);
 
             foreach ($files as $file) {
             	
-                if (File::isFile($file)) {
-                	$path = File::dirname($file);
+                if (FacadesFile::isFile($file)) {
+                	$path = FacadesFile::dirname($file);
 	            	$startClass = substr($path,strrpos($path, 'app'));
 	            	
-	            	$name = File::name($file);
+	            	$name = FacadesFile::name($file);
 	            	
 	            	$serviceProviderClass = str_replace('/','\\',ucfirst($startClass).'\\'.$name);
                 	$this->loadProvider($serviceProviderClass);
@@ -217,7 +217,7 @@ class SmartServiceProvider extends ServiceProvider {
      */
     private function loadProvider($providerFullName)
     {
-        App::register($providerFullName);
+        FacadesApp::register($providerFullName);
     }
 
 

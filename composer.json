@@ -1,63 +1,13 @@
 {
     "name": "dominator88/laravel-smart",
-    "description": "后台管理系统.能快速度进行移动端开发.集成多个常见工具包.",
-    "keywords": ["admin", "laravel", "grid", "api"],
-    "homepage": "https://github.com/dominator88/laravel-smart",
-    "license": "MIT",
-    "authors": [{
-        "name": "mr.z",
-        "email": "zsh2088@gmail.com"
-    }],
-    "type": "library",
+    "type": "composer-plugin",
     "require": {
-        "php": "^7.1.3",
-        "laravel/framework": "5.8.*",
-        "intervention/image": "^2.5",
-        "overtrue/easy-sms": "^1.1",
-        "prettus/l5-repository": "^2.6",
-        "barryvdh/laravel-cors": "^0.11.4",
-        "laravel/passport": "^7.4",
-        "spatie/laravel-permission": "^2.38"
+
     },
-    "require-dev": {
-        "phpunit/phpunit": "~6.0"
-    },
-    "minimum-stability": "dev",
-    "autoload": {
-        "classmap": [
-            "tests/factories"
-
-        ],
-        "psr-4": {
-            "Smart\\": "src/"
-
-        },
-        "files": [
-            "Func.php"
-        ]
-    },
-    "autoload-dev": {
-        "psr-4": {
-
-
-        },
-        "classmap": [
-            "tests/TestCase.php"
-
-        ]
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Smart\\SmartServiceProvider",
-                "Intervention\\Image\\ImageServiceProvider"
-            ],
-            "aliases": {
-                "Image": "Intervention\\Image\\Facades\\Image"
-            }
-
+    "authors": [
+        {
+            "name": "mr.z",
+            "email": "zsh2088@gmail.com"
         }
-
-    }
-
+    ]
 }
