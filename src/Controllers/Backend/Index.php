@@ -36,19 +36,19 @@ EOF;
 
 		$stat = cache('stat');
 		if (!$stat) {
-			$stat = [
-				'articles' => DB::table('mer_articles')->count(),
-				'users' => DB::table('mer_user')->count('id'),
-				'api' => DB::table('sys_api_log')->whereTime('created_at', '>', date('Y-m-d'))->count(),
-				'download' => 0,
-			];
-			cache('stat', $stat, 300);
+			// $stat = [
+			// 	'articles' => DB::table('mer_articles')->count(),
+			// 	'users' => DB::table('mer_user')->count('id'),
+			// 	'api' => DB::table('sys_api_log')->whereTime('created_at', '>', date('Y-m-d'))->count(),
+			// 	'download' => 0,
+			// ];
+			// cache('stat', $stat, 300);
 		}
 
-		$charts = $this->_getCharts($stat);
+		// $charts = $this->_getCharts($stat);
 
-		$this->_addData('stat', $stat);
-		$this->_addParam('charts', $charts);
+		// $this->_addData('stat', $stat);
+		// $this->_addParam('charts', $charts);
 
 		$this->_addParam( 'uri', [
 			
