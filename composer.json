@@ -14,6 +14,7 @@
         "intervention/image": "^2.5",
         "overtrue/easy-sms": "^1.1",
         "barryvdh/laravel-cors": "^0.11.4",
+        "laravel/passport": "^7.5",
         "spatie/laravel-permission": "^2.38"
     },
     "require-dev": {
@@ -23,7 +24,7 @@
     "autoload": {
         "classmap": [
             "tests/factories"
-
+ 
         ],
         "psr-4": {
             "Smart\\": "src/"
