@@ -29,7 +29,7 @@ class ServiceManager {
 	}
 
 	//绑定class至容器
-	public function bind($className){
+	public static function bind($className){
 		app()->singleton($className,function($app) use ($className){
 			return new $className;
 		});

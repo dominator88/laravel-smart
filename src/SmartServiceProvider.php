@@ -13,8 +13,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\App as FacadesApp;
 use Illuminate\Support\Facades\File as FacadesFile;
 use Illuminate\Support\Facades\URL;
-use Smart\Service\ServiceManager as ServiceServiceManager;
 
+use Smart\Service\ServiceManager;
 class SmartServiceProvider extends ServiceProvider {
 
 	protected $commands = [
@@ -183,7 +183,7 @@ class SmartServiceProvider extends ServiceProvider {
 			$file_collect->push($class_prefix.$filesystem->name($file));
 		}
 		$file_collect->each(function($item){
-			ServiceServiceManager::bind($item);
+			ServiceManager::bind($item);
 		});	
 	}
 

@@ -126,7 +126,7 @@ class SysUserService extends BaseService implements PermissionInterface {
 	 *
 	 * @return mixed
 	 */
-	private function getRoles($data) {
+	public function getRoles($data) {
 		$SysUserRole = SysUserRoleService::instance();
 
 		foreach ($data as &$item) {
