@@ -1,6 +1,8 @@
 <?php
 namespace Smart\Traits\Service;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 trait GridTable {
   /**
    * 根据id 查询
@@ -12,9 +14,9 @@ trait GridTable {
   public function getById( $id,$with = [] ) {
 
     if(empty($with)){
-      return $this->getModel()->findOrFail( $id );
+      return $this->getModel()->find( $id );
     }else{
-      return $this->getModel()->with($with)->findOrFail($id);
+      return $this->getModel()->with($with)->find($id);
     }
     
 

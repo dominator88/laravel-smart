@@ -10,10 +10,9 @@ trait Instance{
 	//protected static $instance;
 
 	private  $model;
-
 	
-	
-	public static function instance(){
+	public static function instance( $params = []){
+		
 		$class_name = get_class();
 		ServiceManager::bind($class_name);
 		$instance = ServiceManager::make($class_name);
@@ -21,6 +20,7 @@ trait Instance{
 		if(isset($instance->model_class) && $instance->model_class  && empty($instance->model)){
 			$instance->setModel(new $instance->model_class);
 		}
+		$instance->params = $params;
 
 		return $instance;
 	}	
