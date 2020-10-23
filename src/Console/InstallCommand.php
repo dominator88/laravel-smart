@@ -105,7 +105,7 @@ class InstallCommand extends Command
     }
 
     public function initExampleController($module){
-        $example_path = 'Controllers/index.txt';
+        $example_path = 'controllers/index.txt';
         $content = $this->getContent($example_path , ['module' => $module]);
         $this->laravel['files']->put( app_path($module).'/Controllers/IndexController.php' , $content);
         $this->line('initExampleController success!');
