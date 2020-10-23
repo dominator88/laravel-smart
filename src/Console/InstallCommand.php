@@ -96,7 +96,7 @@ class InstallCommand extends Command
     public function initController($module){
         //基类
         $this->directory = app_path($module);
-        $base_path = 'Controllers/module.txt';
+        $base_path = 'controllers/module.txt';
         $content = $this->getContent($base_path ,['module' => $module]);
         $this->makeDir('Controllers');
         $this->laravel['files']->put( app_path($module).'/Controllers/'.$module.'.php' , $content);

@@ -76,8 +76,8 @@ class {name}Service extends ApiService {
       case 'GET' :
         $data = $this->get();
         $data = $this->formatData( $data );
-
-        return api_result( '查询成功' , 0 , [ 'rows' => $data ] );
+        return $data;
+      //  return api_result( '查询成功' , 0 , [ 'rows' => $data ] );
       case 'POST' :
         return $this->post();
       case 'PUT' :
