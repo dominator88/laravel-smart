@@ -1,20 +1,24 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: sl
  * Date: 2017/9/14
  * Time: 17:35
  */
+
 namespace Smart\Service;
+
 use Illuminate\Support\Facades\DB;
-use Smart\Models\SysFunc; 
+use Smart\Models\SysFunc;
 use Facades\Smart\Service\ServiceManager;
 use Smart\Service\SysRoleService;
 use Illuminate\Support\Facades\Auth;
 
-class SysFuncService extends BaseService {
+class SysFuncService extends BaseService
+{
 
-	use \Smart\Traits\Service\TreeTable,\Smart\Traits\Service\Instance;
+	use \Smart\Traits\Service\TreeTable, \Smart\Traits\Service\Instance;
 
 	protected $model_class = SysFunc::class;
 
@@ -41,7 +45,8 @@ class SysFuncService extends BaseService {
 
 
 	//默认行
-	public function getDefaultRow() {
+	public function getDefaultRow()
+	{
 		return [
 			'sort' => '99',
 			'module' => 'backend',
@@ -65,92 +70,176 @@ class SysFuncService extends BaseService {
 	 *
 	 * @return array
 	 */
-	public function getMenuByRoles($roleIds, $module) {
-		$roleIds = explode(',', $roleIds);
-		if ($roleIds == config('backend.superAdminId') || in_array(config('backend.superAdminId'), $roleIds)) {
-			$result = $this->getByCond(['isMenu' => 1, 'status' => 1, 'module' => $module]);
-			
-			//如果是系统管理员
-			return $result;
-		} else {
-			//如果是普通用户
-			return $this->_getMenuByRoles($roleIds, $module);
-		}
-	}
+	// public function getMenuByRoles($roleIds, $module)
+	// {
+	// 	$roleIds = explode(',', $roleIds);
+	// 	if ($roleIds == config('backend.superAdminId') || in_array(config('backend.superAdminId'), $roleIds)) {
+	// 		$result = $this->getByCond(['isMenu' => 1, 'status' => 1, 'module' => $module]);
 
-	public function getMenuByRole($roleIds, $module){
-		return $this->_getMenuByRoles($roleIds, $module);
-	}
+	// 		//如果是系统管理员
+	// 		return $result;
+	// 	} else {
+	// 		//如果是普通用户
+	// 		return $this->_getMenuByRoles($roleIds, $module);
+	// 	}
+	// }
 
-	public function getByUri($uri) {
+	// public function getMenuByRole($roleIds, $module)
+	// {
+	// 	return $this->_getMenuByRoles($roleIds, $module);
+	// }
+
+	public function getByUri($uri)
+	{
 		return $this->getModel()->where('uri', $uri)->first();
-	} 
+	}
 
-	public function getByCond($param) {
+	public function getMenuByRole($role_id){
+		$roots = $this->getRoots();
+		$config = [
+			'pids' => $roots->pluck('id')->toArray(),
+			'module' => $this->getModule(),
+			'status' => 1,
+			'getAll' => true,
+		];
+		$menus = $this->getByCond($config);
+
+
+		$sysRoleService = SysRoleService::instance();
+
+		$func = function($menus) use ($role_id,&$func,$sysRoleService){
+			foreach($menus as $k => &$menu){
+				if(isset($menu['children']) && !empty($menu['children'])){
+					$tmp_children = $func($menu['children']);
+					// unset($menu['children']);
+					// dump($tmp_children);
+					// $menus[$k]['children'] = $tmp_children->values();
+				}
+				//查看是否有菜单展现权限
+				$permission_node = $menu->nodeView;
+				if(empty($permission_node) || !$sysRoleService->hasPermissionTo($role_id, $permission_node->id)){
+					unset($menus[$k]);
+				}
+			}
+
+			return $menus->values();
+		};
+		$new_arr = collect($menus);
+		$new_arr = $func($new_arr);
+
+		return $new_arr;
+	}
+
+	public function getMenuByUser($user_id)
+	{
+		$roots = $this->getRoots();
+		$config = [
+			'pids' => $roots->pluck('id')->toArray(),
+			'module' => $this->getModule(),
+			'status' => 1,
+			'getAll' => true,
+		];
+		$menus = $this->getByCond($config);
+
+
+		$sysUserService = SysUserService::instance();
+
+		$func = function (&$menus) use ($user_id, &$func, $sysUserService) {
+			foreach ($menus as $k => &$menu) {
+				if (isset($menu['children']) && !empty($menu['children'])) {
+					$tmp_children = $func($menu['children']);
+					unset($menu['children']);
+					//	dump($tmp_children);
+					$menus[$k]['children'] = $tmp_children->values();
+				}
+				//查看是否有菜单展现权限
+				$permission_node = $menu->nodeView;
+				if ($user_id == config('backend.superAdminId')) {
+
+					continue;
+				}
+				if (empty($permission_node) || !$sysUserService->hasAnyPermission($user_id, (array)$permission_node->id)) {
+					unset($menus[$k]);
+				}
+			}
+
+			$menus = $menus->values();
+			//	dump($menus->toArray());
+			return $menus;
+		};
+		$new_arr = collect($menus);
+		$new_arr = $func($new_arr);
+
+		return $new_arr;
+	}
+
+
+
+	public function getByCond($param)
+	{
 		$default = [
 			'field' => ['*'],
-		//	'module' => 'backend',
+			//	'module' => 'backend',
 			'with' => [],
 			'isMenu' => '',
 			'pid' => 0,
 			'status' => '',
-			'page'     => 1 ,
-            'pageSize' => 10 ,
+			'page'     => 1,
+			'pageSize' => 10,
 			'withPrivilege' => FALSE,
 			'key' => self::DEFAULT_KEY,
 			'getAll' => FALSE,
 		];
-		$func = function (&$arr) use (&$func){
-          foreach($arr as &$val){
-			$val->nodeFunc;
-			if($val->extend){
-				$val->extend_name = $val->extend->extend_name;
-				$val->extend_path = $val->extend->extend_path;
-				$val->extend_component = $val->extend->extend_component;
-				$val->extend_notCache = $val->extend->extend_notCache;
-				$val->extend_showAlways = $val->extend->extend_showAlways;
+		$func = function (&$arr) use (&$func) {
+			foreach ($arr as &$val) {
+				$val->nodeFunc;
+				if ($val->extend) {
+					$val->extend_name = $val->extend->extend_name;
+					$val->extend_path = $val->extend->extend_path;
+					$val->extend_component = $val->extend->extend_component;
+					$val->extend_notCache = $val->extend->extend_notCache;
+					$val->extend_showAlways = $val->extend->extend_showAlways;
+				}
+
+				if (isset($val['children'])) {
+
+					if ($val->has('children') && $val->children->isNotEmpty()) {
+						$func($val['children']);
+					} else {
+						unset($val->children);
+					}
+				}
 			}
-			
-            if(isset($val['children'])){
+			return $arr;
+		};
 
-              if( $val->has('children') && $val->children->isNotEmpty()){
-				$func($val['children']);
-              }else{
-                unset($val->children);
-              }
-            }
-          }
-          return $arr;
-          
-        };
+		$param = extend($default, $param);
+		$model = $this->getModel()->where('pid', $param['pid']);
 
-        $param = extend( $default , $param );
-		$model = $this->getModel()->where('pid',$param['pid']);
-		 
-		if($param['with']){
+		if ($param['with']) {
 			$model = $model->with($param['with']);
 		}
 
-        if($param['module']){
-        	$model = $model->whereIn('module',(array)$param['module']);
-        }
-    //    echo $model->find(1)->level;
-        if ( isset($param['count']) && $param['count'] ) {
-            return $model->count();
-        }
-
-        if($param['getAll'] === FALSE){
-          $model = $model->get()->forPage($param['page'] , $param['pageSize'])->values();
-        }else{
-          $model = $model->get()->values();
+		if ($param['module']) {
+			$model = $model->whereIn('module', (array)$param['module']);
 		}
-		
-        $data = $model;
+		//    echo $model->find(1)->level;
+		if (isset($param['count']) && $param['count']) {
+			return $model->count();
+		}
 
-        $data = $func($data);
-        
+		if ($param['getAll'] === FALSE) {
+			$model = $model->get()->forPage($param['page'], $param['pageSize'])->values();
+		} else {
+			$model = $model->get()->values();
+		}
 
-        return $data ;
+		$data = $model;
+
+		$data = $func($data);
+
+
+		return $data;
 	}
 
 	/**
@@ -161,36 +250,36 @@ class SysFuncService extends BaseService {
 	 *
 	 * @return array
 	 */
-	private function _getMenuByRoles($roleIds, $module) {
-		$config = [
-			'pid' => 0,
-			'module' => ucfirst($module),
-			'status' => 1,
-			'getAll' => true,
-		];
-		$menus = $this->getByCond($config);
+	// private function _getMenuByRoles($roleIds, $module)
+	// {
+	// 	$config = [
+	// 		'pid' => 0,
+	// 		'module' => ucfirst($module),
+	// 		'status' => 1,
+	// 		'getAll' => true,
+	// 	];
+	// 	$menus = $this->getByCond($config);
 
-		$user = Auth::user();
+	// 	$user = Auth::user();
 
-		$func = function(&$menus) use ($user,&$func){
-			foreach($menus as $k=>$menu){
-				if($menu->has('children') && $menu->children->isNotEmpty() ){
-					$func($menu['children']);
-				}else{
-					unset($menu->children);
-				}
-				if(!$user->can($menu['id'].'.func.read')){
-					unset($menus[$k]);
-				}
-			}
-			return $menus;
-		};
-		$new_arr = collect($menus);
-		$new_arr = $func($new_arr);
+	// 	$func = function (&$menus) use ($user, &$func) {
+	// 		foreach ($menus as $k => $menu) {
+	// 			if ($menu->has('children') && $menu->children->isNotEmpty()) {
+	// 				$func($menu['children']);
+	// 			} else {
+	// 				unset($menu->children);
+	// 			}
+	// 			if (!$user->can($menu['id'] . '.func.read')) {
+	// 				unset($menus[$k]);
+	// 			}
+	// 		}
+	// 		return $menus;
+	// 	};
+	// 	$new_arr = collect($menus);
+	// 	$new_arr = $func($new_arr);
 
-		return $new_arr;
-
-	}
+	// 	return $new_arr;
+	// }
 
 	/* public function withPrivilege($data) {
 		$allId = [];
@@ -212,7 +301,8 @@ class SysFuncService extends BaseService {
 		return $data;
 	} */
 
-	public function getPrivilege($uri) {
+	public function getPrivilege($uri)
+	{
 		$func = SysFunc::where('uri', $uri)->first();
 		if (empty($func)) {
 			return false;
@@ -221,7 +311,8 @@ class SysFuncService extends BaseService {
 		return true;
 	}
 
-	public function accept(SysUserService $sysUserService) {
+	public function accept(SysUserService $sysUserService)
+	{
 
 		$klass = get_called_class();
 		preg_match('#([^\\\\]+)$#', $klass, $extract);
@@ -238,46 +329,47 @@ class SysFuncService extends BaseService {
 						return true;
 					}
 				}
-
 			}
 			return false;
 		});
 
 		return $sysUserService->$method($this);
-
 	}
 
-	public function getSymbol($id){
+	public function getSymbol($id)
+	{
 
 		$sysFunc = $this->getModel()->find($id);
 
-		if(!empty($sysFunc)){
-			$uri_arr = explode('/',strtolower($sysFunc->uri));
-			
-			if(count($uri_arr) == 3){
-				return $uri_arr[0].'.'.$uri_arr[1];
+		if (!empty($sysFunc)) {
+			$uri_arr = explode('/', strtolower($sysFunc->uri));
+
+			if (count($uri_arr) == 3) {
+				return $uri_arr[0] . '.' . $uri_arr[1];
 			}
 		}
 		return false;
 	}
 
-	public function findById($id){
+	public function findById($id)
+	{
 		return $this->getModel()->find($id);
 	}
 
 
-		
-	public function getPermission($params){
-		$sysFuncs = $this->getModel()->where('module',$params['module'])->where('pid',0)->get();
 
-		$func = function($sysFuncs) use(&$func){
+	public function getPermission($params)
+	{
+		$sysFuncs = $this->getModel()->where('module', $params['module'])->where('pid', 0)->get();
 
-			foreach($sysFuncs as $sysFunc){
-				if(isset($sysFunc->children) && $sysFunc->children->count() > 0){
+		$func = function ($sysFuncs) use (&$func) {
+
+			foreach ($sysFuncs as $sysFunc) {
+				if (isset($sysFunc->children) && $sysFunc->children->count() > 0) {
 					$func($sysFunc->children);
 				}
 			}
-		};	
+		};
 		$func($sysFuncs);
 		return $sysFuncs;
 	}
@@ -291,10 +383,11 @@ class SysFuncService extends BaseService {
 	 *
 	 * @return array
 	 */
-	public function insert( $data ) {
+	public function insert($data)
+	{
 		try {
-			if ( empty( $data ) ) {
-				throw new \Exception( '数据不能为空' );
+			if (empty($data)) {
+				throw new \Exception('数据不能为空');
 			}
 
 			$data_base = [
@@ -306,13 +399,13 @@ class SysFuncService extends BaseService {
 				'status' => $data['status'],
 				'pid' => $data['pid'],
 			];
-			$data_base['level'] = $this->getLevel( $data['pid'] );
-			$id            = $this->getModel()->insertGetId( $data_base );
+			$data_base['level'] = $this->getLevel($data['pid']);
+			$id            = $this->getModel()->insertGetId($data_base);
 
-			if($data_base['module'] !== 'backend'){
-			//更新到扩展表中
+			if ($data_base['module'] !== 'backend') {
+				//更新到扩展表中
 				$data_extend = [
-				//	'func_id' => $id,
+					//	'func_id' => $id,
 					'extend_name' => $data['extend_name'],
 					'extend_path' => $data['extend_path'],
 					'extend_component' => $data['extend_component'],
@@ -322,12 +415,12 @@ class SysFuncService extends BaseService {
 				$sysFuncExtendService = SysFuncExtendService::instance();
 				$sysFuncExtendService->updateOrCreate($data_extend, $id);
 			}
-			return ajax_arr( '创建成功', 0, [ 'id' => $id ] );
-		} catch ( \Exception $e ) {
-			return ajax_arr( $e->getMessage(), 500 );
+			return ajax_arr('创建成功', 0, ['id' => $id]);
+		} catch (\Exception $e) {
+			return ajax_arr($e->getMessage(), 500);
 		}
 	}
-	
+
 	/**
 	 * 根据ID 更新数据
 	 *
@@ -336,10 +429,11 @@ class SysFuncService extends BaseService {
 	 *
 	 * @return array
 	 */
-	public function update( $id, $data ) {
+	public function update($id, $data)
+	{
 		try {
-			if ( $data['pid'] == $id ) {
-				throw new \Exception( '不能选自己做上级' );
+			if ($data['pid'] == $id) {
+				throw new \Exception('不能选自己做上级');
 			}
 
 			$data_base = [
@@ -351,13 +445,13 @@ class SysFuncService extends BaseService {
 				'status' => $data['status'],
 				'pid' => $data['pid'],
 			];
-			$data_base['level'] = $this->getLevel( $data['pid'] );
-			$rows          = $this->getModel()->where( 'id', $id )->update( $data_base );
+			$data_base['level'] = $this->getLevel($data['pid']);
+			$rows          = $this->getModel()->where('id', $id)->update($data_base);
 			//
 			//更新到扩展表中
-			if($data_base['module'] !== 'backend'){
+			if ($data_base['module'] !== 'backend') {
 				$data_extend = [
-				//	'func_id' => $id,
+					//	'func_id' => $id,
 					'extend_name' => $data['extend_name'],
 					'extend_path' => $data['extend_path'],
 					'extend_component' => $data['extend_component'],
@@ -365,19 +459,19 @@ class SysFuncService extends BaseService {
 					'extend_showAlways' => $data['extend_showAlways'],
 				];
 				$sysFuncExtendService = SysFuncExtendService::instance();
-				$sysFuncExtendService->updateOrCreate( $data_extend,$id);
+				$sysFuncExtendService->updateOrCreate($data_extend, $id);
 			}
-			if ( $rows == 0 ) {
-				return ajax_arr( "未更新任何数据", 0 );
+			if ($rows == 0) {
+				return ajax_arr("未更新任何数据", 0);
 			}
-			
-			return ajax_arr( "更新成功", 0 );
-		} catch ( \Exception $e ) {
-		//	return ajax_arr( $e->getMessage(), 500 );
+
+			return ajax_arr("更新成功", 0);
+		} catch (\Exception $e) {
+			//	return ajax_arr( $e->getMessage(), 500 );
 			throw $e;
 		}
 	}
-	
+
 	/**
 	 * 根据ID 删除数据
 	 *
@@ -385,24 +479,30 @@ class SysFuncService extends BaseService {
 	 *
 	 * @return array
 	 */
-	public function destroy( $ids ) {
+	public function destroy($ids)
+	{
 		try {
 			//查看是否有下级数据
-			$childrenData = $this->getByPid( $ids );
-			if ( ! empty( $childrenData ) ) {
-				throw new \Exception( '还有下级数据,不能删除' );
+			$childrenData = $this->getByPid($ids);
+			if (!empty($childrenData)) {
+				throw new \Exception('还有下级数据,不能删除');
 			}
-			
+
 			//删除数据
-			$rows = $this->getModel()->destroy( $ids );
-			if ( $rows == 0 ) {
-				return ajax_arr( '未删除任何数据', 0 );
+			$rows = $this->getModel()->destroy($ids);
+			if ($rows == 0) {
+				return ajax_arr('未删除任何数据', 0);
 			}
-			
-			return ajax_arr( "成功删除{$rows}行数据", 0 );
-		} catch ( \Exception $e ) {
-			return ajax_arr( $e->getMessage(), 500 );
+
+			return ajax_arr("成功删除{$rows}行数据", 0);
+		} catch (\Exception $e) {
+			return ajax_arr($e->getMessage(), 500);
 		}
 	}
 
+	//获取根节点组
+	public function getRoots()
+	{
+		return $this->getModel()->where('module', $this->getModule())->where('pid', 0)->get();
+	}
 }
