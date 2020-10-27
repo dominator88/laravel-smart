@@ -17,7 +17,7 @@ define('API_TEMP_BASE_PATH', __DIR__ . '/../../templates/generate/api');
 define('APP_PATH', app_path());
 define('BASE_PATH', base_path());
 
-class GenerateService implements ParamService{
+class GenerateService implements ParamService{ 
 
 	public $type = [
 		'system' => '管理模块',
@@ -671,7 +671,18 @@ class GenerateService implements ParamService{
 			'date' => $data['date'],
 			'funcName' => $data['funcName'],
 			'tableName' => $data['tableName'],
+		//	'fielddata' => $data['fielddata'],
 		];
+
+		//字段默认值
+		$fieldDefault = [];
+		foreach ($data['fieldInfo'] as $item) {
+			$val = ($item->fieldDefault == 'CURRENT_TIMESTAMP') ? "date('Y-m-d H:i:s')" : "'{$item->fieldDefault}'";
+
+			$fieldDefault[] = "'{$item->fieldName}' , ";
+		}
+
+		$replaceData['fieldDefault'] = implode("\r", $fieldDefault);
 
 		//文件模板
 		$tempContent = file_get_contents(SYSTEM_TEMP_BASE_PATH . $this->systemTemps[$temp]);

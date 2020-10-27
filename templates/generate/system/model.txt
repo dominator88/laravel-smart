@@ -15,5 +15,7 @@ class {func} extends Model {
 
     public $timestamps = TRUE;
 
+    protected $fillable = [{fieldDefault}];
+
     use \Smart\Traits\Service\Scope;
 }

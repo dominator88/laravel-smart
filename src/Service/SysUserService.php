@@ -354,10 +354,6 @@ class SysUserService extends BaseService implements PermissionInterface {
 	}
 	/*****************************权限相关start****************************** */
 
-
-	
-	/*****************************权限相关end****************************** */
-
 	use \Smart\Traits\Service\Permission;
 	/*****************************权限相关end****************************** */
 
