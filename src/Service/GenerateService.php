@@ -35,11 +35,11 @@ class GenerateService implements ParamService{
 
 	var $apiParams = [
 		'api_token' => 'api_token (用户Token)',
-		'phone' => 'phone (手机号)',
+		//'phone' => 'phone (手机号)',
 		'status' => 'status (状态)',
-		'merId' => 'mer_id (机构ID)',
-		'orderId' => 'orderId (订单ID)',
-		'goodsId' => 'goodsId (商品ID)',
+		// 'merId' => 'mer_id (机构ID)',
+		// 'orderId' => 'orderId (订单ID)',
+		// 'goodsId' => 'goodsId (商品ID)',
 		'page' => 'page (页码)',
 		'pageSize' => 'pageSize (每面行数)',
 	];
@@ -223,7 +223,8 @@ class GenerateService implements ParamService{
 		'authUser' => API_TEMP_BASE_PATH . '/auth_user.txt',
 	];
 
-	public function params($params = []){
+	public function params(array $params)
+	{
 		$this->params = $params;
 	}
 
@@ -678,7 +679,10 @@ class GenerateService implements ParamService{
 		$fieldDefault = [];
 		foreach ($data['fieldInfo'] as $item) {
 			$val = ($item->fieldDefault == 'CURRENT_TIMESTAMP') ? "date('Y-m-d H:i:s')" : "'{$item->fieldDefault}'";
-
+			$except_fileds = ['id','created_at','updated_at','deleted_at'];
+			if(in_array($item->fieldName,$except_fileds)){
+				continue;
+			}
 			$fieldDefault[] = "'{$item->fieldName}' , ";
 		}
 

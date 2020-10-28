@@ -3,5 +3,5 @@ namespace Smart\Service;
 
 interface ParamService{
 
-    public function params($params);
+    public function params(array $params);
 }

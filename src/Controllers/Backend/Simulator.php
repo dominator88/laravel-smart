@@ -43,8 +43,8 @@ class Simulator extends Backend {
 			'readme' => full_uri('backend/simulator/read_me'),
 		]);
 
-		$SysUser = SysUserService::instance();
-		$SysMerchant = SysMerchantService::instance();
+	//	$SysUser = SysUserService::instance();
+	//	$SysMerchant = SysMerchantService::instance();
 
 		$discover = new Discover;
 		$versions = $discover->version();
@@ -53,8 +53,8 @@ class Simulator extends Backend {
 			'deviceOsVersion' => $this->deviceOsVersion,
 			'apiVersion' => $this->apiVersion,
 			'secret' => config('backend.secret'),
-			'testToken' => $SysUser->getForTest(),
-			'testMer' => $SysMerchant->getForTest(),
+		//	'testToken' => $SysUser->getForTest(),
+		//	'testMer' => $SysMerchant->getForTest(),
 			'versions' => $versions,
 			'defaultValue' => [
 				'token' => '', //取一个token
@@ -143,22 +143,22 @@ class Simulator extends Backend {
 	}
 
 	//文档
-	function read_me() {
-		$this->_init('文档');
-		$parser = new MarkdownExtra();
-		$readme = $parser->parse(file_get_contents(base_path() . './README.md'));
+	// function read_me() {
+	// 	$this->_init('文档');
+	// 	$parser = new MarkdownExtra();
+	// 	$readme = $parser->parse(file_get_contents(base_path() . './README.md'));
 
-		$this->_addData('readme', $readme);
+	// 	$this->_addData('readme', $readme);
 
-		$this->_addParam('uri', [
-			'menu' => '/backend/simulator/index',
-		]);
+	// 	$this->_addParam('uri', [
+	// 		'menu' => '/backend/simulator/index',
+	// 	]);
 
-		$this->_addJsLib('static/js/backend/SimulatorReadme.js');
-		$this->data['initPageJs'] = FALSE;
-		$this->data['jsCode'][] = 'SimulatorReadme.init()';
+	// 	$this->_addJsLib('static/js/backend/SimulatorReadme.js');
+	// 	$this->data['initPageJs'] = FALSE;
+	// 	$this->data['jsCode'][] = 'SimulatorReadme.init()';
 
-		return $this->_displayWithLayout('backend::readme');
-	}
+	// 	return $this->_displayWithLayout('backend::readme');
+	// }
 
 }

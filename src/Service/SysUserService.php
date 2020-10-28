@@ -349,7 +349,7 @@ class SysUserService extends BaseService implements PermissionInterface {
 	 * @return mixed
 	 */
 	public function getForTest() {
-		$data = DB::table('sys_user as su')->leftJoin('sys_user_device as sud', 'su.id', '=', 'sud.user_id')->where('sud.for_test', 1)->get()->toArray();
+		$data = DB::table('sys_user')->where('for_test', 1)->get()->toArray();
 		return $data;
 	}
 	/*****************************权限相关start****************************** */
