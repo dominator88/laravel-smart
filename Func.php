@@ -119,42 +119,9 @@ if (!function_exists('form_radio_rows')) {
 	}
 }
 
-if (!function_exists('form_radio')) {
-	function form_radio($name, $data, $checked_value = 0, $title) {
-		$data = [
-			'type' => 'radio',
-			'title' => $title,
-			'name' => $name,
-			'data' => $data,
-			'value' => $checked_value,
-		];
 
-		return form_field($data);
-	}
-}
 
-if (!function_exists('form_text2')) {
-	function form_text2($name, $value = 0, $title, $help = '', $placeholder = '') {
-		$data = [
-			'type' => 'text',
-			'title' => $title,
-			'name' => $name,
-			'data' => $data,
-			'value' => $value,
-			'help' => $help,
-			'placeholder' => $placeholder,
-		];
 
-		return form_field($data);
-	}
-}
-
-//use Facades\Smart\Service\WidgetService;
-function form_field($param) {
-
-	$widgetService = Facades\Smart\Service\WidgetService::make($param);
-	return $widgetService;
-}
 
 if (!function_exists("ajax_arr")) {
 	/**
@@ -398,51 +365,7 @@ if (!function_exists('full_img_uri')) {
 	}
 }
 
-if (!function_exists('css')) {
-	/**
-	 * 返回图片绝对路径
-	 *
-	 * @param $imgUri
-	 *
-	 * @return string
-	 */
-	function css() {
-		if(class_exists(Mp\Service\Common\Asset::class)){
-			return  Mp\Service\Common\Asset::css();
-		}
-		
-	}
-}
 
-if (!function_exists('js')) {
-	/**
-	 * 返回图片绝对路径
-	 *
-	 * @param $imgUri
-	 *
-	 * @return string
-	 */
-	function js() {
-		if(class_exists(Mp\Service\Common\Asset::class)){
-			return  Mp\Service\Common\Asset::js();
-		}
-	}
-}
-
-if (!function_exists('script')) {
-	/**
-	 * 返回图片绝对路径
-	 *
-	 * @param $imgUri
-	 *
-	 * @return string
-	 */
-	function script() {
-		if(class_exists(Mp\Service\Common\Asset::class)){
-			return  Mp\Service\Common\Asset::script();
-		}
-	}
-}
 
 
 if(!function_exists('human_filesize')){

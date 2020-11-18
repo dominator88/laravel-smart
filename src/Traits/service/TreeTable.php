@@ -1,5 +1,8 @@
 <?php
 namespace Smart\Traits\Service;
+
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 /**
  * TreeTable Trait for Service
  *
@@ -44,7 +47,7 @@ trait TreeTable {
 	 * @return mixed
 	 */
 	public function getByPid( $pid ) {
-		return $this->getModel()->where( 'pid', $pid )->get()->toArray();
+		return $this->getModel()->where( 'pid', $pid )->get();
 	}
 	
 	//转换树key

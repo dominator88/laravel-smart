@@ -25,6 +25,14 @@ class {name}Service extends ApiService {
 	  'delete' => 'DELETE - 设置{desc}'
 	];
 
+  //允许访问权限
+  public $method_permission = [
+    'get' => true,
+    'post' => true,
+    'put' =>  true,
+    'delete' => true,
+  ];
+
 	/**
 	 * 传参 如:
 	 * 'title' => ['标题' , '默认值' , '验证方式'] //验证方式可选
@@ -77,7 +85,7 @@ class {name}Service extends ApiService {
         $data = $this->get();
         $data = $this->formatData( $data );
         return $data;
-      //  return api_result( '查询成功' , 0 , [ 'rows' => $data ] );
+
       case 'POST' :
         return $this->post();
       case 'PUT' :
