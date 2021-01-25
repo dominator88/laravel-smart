@@ -142,8 +142,10 @@ class SysFuncService extends BaseService {
 					continue;
 				}
 				if(empty($permission_node) || !$sysUserService->hasAnyPermission($user_id, (array)$permission_node->id)){
-					unset($menus[$k]);
+				//	unset($menus[$k]);
+					$menu->is_menu = false;
 				}
+
 			}
 			
 			$menus = $menus->values();

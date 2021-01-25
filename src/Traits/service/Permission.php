@@ -75,7 +75,7 @@ trait Permission{
 	
 	public function hasPermission(SysUser $user, SysPermissionNode $permission){
 		return $user->hasPermissionTo($permission->permission);
-	  }
+	}
 
 
 
